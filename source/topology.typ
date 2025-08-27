@@ -12,7 +12,83 @@ A set is defined by selecting elements from another set such that $S(x)$ is true
 
 $ {x in A : S(x)} "or" {x in A | S(x) } $
 
-$\u{02300}$
+$emptyset$ denotes the empty set.
+
+$P implies Q$ means $P$ implies $Q$ (if $P$, then $Q$).
+
+$P iff Q$ means $P$ and $Q$ are equivalent ($P$ iff $Q$).
+
+$A subset B$ means $A$ is a subset of $B$ (*$A = B$ is allowed*).
+
+$A subset.neq B$ means $A$ is a strict/proper subset of $B$.
+
+$A = B$ means $A subset B$ and $B supset A$.
+
+$A union B$ means the union of $A$ and $B$.
+
+$A inter B$ means the intersection of $A$ and $B$.
+
+$A parallel B$ means $A inter B = emptyset$.
+
+$A setminus B = {x in A : x in.not B}$, everything in $A$ that's not in $B$.
+
+$A times B = {(a, b) : a in A, b in B}$ is called the #defname[Cartesian product] of $A$ and $B$.
+
+== Relations
+
+#definition[Relation][
+  A #defname[relation] $R : A to B$ is any subset of $A times B$.
+
+  $a R b$ means $(a, b) in R$.
+]
+
+#theorem[Relations can compose][
+  If $R : A to B$ and $S : B to C$, then $S compose R : A to C$ is a subset of $A times C$.
+]
+
+#warning[$R compose R^(-1)$ is not necessarily the identity map!]
+
+#theorem[
+  $ (S compose R)^(-1) &= R^(-1) compose S^(-1) \
+  (T compose S) compose R &= T compose (S compose R) $
+]
+
+#definition[
+  $R$ is #defname[reflexive] iff $a R a$ for all $a in A$.
+
+  $R$ is #defname[symmetric] iff $a R b iff b R a$.
+
+  $R$ is #defname[transitive] iff $a R b, b R c implies a R c$.
+]
+
+== Equivalence relations
+
+#definition[Equivalence relation][
+  A relation that is reflexive, symmetric, and transitive.
+]
+
+#definition[Equivalence class][
+  Let $R : A to B$ be an equivalence relation. Then the #defname[equivalence class] of $a in A$ is
+  $ [a] = [a]_R := {b in A : a R b} $
+]
+
+#lemma[
+  Two equivalence classes are either identical or disjoint.
+]
+
+#definition[Partition][
+  A collection of disjoint nomempty subsets of $A$ whose union is all of $A$.
+]
+
+#theorem[
+  Given an equivalence relation on nonempty $A$, its set of equivalence classes forms a partition of $A$.
+
+  Given a partition $P$ of $A$, there is a unique equivalence relation whose set of equivalence classes forms $P$.
+]
+
+== Functions (maps)
+
+
 
 == Cardinality
 
