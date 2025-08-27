@@ -46,7 +46,7 @@ $A times B = {(a, b) : a in A, b in B}$ is called the #defname[Cartesian product
   If $R : A to B$ and $S : B to C$, then $S compose R : A to C$ is a subset of $A times C$.
 ]
 
-#warning[$R compose R^(-1)$ is not necessarily the identity map!]
+#warning-box[$R compose R^(-1)$ is not necessarily the identity map!]
 
 #theorem[
   $ (S compose R)^(-1) &= R^(-1) compose S^(-1) \
