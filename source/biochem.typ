@@ -8,6 +8,8 @@
 #let pOH = "pOH"
 #let pKa = $"p"K_a$
 
+Note that when we use $log$ in this section, we mean $log_(10)$.
+
 = pH and buffers
 
 == pH and pOH
@@ -15,8 +17,8 @@
 $[ce("H+")]$ is the molarity of #ce("H+") in whatever solution we're measuring the pH of.
 
 $
-    pH &= - log_10([ce("H+")]) & [ce("H+")] &= 10^{- pH} \
-    pOH &= - log_10([ce("OH-")]) & [ce("OH-")] &= 10^{- pOH} \
+    pH &= -log([ce("H+")]) & [ce("H+")] &= 10^{-pH} \
+    pOH &= -log([ce("OH-")]) & [ce("OH-")] &= 10^{-pOH} \
     pH + pOH &= 14
 $
 
@@ -56,19 +58,19 @@ The following are the strong bases to memorize:
 
 #definition[Equilibrium constant for ionization of a weak acid][
   $
-    K_a = frac([ce("H+")][ce("A-")], [ce("HA")])
+    K_a = ([ce("H+")][ce("A-")])/[ce("HA")]
   $
 
   The negative log of $K_a$ is called $pKa$:
   $
-    pKa = - log_10 K_a
+    pKa = - log K_a
   $
 ]
 
 #theorem[Henderson-Hasselbalch equation][
   $
-    pH &= pKa + log (frac([ce("A-")],[ce("HA")])) \
-    &= pKa + log (frac(["conjugate base"], ["acid"]))
+    pH &= pKa + log ([ce("A-")]/[ce("HA")]) \
+    &= pKa + log (["conjugate base"]/["acid"])
   $
 ]
 
