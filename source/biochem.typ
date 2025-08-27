@@ -17,8 +17,8 @@ Note that when we use $log$ in this section, we mean $log_(10)$.
 $[ce("H+")]$ is the molarity of #ce("H+") in whatever solution we're measuring the pH of.
 
 $
-    pH &= -log([ce("H+")]) & [ce("H+")] &= 10^{-pH} \
-    pOH &= -log([ce("OH-")]) & [ce("OH-")] &= 10^{-pOH} \
+    pH &= -log([ce("H+")]) & [ce("H+")] &= 10^(-pH) \
+    pOH &= -log([ce("OH-")]) & [ce("OH-")] &= 10^(-pOH) \
     pH + pOH &= 14
 $
 
