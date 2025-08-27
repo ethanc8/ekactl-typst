@@ -14,5 +14,9 @@
 )[EKACTL]
 
 #pagebreak()
+#counter(heading).update(0)
+#include "biochem.typ"
+#pagebreak()
+#counter(heading).update(0)
 #include "topology.typ"
 #pagebreak()
