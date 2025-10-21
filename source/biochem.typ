@@ -276,6 +276,10 @@ $ #ce("Cu^2+ + 2e- + Zn") &--> #ce("Cu + Zn^2+ + 2e^-") \
   #defname[Quaternary structure] is multiple polypeptide chains together, held together by the same forces that create tertiary structure.
 ]
 
+#definition(title: [Hydrogen bond])[
+  An intermolecular force between a hydrogen bonded to N, O, or F and a lone pair.
+]
+
 == Thin layer chromatography, polarity
 
 #lemma[
