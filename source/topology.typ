@@ -192,7 +192,7 @@ $A times B = {(a, b) : a in A, b in B}$ is called the #defname[Cartesian product
 ]
 
 #lemma[
-  If $A$ and $B$ are finite, then the size of $B^A$ is $|B|^|A|$, the size of $B$ to the size of $A$.
+  If $A$ and $B$ are finite, then the size of $B^A$ is $|B|^(|A|)$, the size of $B$ to the size of $A$.
 ]
 
 #theorem[
@@ -220,7 +220,7 @@ $A times B = {(a, b) : a in A, b in B}$ is called the #defname[Cartesian product
   - *transitive*: $a <= b "and" b <= c implies a <= c$
   - *antisymmetric*: $a <= b "and" b <= a implies a = b$
 
-  Given a partial order $<=$, we define the partial order $>=$ so that $a >= b <=> b <= a$.
+  Given a partial order $<=$, we define the partial order $>=$ so that $a >= b <==> b <= a$.
 ]
 
 #definition(title: [Total order])[
@@ -236,7 +236,7 @@ $A times B = {(a, b) : a in A, b in B}$ is called the #defname[Cartesian product
 
   A #defname[totally ordered set] is a pair of a set and a total order for that set.
 
-  By abuse of definitions we also say that the set itself is partially/totally ordered.
+  By abuse of notation we also say that the set itself is partially/totally ordered.
 ]
 
 #definition(title: [Upper and lower bounds])[
@@ -870,7 +870,7 @@ In this class, we assume the Axiom of Choice.
 #see[10 Induced Topologies.3]
 
 #definition(title: [Defining family])[
-  A #defname[defining family] for topological space $X$ is a collection $calC$ s.t. $U subset X$ is open in $X$ iff its intersection with each $C in calC$ is open in the relative topology on $C$.
+  A #defname[defining family] for topological space $X$ is a collection $calC$ s.t. $U subset X$ is open in $X$ iff its intersection with each $C in calC$ is open in the subspace topology on $C$.
 ]
 
 #definition(title: [Open cover])[
@@ -1159,7 +1159,7 @@ In this class, we assume the Axiom of Choice.
   A space in which closed sets and disjoint single points can be separated by continuous functions.
 ]
 
-#definition(title: [Tychonhoff space ($T_(3 1/2)$)])[
+#definition(title: [Tychonoff space ($T_(3 1/2)$)])[
   A completely regular $T_1$ space.
 ]
 
@@ -1183,7 +1183,7 @@ In this class, we assume the Axiom of Choice.
   A topological space is #defname[normal] iff disjoint closed sets are separable by neighborhoods.
 ]
 
-#definition(title: [Normal Tychonhoff space ($T_4$)])[
+#definition(title: [Normal Tychonoff space ($T_4$)])[
   A normal $T_1$ space.
 
   Equivalently, a normal $T_(3 1/2)$ space.
@@ -1197,7 +1197,7 @@ In this class, we assume the Axiom of Choice.
   A space in which every subspace is normal.
 ]
 
-#definition(title: [Completely normal Tychonhoff ($T_5$)])[
+#definition(title: [Completely normal Tychonoff ($T_5$)])[
   A completely normal $T_1$ space.
 
   Equivalently, a completely normal $T_4$ space.
