@@ -993,7 +993,7 @@ In this class, we assume the Axiom of Choice.
 
 #theorem[
   In a first countable space, $x in cl(A)$ iff there is a sequence of points in $A$ that converge to $x$.
-]
+] <thm:closure-sequence>
 
 #theorem[
   If $f : X to Y$ is continuous at $x_0$ and ${x_n} to x_0$, then $f(x_n) to f(x_0)$.
@@ -1114,7 +1114,7 @@ In this class, we assume the Axiom of Choice.
 == Separated
 
 #definition(title: [Separated])[
-  $A$ and $B$ in the space $X$ are #defname[separated by neighborhoods] iff 
+  $A$ and $B$ in the space $X$ are #defname[separated] iff 
   $ A inter cl(B) = cl(A) inter B = emptyset $
   or equivalently iff there exist neighborhoods of each that do not include the other.
 ]
@@ -1197,7 +1197,7 @@ In this class, we assume the Axiom of Choice.
   The following are equivalent:
   1. $X$ is $T_2$
   2. Limits of filter bases in $X$ are unique.
-  3. The diagonal, $Delta = {(x, y) in X times X : x = y}$
+  3. The diagonal, $Delta = {(x, y) in X times X : x = y}$, is a closed set in the product space.
 ]
 
 #lemma[
@@ -1716,6 +1716,8 @@ A filter is always equal to the intersection of all the ultrafilters containing 
 #theorion-restate(filter: <thm:closure-nbhd>)
 
 #theorion-restate(filter: <cor:closure-accpt>)
+
+#theorion-restate(filter: <thm:closure-sequence>)
 
 #theorion-restate(filter: <thm:closure-net>)
 
