@@ -920,7 +920,7 @@ In this class, we assume the Axiom of Choice.
     // ---- nodes (objects)
     set-style(content: (padding: .1))
     content((0, 2), $(Z, cal(T))$,            name: "Y")
-    content((0, 0), $(X, cal(T)_"final")$, name: "X")
+    content((0, 0), $(Y, cal(T)_"final")$, name: "X")
     content((4, 0), $(X_alpha, cal(T)_alpha)$, name: "Xa")
 
     // ---- arrows
