@@ -696,7 +696,7 @@ In this class, we assume the Axiom of Choice.
 === Accumulation points
 
 #definition(title: [Accumulation point])[
-  $x$ is an #defname[accumulation point] of $A$ iff every neighborhood of $x$ contains a point of $A$ other than $x$.
+  $x$ is an #defname[accumulation point] (also called #defname[limit point] or #defname[cluster point]) of $A$ iff every neighborhood of $x$ contains a point of $A$ other than $x$.
 ]
 
 #definition(title: [Derived set])[
@@ -1487,6 +1487,12 @@ In this class, we assume the Axiom of Choice.
   4. (#defname[Cantor Intersection Property]) Every decreasing sequence of nonempty closed subsets has nonempty intersection.
 ]
 
+#theorem[
+  If $X$ is countably compact, every infinite open cover has a proper subcover.
+
+  If every infinite open cover has a proper subcover, every infinite subset has an accumulation point.
+]
+
 == Separation properties in compact spaces
 
 #see[19b Separation Properties in Compact Spaces]
@@ -1549,6 +1555,356 @@ In this class, we assume the Axiom of Choice.
   The one-point compactification of an open interval on $Reals$ is $Sphere^1$, a circle.
 
   The one-point compactification of $[a, b)$ in the real line is $[a, b]$.
+]
+
+== Stone-Čech compactification
+
+#definition(title: [Stone-Čech compactification])[
+  A #defname[Stone-Čech compactification] of a topological space $X$ is a compact Hausdorff space $beta(X)$ together with an embedding $e : X to beta(X)$ such that every bounded real-valued continuous function on $X$ has a unique continuous extension to $beta(X)$. (An #defname[embedding] is a homeomorphism of $X$ with a subspace of $beta(X)$.)
+]
+
+#theorem[
+  $X$ has a Stone-Čech compactification iff $X$ is Tychonoff ($T_(3 1/2)$).
+]
+
+#theorem[
+  Let $e : X to beta(X)$ be a Stone-Čech compactification of $X$ and let $f : X to Y$ be any continuous map from $X$ to a compact Hausdorff space. Then, $f$ has a unique continuous extension to all of $beta(X)$, i.e. there exists a function $F : beta(X) to Y$ s.t. $F compose e = f$.
+]
+
+#corollary[
+  All Stone-Čech compactifications of $X$ are homeomorphic.
+]
+
+== Paracompactness
+
+#definition(title: [Refinement])[
+  A collection of sets $calV$ is a #defname[refinement] of $calU$ iff each $V in calV$ is a subset of some $U in calU$.
+]
+
+#definition(title: [Paracompact])[
+  A space is #defname[paracompact] iff every open covering has a refinement that is a locally finite open cover.
+]
+
+#lemma[
+  The following spaces are paracompact:
+  - $Reals$
+  - The line with two origins
+    - but note that it is not Hausdorff
+]
+
+#lemma[
+  Every compact space is paracompact.
+]
+
+#definition(title: [Countably locally finite])[
+  A collection of sets is #defname[countably locally finite] iff it is a countable union of locally finite collections.
+]
+
+#theorem[
+  For a $T_3$ space $X$, the following are equivalent:
+  1. $X$ is paracompact.
+  2. Every open covering of $X$ has a countable locally finite open refinement which covers $X$.
+  3. Every open covering of $X$ has a locally finite refinement that covers $X$ (the sets need not be open).
+  4. Every open covering of $X$ has a locally finite closed refinement that covers $X$.
+]
+
+#corollary[
+  A Lindelöf $T_3$ space is paracompact.
+]
+
+#lemma[
+  Let $A$ be a closed subset of a paracompact space. Let $calU$ be a collection of open subsets of $X$ covering $A$. Then, there is a locally finite open refinement of $calU$ that covers $A$.
+]
+
+#corollary[
+  A closed subset of a paracompact space is paracompact.
+]
+
+#theorem[
+  A paracompact Hausdorff space is normal, and thus $T_4$.
+]
+
+== Partitions of unity
+
+#definition(title: [Support])[
+  The support of $f : X to Reals$ is the subset of the function's domain solely containing the elements that are not mapped to zero:
+  $ "supp"(f) := {x in X : f(x) != 0} $
+]
+
+#definition(title: [Partition of unity])[
+  A #defname[partition of unity] subordinate to the open cover $calU$ is a family of continuous functions $f_U : X to [0, 1]$, each associated with a $U in calU$, such that:
+  - the support of $f_U$ is contained in $U$
+  - each point has a neighborhood on which only finitely many of the $f_U$ are nonzero
+  - for every $x in X$:
+  $ sum_(U in calU) f_U (x) = 1 $
+]
+
+#theorem[
+  Given any open cover $calU$ of a paracompact Hausdorff space $X$, there is a partition of unity subordinate to $U$.
+]
+
+= Metrizability
+
+== Metrizability
+
+#theorem[
+  - Every subspace of a metric space is metrizable.
+  - Countable products of metrizable spaces are metrizable.
+  - All metric spaces are $T_)5$.
+  - Metric spaces are first countable.
+  - Metric spaces are second countable iff they are separable.
+  - In a metric space, compactness, sequential compactness, and countable compactness are equivalent. Each of these implies second countability.
+    - Second countability does not imply any of the compactness properties.
+]
+
+#theorem(title: ["A. H. Stone"])[
+  Every metrizable space is paracompact.
+]
+
+#definition(title: [$G_delta$])[
+  A set is #defname[$G_delta$] iff it is a countable intersection of open sets.
+
+  - open sets are trivially $G_delta$
+  - closed sets in metric spaces are $G_delta$.
+  - A single point in a first countable Hausdorff space is $G_delta$.
+]
+
+#definition(title: [$F_sigma$])[
+  A set is #defname[$F_sigma$] iff it is a countable union of closed sets.
+
+  - closed sets are trivially $G_delta$.
+  - open sets in metric spaces are $F_sigma$.
+]
+
+== Total boundedness
+
+#definition(title: [Totally bounded])[
+  A metric space is #defname[totally bounded] iff for each $epsilon > 0$ the space is a finite union of sets of diameter at most $epsilon$.
+
+  Totally bounded spaces are bounded.
+]
+
+#lemma[
+  $X$ is totally bounded iff every sequence contains a Cauchy subsequence.
+]
+
+#lemma[
+  A totally bounded metric space is separable.
+]
+
+#definition(title: [Complete metric space])[
+  A metric space is #defname[complete] iff every Cauchy filter converges.
+]
+
+#theorem[
+  A metric space is compact iff it is complete and totally bounded.
+]
+
+#corollary[
+  Subsets of $Reals^n$ are compact iff they are closed and bounded.
+]
+
+#theorem(title: [Lebesgue Number Lemma])[
+  Let $calU$ be an open covering of a compact metric space. Then, there exists a number $lambda > 0$, called the #defname[Lebesgue number] of the cover, s.t. if $A$ is a subset of $X$ with diameter at most $lambda$, then $A$ is contained in some $U in calU$.
+]
+
+#corollary[
+  Every continuous function from a compact metric space to a metric space is uniformly continuous.
+]
+
+== Metrization theorems
+
+#theorem(title: [Smirnov-Nagata Metrization Theorem])[
+  A necessary and sufficient condition that a topological space be metrizable is that it be a $T_3$ space with a countable locally finite base.
+]
+
+#theorem(title: [Urysohn's Metrization Theorem])[
+  A second-countable $T_3$ space is metrizable. 
+]
+
+= Density and sparsity
+
+#definition(title: [Dense set])[
+  A subset $A$ of a topological space $X$ is a set that meets any of the following equivalent conditions:
+  - $cl(A) = X$
+  - $(X - A) ior$ is empty
+  - Every point in $X$ either belongs to $A$ or is a limit point of $A$
+  - For every $x in X$, every neighborhood $U$ of $x$ intersects $A$
+  - $A$ intersects every nonempty open subset of $X$
+
+  If $calB$ is a base for $X$, then the following conditions are equivalent:
+  - For every $x in X$, every basic neighborhood $B in calB$ of $x$ intersects $A$.
+  - $A$ intersects every nonempty $B in calB$
+]
+
+#definition(title: [Nowhere dense])[
+  A subset $A$ of a topological space is #defname[nowhere dense] in the space iff $overline(A) degree = emptyset$.
+]
+
+#lemma[
+  In complete metric spaces and locally compact $T_2$: 
+  - the intersections of countable collections of dense open sets are dense.
+  - the countable unions of nowhere dense closed sets are nowhere dense. 
+]
+
+== Categories
+
+#see[23b Categories]
+
+#definition(title: [First category])[
+  A set is #defname[first category] or #defname[meager] if it is a countable union of nowhere dense sets.
+
+  It is first category in $X$ if it is a countable union of sets that are nowhere dense in $X$.
+]
+
+#definition(title: [Second category])[
+  A set is #defname[second category] iff it is not first category.
+]
+
+#lemma[
+  Countable unions of first category sets are first category.
+]
+
+#theorem(title: [Baire Category Theorem])[
+  Complete metric spaces and locally compact $T_2$ spaces are second category in themselves.
+]
+
+#lemma[
+  The reals are second category. The rationals are first category, while the irrationals are second category.
+]
+
+#theorem[
+  Let $f : Reals to Reals$ be continuous on a dense subset. Then the set of discontinuities of $f$ is first category.
+]
+
+#corollary[
+  There is no function that is continuous at rationals but discontinuous at irrationals.
+
+  There is a function that is discontinuous at rationals and continuous at irrationals:
+  $ f(x) := cases(
+    0 &: #[$x$ irrational],
+    1/q &: #[$x = p/q$ in lowest terms],
+  ) $
+]
+
+#theorem[
+  Let $f_n : Reals to Reals$ be a sequence of continuous functions converging pointwise to some function $f(x)$. Then the set of discontinuities of $f(x)$ is first category.
+]
+
+= Function spaces
+
+== Pointwise convergence
+
+#definition(title: [Product topology on $Y^X$])[
+  Let $Y$ be a topological space, and $X$ be a set. Then the product topology on $Y^X$ is the product topology on
+  $ product_(x in X) Y $
+]
+
+#definition(title: [Topology of pointwise convergence])[
+  Let $F$ be a subset of $Y^X$ (the set of all functions $X to Y$), where $Y$ is a topological space.
+
+  The #defname[topology of pointwise convergence] is the topology in which a sequence of functions $f_n$ converges to $f$ iff for each $x in X$ the sequence $f_n (x)$ converges to $f(x)$ in $Y$. Equivalently, sequences converge iff they converge pointwise.
+
+  It is also called the #defname[point-open topology], since the set of all
+  $ S(x, U) := {f in Y^X : f(x) in U} $
+  for each $x in X$ and $U$ open in $Y$, forms a subbase for the topology.
+
+  This topology is the subspace topology of $F$ from $Y^X$ endowed with the product topology.
+]
+
+== Compact-open topology
+
+#see[25 The Compact-Open Topology]
+
+#definition(title: [Evaluation map])[
+  The #defname[evaluation map], $E(f, x) : F times X to Y$, is defined as 
+  $ E(f, x) := f(x) $
+]
+
+#lemma[
+  The evaluation map, is:
+  - continuous in the first argument if $F$ has the point-open topology
+  - continuous in the second argument if $F$ is a subset of the continuous functions from $X$ to $Y$
+
+  However, the evaluation map is not continuous in both variables together.
+]
+
+#definition(title: [Compact-open topology])[
+  The #defname[compact-open topology] is the topology on $F$ generated by the $⟨K, U⟩$ where $K$ is compact in $X$ and $U$ is open in $Y$.
+]
+
+
+
+=== Algebra
+
+#definition(title: [Ring])[
+  Something that you can do:
+  - add two elements of the ring
+  - multiply two elements of the ring
+  - multiply an element of the ring with a scalar
+]
+
+#definition(title: [Algebra])[
+  Given rings $A$ and $B$, if there exists $f : A to B$, $B$ is a #defname[algebra] on $A$.
+]
+
+#definition(title: [Subalgebra])[
+  A subset of an algebra that is closed under:
+  - addition
+  - multiplication
+  - scalar multiplication
+]
+
+== Stone-Weierstraß Approximation Theorem
+
+#see[27 Stone-Weierstraß Approximation Theorem]
+
+#lemma[
+  There exists a sequence ${p_n (t)}$ of polynomials that converges uniformly to $sqrt(t)$ on the unit interval.
+]
+
+#lemma[
+  $ |a + b| + a + b = 2 max(a, b) \
+    min(a, b) = a + b - max(a, b)  $
+]
+
+#definition(title: [$C^* (X)$])[
+  $C^* (X)$ is the set of all bounded continuous real-valued functions on $X$. The metric on $C^* (X)$ is the #defname[supremum metric]:
+  $ d(f, g) := sup_(x in X) | f(x) - g(x) | $
+
+  $C^* (X)$ is a normed algebra over the real numbers. You can add and multiply its members.
+]
+
+#theorem(title: [Stone-Weirstraß Approximation Theorem])[
+  Let $X$ be a compact Hausdorff space. Then, any closed subalgebra of $C^* (X)$ that contains constants and separates points must be all of $C^* (X)$.
+]
+
+= Functional analysis
+
+== Topological vector space
+
+We only care about the fields $F = Reals$ and $F = Complex$, with their standard topologies.
+
+#definition(title: [Topological vector space])[
+  A vector space s.t. addition and scalar multiplication are continuous functions.
+]
+
+#definition(title: [Normed vector space])[
+  A vector space together with a norm $|| · || : X to Reals$ that satisfies the following properties:
+  1. *Positive*: $|| x || >= 0$
+  2. *Definite*: $|| x || = 0 <==> x = 0$
+  3. *Scaling*: $|| alpha x || = |alpha| ||x||$ for all scalars $alpha$
+  4. *Triangle Inequality*: $|| x + y || <= ||x|| + ||y|| $
+
+  $d(x, y) := || x - y ||$ is a metric, which also scales. Thus, all normed spaces are metric spaces.
+
+  All normed vector spaces are topological vector spaces.
+]
+
+#definition(title: [Bonoch space])[
+  A complete normed space.
+
+  All finite-dimensional normed spaces are Bonoch.
 ]
 
 = Past homework problems

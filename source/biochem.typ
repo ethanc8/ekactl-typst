@@ -4,6 +4,8 @@
   title: "Biochemistry"
 )
 
+#import "@preview/xarrow:0.3.1": xarrow
+
 #import "@preview/alchemist:0.1.8": *
 
 #let pH = "pH"
@@ -293,4 +295,161 @@ $ #ce("Cu^2+ + 2e- + Zn") &--> #ce("Cu + Zn^2+ + 2e^-") \
   $ A = epsilon l c $
 ]
 
+// TODO
+
+= Enzymes
+
+#definition(title: [Catalyst])[
+  A substance that increases the rate of a chemical reaction and is not consumed by the reaction.
+]
+
+#definition(title: [Enzyme])[
+  A biological macromolecule that is a catalyst.
+]
+
+#definition(title: [Substrate])[
+  The reactant in an enzyme-catalyzed reaction.
+
+  The substrate binds to the enzyme at the #defname[active site].
+]
+
+== Cofactors
+
+#definition(title: [Cofactor])[
+  Something that the enzyme needs to bind to in order to work.
+]
+
+#definition(title: [Coenzyme])[
+  A cofactor which is an organic molecule, loosely bound to the enzyme.
+]
+
+#definition(title: [Prosthetic group])[
+  A cofactor tightly bound to the enzyme, which stays permanently attached.
+]
+
+#definition(title: [Holoenzyme])[
+  The enzyme with all of its cofactors.
+]
+
+#definition(title: [Apoenzyme])[
+  The enzyme without its cofactors.
+]
+
+== Types of enzymes
+
+#definition(title: [Oxidoreductase])[
+  Catalyzes redox reactions.
+]
+
+#definition(title: [Transferase])[
+  Catalyzes the transfer of a functional group from one molecule to another.
+]
+
+#definition(title: [Hydrolase])[
+  Catalyzes hydrolysis (breaking bonds by reacting with water)
+]
+
+#definition(title: [Lyase])[
+  Catalyzes the breaking of bonds without water nor oxidation
+]
+
+#definition(title: [Isomerase])[
+  Catalyzes the rearrangement of the atoms in the molecule.
+]
+
+#definition(title: [Ligase])[
+  Catalyzes the joining of molecules.
+]
+
+== Chemical reaction kinetics
+
+#definition(title: [Rate])[
+  The #defname[rate] or #defname[velocity] of a chemical reaction with one product is the change in concentration of the product over the change in time.
+
+  Given a balanced chemical reaction with two reactants and two products:
+  $ #ce("$a$A + $b$B -> $p$P + $q$Q") $
+
+  #let dt = $d t$
+
+  the rate is defined as:
+  $ v = -1/a (d"[A]")/dt = -1/b (d"[B]")/dt = 1/p (d"[P]")/dt = 1/q (d"Q")/dt $
+]
+
+#definition(title: [Rate constant, rate equation])[
+  The #defname[rate constant] $k$ of a reaction is inherent to the reaction and is related to its speed.
+
+  Assume a reaction #ce("A -> B").
+
+  A zero-order reaction has a constant rate:
+  $ v = k $
+
+  A first-order reaction has a linearly increasing rate:
+  $ v = k"[A]" $
+
+  A second-order reaction has a quadratically increasing rate:
+  $ v = k"[A]"^2 $ 
+]
+
+== Enzyme kinetics
+
+#definition(title: [Enzyme-catalyzed reaction])[
+  A reaction:
+
+  #ce("E + S <->[$k_1$][$k_3$] ES ->[$k_2$] E + P")
+
+  $"E"$ represents the free enzyme, $"E"_"T"$ represents the total enzyme, $"S"$ represents the substrate, and $"P"$ represents the product.
+]
+
+#definition(title: [Michaelis constant])[
+  The #defname[Michaelis constant] is defined as:
+  $ K_m := (k_2 + k_3)/(k_1) $
+
+  A low $K_m$ causes a quick reaction, while a high $K_m$ causes a slower reaction.
+]
+
+#definition(title: [$K_"cat"$])[
+  $ k_"cat" := (v_"max")/["E"] $
+]
+
+$k_"cat"$ and $K_m$ are both inherent to each enzyme, and are invariant with respect to concentration, etc.
+
+$(k_"cat")/(K_m)$ is the best measure of enzyme efficiency.
+
+#theorem(title: [Michaelis-Menton equation])[
+  The maximum velocity of an enzyme-catalyzed reaction is
+  $ v_max = k_2 ["E"_"T"] $
+
+  The velocity of an enzyme-catalyzed reaction is given by the #defname[Michaelis-Menton equation]:
+  $ v = (v_max "[S]")/(K_m + "[S]") $
+
+  The equivalent, linear #defname[Lineweaver-Burk equation] is:
+  $ 1/v = (K_m)/(v_max "[S]") + 1/v_max $
+
+  Note also that the $x$-intercept of $1/"[S]"$ is equal to $-1/K_m$.
+]
+
+== Enzyme regulation
+
+There are three types of enzyme regulation:
+- genetic regulation
+- covalent modification (phosphorylation)
+- allosteric regulation
+
+// TODO
+
+== Enzyme inhibition
+
+=== Reversible inhibitors
+
+$ #ce("E") & #ce("+") & #ce("S") & #ce("<=>") & #ce("ES") & #ce("->") & #ce("E + P") \
+  + \
+  #ce("I") \
+  harpoons.tlbr \
+  #ce("EI")  $
+
+$ harpoons.rtlb^(x) $
+
+// noncompetitive means mixed
+
+// TODO
 
