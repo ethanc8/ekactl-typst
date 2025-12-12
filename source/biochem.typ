@@ -530,7 +530,9 @@ There are three types of enzyme regulation:
 ]
 
 #definition(title: [Exergonic reaction])[
-  A reaction that net releases free energy (and thus has negative $Delta G$).
+  A reaction that net releases free energy (and thus has negative $Delta G$). 
+
+  Note that $G$ represents the free energy of the system containing solely the reactants and products.
 ]
 
 #definition(title: [Endergonic reaction])[
