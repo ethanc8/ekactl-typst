@@ -229,9 +229,9 @@ Carbons are not shown, and hydrogens bonded to carbons are not shown.
 == Redox
 
 #definition(title: [Oxidation and reduction])[
-  #defname[Oxidation] is a process in which a substance loses electrons.
+  #defname[Oxidation] is a process in which a substance loses electrons (or loses hydrogen).
 
-  #defname[Reduction] is a process in which a substance gains electrons.
+  #defname[Reduction] is a process in which a substance gains electrons (or gains hydrogen).
 
   Oxidation and reduction must occur together.
 ]
@@ -240,6 +240,8 @@ Carbons are not shown, and hydrogens bonded to carbons are not shown.
   The hypothetical charge of an atom if all of its bonds to other atoms were fully ionic.
 
   In covalent bonds, we assign the electrons to the more electronegative atom.
+
+  For a carbon, it is more oxidized if it has more bonds to oxygen. If a carbon has four bonds to oxygen it is the most oxidized possible.
 ]
 
 #lemma[
@@ -439,17 +441,246 @@ There are three types of enzyme regulation:
 
 == Enzyme inhibition
 
+
+#definition(title: [Phosphorylation])[
+  A type of #defname[covalent modification] where the inactive enzyme can be activated by adding a phosphate group and deactivated by removing a phosphate group.
+]
+
+#definition(title: [Allosteric regulation])[
+  
+]
+
+=== Irreversible inhibitors
+
+#definition(title: [Irreversible inhibitor])[
+  The inhibitor permanently covalently-bonds to the enzyme.
+]
+
+
 === Reversible inhibitors
 
-$ #ce("E") & #ce("+") & #ce("S") & #ce("<=>") & #ce("ES") & #ce("->") & #ce("E + P") \
-  + \
-  #ce("I") \
-  harpoons.tlbr \
-  #ce("EI")  $
+#definition(title: [Competitive inhibition])[
+  The inhibitor pretends to be the substrate and binds to the active site:
+  #image("image.png")
 
-$ harpoons.rtlb^(x) $
+  #image("image-2.png")
+
+  $v_max$ does not change, since at high substrate concentrations the substrate will outcompete the inhibitor.
+
+  The effective $K_m$ increases since at low substrate concentrations the inhibitor outcompetes the substrate, so the inactive substrates have no enzyme affinity.
+
+  #image("image-1.png")
+]
+
+#definition(title: [Uncompetitive inhibition])[
+  The inhibitor binds to some inhibition site on the enzyme, but the inhibition site can only be bound to when the enzyme has already bound a substrate:
+  
+  #image("image-4.png")
+
+  Since ES only forms under high substrate concentration, and once inhibited cannot form product, it lowers the $v_max$. 
+
+  The $K_m$ is reduced because the ES-I complex reduces the concentration of the ES complex, which causes a shift to form more ES. This results in less free enzyme, so the remaining enzyme has a greater affinity.
+
+  #image("image-5.png")
+]
+
+#definition(title: [Noncompetitive (mixed) inhibition])[
+  The inhibitor can inhibit either the enzyme or the substrate, and the inhibited enzyme can still bind to the substrate:
+  #image("image-6.png")
+
+  $v_max$ is reduced since at high substrate concentrations, still a lot of the enzyme is inhibited. $K_m$ does not change since the active enzymes still have the same $K_m$:
+  #image("image-7.png")
+]
 
 // noncompetitive means mixed
 
 // TODO
 
+= Metabolism
+
+#definition(title: [Catabolic pathway])[
+  A pathway that releases energy by breaking down complex molecules into simpler compounds.
+]
+
+#definition(title: [Anabolic pathway])[
+  A pathway that consumes energy to build complex molecules from simpler compounds.
+]
+
+#axiom(title: [First law of thermodynamics])[
+  Energy can be transferred and transformed, but not created nor destroyed.
+]
+
+#axiom(title: [Second law of thermodynamics])[
+  Every energy transformation increases the entropy of the universe.
+]
+
+#definition(title: [Spontaneous])[
+  A spontaneous process can occur without adding energy to the system. A nonspontaneous process requires energy.
+]
+
+#definition(title: [Free energy])[
+  #defname[Free energy], $G$, is the portion of a system's energy available to perform work when the temperature throughout the system is uniform.
+]
+
+#theorem[
+  The (Gibbs) free energy $G$ in a system is related to the total energy/enthalpy $H$, entropy $S$, and temperature $T$ by:
+  $ Delta G = Delta H - T Delta S $
+
+  In order for a system to be spontaneous, $Delta G$ must be negative; the system must either give up energy (decrese $H$) or give up order (increase $S$).
+]
+
+#definition(title: [Exergonic reaction])[
+  A reaction that net releases free energy (and thus has negative $Delta G$).
+]
+
+#definition(title: [Endergonic reaction])[
+  A reaction that requires an input of energy (and thus has positive $Delta G$).
+]
+
+== Adenosine triphosphate
+
+ATP can provide the energy needed for a nonspontaneous reaction to become spontaneous.
+
+It is composed of the nitrogenous base adenine, the surgar ribose, and a chain of three phosphate groups.
+
+#image("image-9.png")
+
+The hydrolysis of ATP releases 7.3 kcal/mol ATP:
+
+$ #ce("ATP + H_2O ->") "P"_i #ce("+ ADP") $
+
+== Carbohydrates
+
+#definition(title: [Carbohydrate])[
+  A molecule of the form
+  $ "C"_n ("H"_2 "O")_n  $
+
+  Types of carbohydrates:
+  - monosaccharides (sugar monomers)
+  - oligosaccharides (di-, trisaccharides, etc)
+  - polysaccharides (starch)
+  - cellulose
+]
+
+#definition(title: [Glucose])[
+  The most abundant monosaccharide in the body, which is part of every disaccharide.
+]
+
+#definition(title: [Starch])[
+  A polysaccharide with α-glycosidic bonds.
+
+  #image("image-14.png")
+
+  Starch is the energy reserve of plants, used to store glucose when it is not needed.
+]
+
+#definition(title: [Glycogen])[
+  A highly branched polysaccharide, the energy reserve of animals.
+]
+
+#definition(title: [Cellulose])[
+  A polysaccharide with β-glycosidic bonds.
+
+  #image("image-15.png")
+]
+
+=== Carbohydrate metabolism
+
+#definition(title: [Amylase])[
+  An enzyme that catalyzes the hydrolysis of starch into sugars.
+
+  Example:
+  $ #ce("starch <=>[β amylase][H2O] maltose") $
+]
+
+#definition(title: [α-glucosidase])[
+  An enzyme that catalyzes the hydrolysis of oligosaccharides into sugars.
+
+  Example:
+  $ #ce("maltose <=>[α glucosidase][H2O] glucose") $
+]
+
+#image("image-16.png")
+
+== Substrate-level phosphorylation
+
+#definition(title: [Substrate-level phosphorylation])[
+  Adding a phosphate to ATP in order to form ADP, using directly the 
+]
+
+== Glycolysis
+
+$ "Glucose" + 2 #ce("NAD+") + 2 #ce("ADP") + 2 "P"_i --> \
+  2 "Pyruvate" + 2 #ce("NADH") + 2 #ce("H+") + 2 "ATP" + 2 #ce("H2O") $
+
+Glycolysis happens in the cytosol.
+
+#image("image-12.png")
+
+The irreversible reactions are:
+
+\#1 $#ce("Glucose + ATP ->[Hexokinase] ADP +") "Glucose-6-phosphate"$
+
+\#3 $"Fructose-6-phosphate" #ce("+ ATP ->[Phosphofructokinase]ADP + ") "Fructose-1,6-biphosphate"$ (the committed step)
+
+\#10 $#ce("Phosphoenolpyruvate + ADP ->[Pyruvate kinase] ATP + Pyruvate")$
+
+Note that step \#4 splits the fructose-1,6-biphosphate into two molecules! Each of them go through the ext steps to make pyruvate.
+
+After the first step, before the committed step, it can go into:
+- Pentose phosphate pathway: generate NADPH and ribose-5-phosphate
+- Glycogenesis: Synthesize glycogen
+- Glycogenolysis: Convert glycogen back to glucose-1-phosphate via glucose-6-phosphate
+- Glycolysis: Convert glucose to pyruvate
+
+== Fermentation
+
+It happens to pyruvate when there's no oxygen.
+
+$ #ce("Pyruvate + NADH ->[Lactate dehydrogenase] NAD+ + Lactate") $
+
+It's a redox reaction!
+
+The #ce("NAD+") can be used for more glycolysis.
+
+== Link step and Krebs (citric acid) cycle
+
+#definition(title: [Link step])[
+  $ #ce("Pyruvate + NAD+ ->[Pyruvate dehydrogenase]") \ "NADH" + "Acetyl-CoA" + #ce("CO2") $
+]
+
+The pyruvate goes from the cytosol to the mitochondrial matrix, then the link step happens.
+
+After the link step, it's ready to enter the Krebs cycle.
+
+#image("image-13.png")
+
+#definition(title: [Acetyl group])[
+  #ce("CH3CO")
+
+  There is a double bond between the C and the O.
+]
+
+Fatty acids and amino acids can also go into the Krebs cycle.
+
+== Oxidative phosphorylation
+
+This uses the energy from #ce("NADH") and #ce("FADH2") to phosphorylate the ATP.
+
+=== Electron transport chain
+
+#image("image-10.png")
+
+This uses the energy from the "electron acceptors", #ce("NADH") and #ce("FADH2"), to pump protons into the intermembrane space.
+
+The electrons flow into the oxygen due to the voltage gradient. There are enzymes (the redox carriers) with different voltages that cause the electrons to flow towards the oxygen. The electrons reaching each of the redox carriers cause a change in the electric field, which pumps the protons into the intermembrane space.
+
+[The notes about the redox carriers are not necessary for the test but help to understand it.]
+
+=== Chemiosmosis
+
+#image("image-11.png")
+
+The protons want to go back to the mitochondrial matrix for two reasons:
+- concentration gradient - wants same concentration on both sides
+- voltage gradient
