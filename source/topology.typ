@@ -1801,7 +1801,7 @@ In this class, we assume the Axiom of Choice.
 ]
 
 #definition(title: [Topology of pointwise convergence])[
-  Let $F$ be a subset of $Y^X$ (the set of all functions $X to Y$), where $Y$ is a topological space.
+  Let $F$r be a subset of $Y^X$ (the set of all functions $X to Y$), where $Y$ is a topological space.
 
   The #defname[topology of pointwise convergence] is the topology in which a sequence of functions $f_n$ converges to $f$ iff for each $x in X$ the sequence $f_n (x)$ converges to $f(x)$ in $Y$. Equivalently, sequences converge iff they converge pointwise.
 
@@ -1899,12 +1899,91 @@ We only care about the fields $F = Reals$ and $F = Complex$, with their standard
   $d(x, y) := || x - y ||$ is a metric, which also scales. Thus, all normed spaces are metric spaces.
 
   All normed vector spaces are topological vector spaces.
+
+  A #defname[pseudonorm] satisfies the above except definiteness.
 ]
 
 #definition(title: [Bonoch space])[
-  A complete normed space.
+  A complete normed vector space.
 
   All finite-dimensional normed spaces are Bonoch.
+]
+
+
+
+= Dimension theory
+
+#see[29 Dimension Theory]
+
+#definition(title: [Order])[
+  A collection $calC$ of substs of a space $X$ has #defname[order] $n$ iff some point in $X$ is contained in $n$ of the sets, but no point is contained in more than $n$ of the sets.
+]
+
+#definition(title: [Topological dimension])[
+  The #defname[topological dimension] or #defname[covering dimension] of $X$ is the smallest $N$ for which there is a fixed integer $N$ such that every open covering of $X$ has an open refinement that is of order at most $N + 1$.
+
+  A set with a finite topological dimension is #defname[finite dimensional]. Otherwise, its topological dimension is defined to be infinite.
+]
+
+#lemma[
+  If $Y$ is a closed subset of $X$, then the dimension of $Y$ is at most the dimension of $X$.
+]
+
+#lemma[
+  The topological dimension of a topological vector space is the same as the dimension (linalg) of the vector space.
+]
+
+#lemma[
+  Let $Y$ be a closed subset of $X$ with $dim Y <= m$. Then, any open cover $calC$ of $X$ can be refined to an open cover $calC'$ such that ${U inter Y : U in calC'}$ has order at most $m + 1$.
+]
+
+#lemma[
+  Let $X = Y union Z$ where $Y$ and $Z$ are closed in $X$, with dimensions $y$ and $z$ respectively. Then, $ dim X = max(z, y) $
+]
+
+#lemma[
+  If $X$ is a compact metric space, then $X$ has dimension at most $m$ iff for each $epsilon > 0$ there is a finite covering of $X$ by sets of diameter at most $epsilon$ with order at most $m + 1$.
+]
+
+== Examples
+#lemma[
+  The Cantor set has dimension 0.
+
+  The closed line segment $[a, b]$ has dimension 1.
+
+  A compact subset of $Reals^2$ has dimension at most 2.
+]
+
+#definition(title: [Standard topology on a graph])[
+  The standard topology on a graph is the topology where each edge is homeomorphic to $[0, 1]$ and a set is open iff its intersection with each edge is open in that edge. Here, nodes are closed and not open; open sets need to contain the interior of some edge and not end on nodes.
+
+  This topology is 1-dimensional.
+]
+
+== Manifold
+
+#definition(title: [$n$-Manifold])[
+  A second countable Hausdorff space where each point has a neighborhood homeomorphic to $Reals^n$.
+]
+
+#theorem[
+  All $n$-manifolds have at most $n$ dimensions.
+]
+
+
+== Embedding
+
+#definition()[
+  A set of points in $Reals^3$ is in #defname[general posotion] iff
+  - no two are identical
+  - no three are collinear
+  - no four are coplanar
+
+  This extends to $Reals^n$ in the obvious manner.
+]
+
+#lemma[
+  Every set of points in the curve $t -> (t, t^2, t^3)$ are in general position. This extends to arbitrarily many dimensions.
 ]
 
 = Past homework problems
