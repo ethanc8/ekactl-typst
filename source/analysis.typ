@@ -769,10 +769,167 @@ Now we need to prove more lemmas:
 
 == Infinite limits
 
+#see[16 Infinite Limits]
+
+#definition(title: [Diverging to infinity])[
+  A sequence #defname[diverges to $+infinity$] iff for any $M in Reals$ there is an $N$ s.t. for all $n >= N$ then $x_n >= M$.
+
+  A sequence #defname[diverges to $-infinity$] iff for any $M in Reals$ there is an $N$ s.t. for all $n <= N$ then $x_n <= M$.
+]
+
+#theorem[
+  An unbounded increasing sequence diverges to $+infinity$. An unbounded decreasing sequence diverges to $-infinity$.
+]
+
+#definition[
+  Let ${x_n}$ be a sequence.
+
+  $limsup x_n = +infinity$ iff ${x_n}$ diverges to $+infinity$.
+
+  $liminf x_n = -infinity$ iff ${x_n}$ diverges to $-infinity$.
+]
+
 == Cauchy sequences
+
+#definition(title: [Cauchy sequence])[
+  A sequence ${x_n}$ is called #defname[Cauchy sequence] iff for every $epsilon > 0$, there exists $N$ s.t. for all $m, n > n$, $|x_n - x_m| < epsilon$.
+
+  In short, beyond a certain term, all the following terms are arbitrarily close.
+]
+
+#theorem[
+  Every Cauchy sequence is bounded.
+]
+
+#theorem[
+  A sequence of reals converges iff it is a Cauchy sequence.
+]
 
 = Series
 
+== Series
+
+#definition(title: [Series])[
+  Given a sequence ${x_n}$, the object
+
+  $ sum_(n = 1)^infinity x_n $
+
+  is called an #defname[infinite series].
+
+  Given a series $display(sum_(n = 1)^infinity x_n)$, define its #defname[$k^"th"$ partial sum] by
+
+  $ s_k = sum_(n=1)^k x_n := x_1 + x_2 + dots.c + x_n. $
+
+  Since this sum is finite it is a real number. Additionally, we can recursively define this sum as
+
+  $ s_1 &:= x_1 \
+  s_(k + 1) &:= s_k + x_(k + 1). $
+
+  A series #defname[converges] iff its sequence of partial sums converges, and it converges to the same value as its sequence of partial sums. It is considered to be equal to said value.
+
+  Series with different starting indices are defined in the obvious way:
+  $ sum_(n = a)^infinity x_n := sum_(n=1)^infinity x_(n + a - 1) $
+]
+
+== Basic convergence tests
+
+#theorem(title: [$n^"th"$ term test for divergence])[
+  If $sum x_n$ converges, then $x_n to 0$.
+
+  Equivalently, if $x_n to.not 0$, $sum x_n$ diverges.
+]
+
+#theorem[
+  Let $sum x_n = x$ and $sum y_n = y$. Then, $sum (x_n + y_n) = x + y$.
+
+  For any $c in Reals$, $sum (c x_n) = c x$.
+]
+
+== Absolute convergence
+
+#see[19 Absolute Convergence]
+
+#lemma[
+  If $x_n >= 0$ for all $n$, then $sum x_n$ converges iff the sequence of partial sums is bounded above. Furthermore, each partial sum is less than or equal to the sum.
+]
+
+#definition(title: [Absolute convergence])[
+  Iff $sum abs(x_n)$ converges, then $sum x_n$ #defname[absolutely converges]. If $sum abs(x_n)$ diverges, but $sum x_n$ converges, then $sum x_n$ #defname[conditionally converges].
+]
+
+#theorem[
+  If a series converges absolutely, it converges.
+]
+
+#theorem(title: [Comparison test for positive series])[
+  Let $sum x_n$ and $sum y_n$ be series with $0 <= x_n <= y_n$ for all $n$. Then:
+  1. If $sum y_n$ converges, then $sum x_n <= sum y_n$ ($sum x_n$ converges).
+  2. If $sum x_n$ diverges, so does $sum y_n$.
+]
+
+#corollary[
+  $display(sum_(n=1)^infinity 1/n^p)$ converges iff $p > 1$.
+]
+
+== Ratio test and root test
+
+#theorem(title: [Ratio test])[
+  Let $sum x_n$ be a series of nonzero terms. Suppose that
+  $ L := lim_(n to infinity) abs(x_(n + 1))/abs(x_n) $
+  exists. Then, 
+  - If $L < 1$, $sum x_n$ converges absolutely.
+  - If $L > 1$, $sum x_n$ diverges.
+  - If $L = 1$, the test gives no information.
+]
+
+#theorem(title: [Root test])[
+  Let $sum x_n$ be a series and $L := limsup root(n, abs(x_n))$ (which may be infinite). Then,
+  - If $L < 1$, $sum x_n$ converges absolutely.
+  - If $L > 1$, $sum x_n$ diverges.
+  - If $L = 1$, the test gives no information.
+]
+
+== Alternating series
+
+#see[20 Alternating Series]
+
+#theorem(title: [Alternating series test])[
+  Let $x_n to 0$ be monotone decreasing. Then, $sum (-1)^n x_n$ converges.
+]
+
+#theorem[
+  Let $sum x_n$ be an absolutely convergent series converging to $L$. Let $sigma : Naturals to Naturals$ be a bijection. Then, $sum x_(sigma n)$ is also absolutely convergent and converges to $L$. 
+
+  In short, if the series is absolutely convergent, we can rearrange the terms and the sum is the same.
+]
+
+#theorem(title: [Alternating Series Rearrangement Theorem])[
+  Let $sum x_n$ be a series that satisfies the alternating series test but which is not absolutely convergent. Then, for any $L in Reals$ there is a rearrangement of the series that sums to $L$.
+]
+
+== Multiplying series
+
+#definition(title: [Cauchy product])[
+  The #defname[Cauchy product] of $sum a_n$ and $sum b_n$ is defined as
+  $ sum_(k=1)^n a_n b_(n + 1 - k). $
+
+  Essentially, we collect the terms of the product of $sum a_n$ with $sum b_n$ in diagonal strips when the terms are arranged in a grid.
+]
+
+#theorem(title: [Mertens' theorem])[
+  Let $sum a_n to A$ and $sum b_n to B$. Then if at least one of these is absolutely convergent, then $sum c_n to A B$, where $sum c_n$ is the Cauchy product of $sum a_n$ and $sum b_n$.
+
+  Additionally, if both converge absolutely, so does the sum of $c_n$s.
+]
+
+== Power series
+
+#definition(title: [Power series])[
+  Given $x_0 in Reals$ and a sequence $a_n$, we can create the #defname[power series], a function of $x$:
+  $ sum_(n = 0)^infinity a_n (x - x_0)^n. $
+
+  A power series #defname[converges] iff there exists $x != x_0$ that makes the series converge. If $x = x_0$ makes the series converge, then the series converges for any $x$.
+]
 
 #if(not is-previewing) [
 
