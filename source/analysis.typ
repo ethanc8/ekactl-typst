@@ -930,6 +930,92 @@ Now we need to prove more lemmas:
 
   A power series #defname[converges] iff there exists $x != x_0$ that makes the series converge. If $x = x_0$ makes the series converge, then the series converges for any $x$.
 ]
+// TODO
+
+= Limits and continuity
+
+== Limits
+
+#definition(title: [Accumulation point])[
+  Let $S$ be a set. $x$ is a #defname[accumulation point] of $S$ iff every ball $B(x, epsilon)$ contains a point of $S$ other than $x$.
+]
+
+#lemma[
+  $x$ is an accumulation point of $S$ iff there is a sequence of points in $S - {x}$ converging to $x$.
+]
+
+#definition(title: [Limit])[
+  Let $S$ be a subset of $Reals$ and $c$ be an accumulation point of $S$. Let $f : S to Reals$ be a function.
+
+  The #defname[limit] of $f(x)$ as $x to c$ is $L$ iff for each $epsilon > 0$, there exists a $delta > 0$ s.t. whenever $x in S - {c}$ and $abs(x - c) < delta$, then $abs(f(x) - L) < epsilon$. If so, we say that $f(x)$ converges to $L$ as $x to c$.
+
+  If there is no such limit, then the limit does not exist and $f$ #defname[diverges].
+
+  Limits are unique.
+]
+
+#theorem[
+  Let $S$ be a subset of $Reals$ and $c$ be an accumulation point of $S$. Let $f : S to Reals$ be a function.
+
+  Then $f(x) to L$ as $x to c$ iff for every sequence ${x_n}$ in $S - {c}$ whose limit is $c$, the sequence ${f(x_n)} to L$.
+]
+
+== Continuity
+
+#definition(title: [Continuity])[
+  Let $S subset Reals$, $c in S$, and $f : S to Reals$ be a function. Then, $f$ is #defname[continuous] at $c$ iff for every $epsilon > 0$, there is a $delta > 0$ s.t. whenever $abs(x - c) < delta$, then $abs(f(x) - f(c)) < epsilon$.
+]
+
+#theorem[
+  Let $S in Reals$ and $f : S to Reals$ be a function. Let $c$ be a point in $S$. Then:
+  1. If $c$ is not an accumulation point of $S$, then $f$ is continuous at $c$.
+  2. If $c$ is an accumulation point of $S$, then $f$ is continuous at $c$ iff $display(lim_(x to c) f(x) = f(c))$.
+  3. $f$ is continuous at $c$ iff for every sequence ${x_n} in S$ with limit $c$, $f(x_n) to f(c)$.
+]
+
+#theorem(title: [Composition of continuous functions is continuous])[
+  Let $f : S to Reals$. If $g$ is continuous at $c in T$ and $f$ is continuous at $g(c)$, then $f compose g : T to Reals$ is continuous at $c$.
+]
+
+#theorem[
+  There are no functions that are continuous at every rational but discontinuous at every irrational.
+]
+
+== Big Continuity Theorems
+
+#definition(title: [Bounded function])[
+  A function $f : S to Reals$ is bounded iff its image is bounded.
+]
+
+#lemma[
+  Let $[a, b]$ be a closed finite interval, and $f$ continuous on $[a, b]$. Then $f$ is bounded.
+]
+
+#theorem(title: [Extreme Value Theorem])[
+  Let $f(x)$ be a continuous function defined on a closed interval $[a, b]$. Then, $f$ achieves an absolute maximum and minimum on $[a, b]$.
+]
+
+#lemma[
+  Let $f(x)$ be continuous on the closed bounded interval $[a, b]$. If $f(a) < 0$ and $f(b) > 0$, then there exists $c in [a, b]$ s.t. $f(c) = 0$.
+]
+
+#theorem(title: [Intermediate Value Theorem])[
+  Let $f$ be continuous on closed, bounded $[a, b]$. Let $y in Reals$ s.t. $f(a) < y < f(b)$ or $f(a) > y > f(b)$. Then, there exists $c in (a, b)$ with $f(c) = y$.
+]
+
+== Uniform continuity
+
+TODO
+
+== Lipschitz continuity
+
+#definition(title: [Lipschitz continuity])[
+  Let $f : S to Reals$ be a function. If there exists $K in Reals$ s.t. for every $x, y in S$, $abs(f(x) - f(y)) < K abs(x - y)$ then $f$ is #defname[Lipschitz continuous].
+]
+
+#theorem[
+  Lipschitz continuity implies uniform continuity.
+]
 
 #if(not is-previewing) [
 
