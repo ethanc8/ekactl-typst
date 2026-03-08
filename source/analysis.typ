@@ -930,7 +930,12 @@ Now we need to prove more lemmas:
 
   A power series #defname[converges] iff there exists $x != x_0$ that makes the series converge. If $x = x_0$ makes the series converge, then the series converges for any $x$.
 ]
-// TODO
+
+#theorem[
+  A power series either diverges for all $x != x_0$, converges absolutely for all $x$, or there exists a real number $rho$, called the #defname[radius of convergence], s.t. the series converges absolutely on $(x_0 - rho, x_0 + rho)$ and diverges if $abs(x - x_0) > rho$. 
+  
+  When $x = x_0 + rho$ or $x = x_0 - rho$, this theorem is inconclusive.
+]
 
 = Limits and continuity
 
@@ -1005,7 +1010,25 @@ Now we need to prove more lemmas:
 
 == Uniform continuity
 
-TODO
+#definition(title: [Uniform continuity])[
+  Let $S subset Reals$ and $f : S to Reals$ be a function. For any $epsilon > 0$, $f$ is #defname[uniformly continuous] on $S$ iff we can find $delta$ s.t. for all $x, c in S$ with $abs(x - c) < delta$, then $abs(f(x) - f(c)) < epsilon$.
+
+  This differs from continuity iff the same $delta$ works for every point in $S$.
+
+  Uniform continuity obviously implies continuity.
+]
+
+#theorem[
+  If $f : [a, b] to Reals$ is a continuous function defined on a closed bounded interval, it is uniformly continuous.
+]
+
+#lemma[
+  If $f : S to Reals$ is uniformly continuous and ${x_n}$ is a Cauchy sequence in $S$, then ${f(x_n)}$ is a Cauchy sequence.
+]
+
+#theorem[
+  Let $f : (a, b) to Reals$. Then $f$ is uniformly continuous iff it has a right-handed limit at $a$, a left-handed limit at $b$, and the extension of $f$ to the closed interval $[a, b]$ is continuous.
+]
 
 == Lipschitz continuity
 
@@ -1015,6 +1038,105 @@ TODO
 
 #theorem[
   Lipschitz continuity implies uniform continuity.
+]
+
+= Derivatives
+
+#definition(title: [Derivative])[
+  Let $f(x)$ be a real-valued function defined on an open interval $(a, b)$, and let $x_0 in (a, b)$. The #defname[derivative] of $f$ at $x_0$ is
+
+  $ (d f)/(d x) (x_0) := f'(x_0) := lim_(x to x_0) (f(x) - f(x_0))/(x - x_0). $
+
+  Iff this limit is defined, the function is #defname[differentiable] at $x_0$.
+]
+
+#theorem(title: [Continuity theorem])[
+  Let $f$ be defined on $(a, b)$ with $x_0 in (a, b)$. Then, $f$ is differentiable at $x_0$ iff there is a function $f^*$ (which depends on $f$ and on $x_0$) s.t. 
+  $ f(x) = f(x_0) + f^*(x)(x - x_0) $
+  with $f^*$ defined on $(a, b)$ and continuous at $x_0$, with $f^*(x_0) = f'(x_0)$.
+
+  If $f$ is continuous, $f^*$ can be defined as
+  $ f^*(x) := cases(
+    (f(x) - f(x_0))/(x - x_0) & "if" x != x_0,
+    f'(x_0) & "if" x = x_0.
+  ) $
+]
+
+#definition(title: [One-sided derivative])[
+  Let $f$ be defined on $[a, b)$. The #defname[right-hand derivative] of $f$ at $a$ is
+  $ f'_+(a) := lim_(x to a^+) (f(x) - f(a))/(x - a). $
+
+  Let $f$ be defined on $[a, b)$. The #defname[left-hand derivative] of $f$ at $a$ is
+  $ f'_-(a) := lim_(x to a^-) (f(x) - f(a))/(x - a). $
+]
+
+#definition(title: [Infinite derivatives])[
+  Let $f$ be continuous on $[a, b)$. The right-hand derivative of $f$ at $a$ is $+infinity$ iff
+  $ lim_(x to a^+) (f(x) - f(a))/(x - a) = +infinity. $
+
+  The definition is similar for left-hand and negative infinite derivatives.
+]
+
+#theorem(title: [Sum, product, and quotient rules])[
+  Let $f$ and $g$ be functions defined on an interval $(a, b)$, both differentiable at the point $x_0 in (a, b)$. (In particular, the derivatives there cannot be infinite.) Then, the following derivatives exist and take on the following values:
+  - $(f plus.minus g)'(x_0) = f'(x_0) plus.minus g'(x_0)$.
+  - $(f * g)'(x_0) = f(x_0) g'(x_0) + f'(x_0) g(x_0)$.
+  
+  - $display((f\/g)'(x_0) = (g(x_0) f'(x_0) - f(x_0) g'(x_0))/(g(x_0)^2))$.
+]
+
+#theorem(title: [Chain rule])[
+  Let $f : (a, b) to Reals$ and $g : f(a, b) to Reals$. Let $x_0 in (a, b)$ with $f$ differentiable at $x_0$ and $f(x_0)$ contained in the interior of $f(a, b)$, and let $g$ be differentiable at $f(x_0)$. Then, $(g compose f)(x)$ is differentiable at $x_0$, and
+  $ (g compose f)'(x_0) = g'(f(x_0)) f'(x_0), $
+
+  or equivalently, 
+  $ lr((d g)/(d x) |)_(x_0) = lr((d g)/(d f) |)_(f(x_0)) * lr((d f)/(d x) |)_(x_0). $
+]
+
+== Mean value theorem
+
+#theorem[
+  Let $f'(c) > 0$ and $f$ continuous in some interval about $c$. Then, there is a $delta > 0$ s.t.:
+  - $c < x < c + delta ==> f(c) < f(x)$
+  - $c - d < x - c ==> f(x) < f(c)$
+
+  Equivalently, if the derivative is positive, then the function is increasing at that point.
+
+  Similarly, if the derivative is negative, then the function is increasing at that point.
+]
+
+#theorem(title: [Rolle's theorem])[
+  Let $f(x)$ be continuous on $[a, b]$ and differentiable on $(a, b)$, s.t. $f(a) = f(b)$. Then, there exists $c in (a, b)$ for which $f'(c) = 0$.
+]
+
+#theorem(title: [Mean value theorem])[
+  Let $f$ be continuous on $[a, b]$ and differentiable on $(a, b)$. Then, there exists some point $c in (a, b)$ for which 
+  $ f'(c) = (f(b) - f(a))/(b - a). $
+]
+
+#theorem(title: [Cauchy's mean value theorem])[
+  Let $f(t)$ and $g(t)$ be two functions continuous on $[a, b]$ and differentiable on $(a, b)$. Then, there exists some point $c in (a, b)$ for which
+  $ f'(c)(g(b) - g(a)) = g'(c)(f(b) - f(a)). $
+]
+
+#theorem[
+  Let $f(x)$ be continuous on $[a, b]$ and differentiable on $(a, b)$. Then:
+  - $f'(x) > 0$ for all $x in (a, b) <==> f$ is strictly increasing
+  - $f'(x) < 0$ for all $x in (a, b) <==> f$ is strictly decreasing
+  - $f'(x) = 0$ for all $x in (a, b) <==> f$ is constant
+
+  Let $g(x)$ also be continuous on $[a, b]$ and differentiable on $(a, b)$. Then:
+  - $g'(x) = f'(x)$ for all $x in (a, b) <==> f(x) - g(x)$ is constant
+]
+
+#theorem[
+  Let $f(x)$ be continuous on $(a, b]$ and differentiable on $(a, b)$, with $lim_(x to b^-) f'(x) = L$. Then, $f$ is left-hand differentiable at $b$, and $f'_- (b) = L$.
+
+  A similar theorem exists for right-hand derivatives.
+]
+
+#theorem(title: "Darboux theorem")[
+  Let $f(x)$ be a function that is differentiable on $[a, b]$. Let $y$ be a value s.t. $f'(a) < y < f'(b)$ or $f'(a) > y > f'(b)$. Then there is some $c in (a, b)$ s.t. $f'(c) = y$.
 ]
 
 #if(not is-previewing) [
