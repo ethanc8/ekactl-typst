@@ -15,15 +15,39 @@
   _See_ #it
 ]
 
+#let scr(it) = math.class("normal", box({
+  show math.equation: set text(stylistic-set: 1)
+  $cal(it)$
+}))
+
+#let closure(x) = $overline(#x)$
+#let inner(x) = $#x^circle.small$
+
 #let powerset = $cal(P)$
 #let nbhds = $cal(N)$
 #let calB = $cal(B)$
+#let calD = $cal(D)$
 #let calT = $cal(T)$
 #let calA = $cal(A)$
 #let calF = $cal(F)$
 #let calU = $cal(U)$
 #let calV = $cal(V)$
 #let calC = $cal(C)$
+#let calG = $cal(G)$
+#let calE = $cal(E)$
+#let calI = $cal(I)$
+#let calJ = $cal(J)$
+
+#let to = sym.arrow
+#let implies = sym.arrow.r.double
+#let iff = sym.arrow.l.r.double
+#let setminus = sym.backslash
+
+#let Reals = sym.RR
+#let Naturals = sym.NN
+#let Integers = sym.ZZ
+#let Complex = sym.CC
+#let Rationals = sym.QQ
 
 #let Sphere = $SS$
 
@@ -33,7 +57,13 @@
 #let ior = math.degree // interior
 #let bound = math.partial // boundary
 
+#let Riemann = $cal(R)$
+
 #let card = [card]
+
+#let int = math.integral
+
+#set math.vec(delim: "[")
 
 = Sets, relations, functions, and order
 
@@ -1105,6 +1135,14 @@ Now we need to prove more lemmas:
   Similarly, if the derivative is negative, then the function is increasing at that point.
 ]
 
+#corollary[
+  If $f(c)$ is a local min or local max, than $f'(c) = 0$.
+]
+
+#definition(title: [Critical point])[
+  A point where the derivative of the function is zero.
+]
+
 #theorem(title: [Rolle's theorem])[
   Let $f(x)$ be continuous on $[a, b]$ and differentiable on $(a, b)$, s.t. $f(a) = f(b)$. Then, there exists $c in (a, b)$ for which $f'(c) = 0$.
 ]
@@ -1137,6 +1175,340 @@ Now we need to prove more lemmas:
 
 #theorem(title: "Darboux theorem")[
   Let $f(x)$ be a function that is differentiable on $[a, b]$. Let $y$ be a value s.t. $f'(a) < y < f'(b)$ or $f'(a) > y > f'(b)$. Then there is some $c in (a, b)$ s.t. $f'(c) = y$.
+]
+
+#corollary[
+  - $f'$ cannot change signs without going through zero.
+  - If $f'(x) != 0$ for any $x$, then $f$ is monotonic.
+  - If $f'$ itself is monotonic then it must be continuous:
+    - the only kinds of discontinuities of monotonic functions are jumps
+    - derivatives can't make jumps
+]
+
+== Taylor series
+
+#theorem(title: [Taylor's formula with the Lagrange form of the remainder])[
+  Let $f : (a, b) to Reals$ have $n + 1$ derivatives on the interval $(a, b)$, and let $x_0$ be a point in $(a, b)$. Then, for any point $y$ in $(a, b)$ #defname[Taylor's formula] states that
+  $ f(y) = p_n (y) + R_n (y; x_0). $
+
+  We define the #defname[$n$th Taylor polynomial centered at $x_0$] as:
+  $ p_n (x) := sum_(k = 0)^n (f^(k)(x_0))/(k!) (x - x_0)^k. $
+
+  We define the #defname[Langrange form of the remainder] as:
+  $ R_n(x; x_0) := (f^(n+1)(c)(y - x_0)^(n + 1))/((n+1)!) $
+  for some $c$ between $y$ and $x_0$ [this theorem does not specify which $c$ this is].
+]
+
+#definition(title: [Taylor series])[
+  If $f$ is infinitely differentiable, its #defname[Taylor series] around $x_0$ is the sequence of Taylor polynomials centered at $x_0$:
+
+  $ p_1, p_2, p_3, ... $
+
+  Ideally, this would converge to some nice function, and the error $R_n (x; x_0)$ would converge to $0$. But there are many functions for which this is not the case; some such functions are not really that nasty. 
+]
+
+= Integrals
+
+== Partitions
+
+#definition(title: [Partition])[
+  A #defname[partition] $P$ of $[a, b]$ is a finite set of points, ${x_0, x_1, ..., x_n}$ with $a = x_0 < x_1 < dots.c < x_n = b$. The $k$th interval of the partition is $[x_(k - 1), x_k]$, with width $Delta x_k := x_k - x_(k - 1)$.
+]
+
+#definition(title: [Norm/mesh])[
+  The #defname[norm] or #defname[mesh] of a partition is the width of its largest interval, denoted
+  $ norm(P) := max{Delta x_k : k <= n}. $
+]
+
+#definition(title: [Refinement])[
+  $tilde(P)$ is a #defname[refinement] of $P$ iff $P subset.eq tilde(P)$.
+]
+
+== Darboux integral
+
+#definition(title: [Darboux sum])[
+  Let $f : [a, b] to Reals$ be bounded and $P$ a partition of $[a, b]$. Then, define
+  $ m_k &:= inf{f(x) : x_(k - 1) <= x <= x_k} \
+  M_k &:= sup{f(x) : x_(k - 1) <= x <= x_k}. $
+  
+  Define the #defname[upper] and #defname[lower Darboux sums], respectively, as
+  $ L(P, f) &:= sum_(k=1)^n m_k Delta x_k \
+  U(P, f) &:= sum_(k=1)^n M_k Delta x_k. $
+]
+
+#definition(title: [Upper and lower Darboux integrals])[
+  Let $f : [a, b] to Reals$ be bounded. Then, define the #defname[upper] and #defname[lower Darboux integrals] as follows:
+  $ overline(int_a^b) f(x) d x &:= inf{U(P, f) : P "is a partiton of" [a, b]} \
+  underline(int_a^b) f(x) d x &:= sup{L(P, f) : P "is a partiton of" [a, b]}. $
+]
+
+#definition(title: [Darboux integrability])[
+  If $f : [a, b] to Reals$ is bounded, and $underline(int_a^b) f(x) d x = overline(int_a^b) f(x) d x$, then we say $f$ is #defname[Darboux-integrable] ($f in Riemann[a, b]$), and we define $int_a^b f(x) d x$ to be the common value of the lower and upper Darboux integral.
+]
+
+== Riemann integral
+
+#definition(title: [Riemann sum])[
+  Let $f : [a, b] to Reals$ be bounded and $P$ a partition of $[a, b]$.
+
+  For each interval $[x_(i - 1), x_i]$, select any $t_i$ in that interval. Then, the #defname[Riemann sum] of $f$ under this selection of $t_i$ is
+  $ sum_(i = 1)^n f(t_i) Delta x_i. $
+]
+
+#definition(title: [Riemann integrability])[
+  $f$ is #defname[Riemann-integrable] ($f in Riemann[a, b]$) iff there exists some number $I$ s.t. for every $epsilon > 0$, there exists a partition $P_0$ s.t. for every refinement $P$ of $P_0$ and every choice of $t_i$ on $P$, the corresponding Riemann sum is within $epsilon$ of $I$.
+]
+
+#theorem[
+  Riemann integrability is equivalent to Darboux integrability.
+]
+
+== Integrability
+
+#theorem[
+  Let $f : [a, b] to Reals$ be bounded. Then, $f$ is Darboux-integrable iff for every $epsilon > 0$, there exists a partition $P$ s.t. $U(P, f) - L(P, f)$.
+]
+
+#theorem[
+  Let $f : [a, b] to Reals$ be bounded and monotonic. Then, $f in Riemann[a, b]$.
+]
+
+== Core properties of the integral
+
+#see[35 More Integral Basics]
+
+The integral operator is additive, linear, and monotonic:
+
+#lemma[
+  Let $a < b < c$ and $f : [a, c] to Reals$ be a bounded function. Then, both the upper and lower Darboux integrals are additive over the subintervals. That is,
+  $ underline(int_a^c) f &= underline(int_a^b) f + underline(int_b^c) f \
+  overline(int_a^c) f &= overline(int_a^b) f + overline(int_b^c) f. $
+]
+
+#theorem(title: [Additivity])[
+  Let $a < b < c$ and $f : [a, c] to Reals$ be a bounded funcction. Then,
+
+  $ f in Riemann[a, c] <==> f in Riemann[a, b] "and" f in Riemann[b, c], $
+  and if $f$ is integrable on the whole interval then
+  $ int_a^c f = int_a^b f + int_b^c f. $
+]
+
+#lemma[
+  If $f$ and $g$ are bounded functions on $[a, b]$, then
+
+  $ overline(int_a^b) (f + g) <= overline(int_a^b) f + overline(int_a^b) g. $
+]
+
+#theorem(title: [Linearity])[
+  Let $f, g in Riemann[a, b]$, and $alpha$ any real constant. Then,
+  $ int_a^b alpha f(x) + g(x) d x = alpha int_a^b f(x) d x + int_a^b g(x) d x. $
+]
+
+#theorem(title: [Monotonicity])[
+  Let $f$ and $g$ be bounded functions on $[a, b]$. Assume $f(x) <= g(x)$ for all $x in [a, b]$. Then, $underline(int) f < underline(int) g$ and $overline(int) f < overline(int) g$. If both are in $Riemann[a, b]$ then $int f < int g$.
+]
+
+== Additional properties of the integral
+
+#see[34 Working with Integrals]
+
+#theorem[
+  Let $f in [a, b]$. Let $f(x) in [m, M]$ for all $x in [a, b]$. Then,
+  $ m(b - a) <= int_a^b f(x) d x <= M(b - a). $
+]
+
+#theorem(title: [Integral of a constant])[
+  $ int_a^b c d x = c(b - a). $
+]
+
+#theorem(title: [Integral of a step function])[
+  Let
+  $ f(x) = cases(
+    r & "for" x < c,
+    s & "for" x = c,
+    t & "for" x > c,
+  ), $
+
+  with $c in [a, b]$ and $f : [a, b] to Reals$.
+
+  Then,
+
+  $ int_a^b f(x) d x = r(c - a) + t(b - c). $
+]
+
+#definition[
+  $ int_a^b f(x) d x := -int_b^a f(x) d x. $
+]
+
+== Integrals of continuous functions
+
+#see[36 Integrals of Continuous Functions]
+
+#lemma[
+  A bounded function that has only finitely many discontinuities is integrable.
+]
+
+#lemma[
+  Let $f : [a, b] to Reals$ be bounded. Let ${a_n} to a$ and ${b_n to b}$ be sequences in $[a, b]$, with $a_n < b_n$ for all $n$. Then, if $f in Riemann[a_n, b_n]$ for all $n$, then $f in Riemann[a, b]$ and $int_a^b f = lim_(n to infinity) int_(a_n)^(b_n) f$.
+
+  Essentially, bounded funtions need only be integrable inside the interval to be integrable on the entire interval.
+]
+
+#theorem[
+  Continuous functions are integrable.
+]
+
+== Fundamental theorem of calculus
+
+#see[37 Fundamental Theorem of Calculus]
+
+#theorem(title: [First Fundamental Theorem of Calculus])[
+  Let $F : [a, b] to Reals$ be continuous and differentiable\* on $(a, b)$, with $F' in Riemann[a, b]$. Then,
+  $ int_a^b F'(x) d x = F(b) - F(a). $
+
+  \*$F$ may have finitely many points where it is not differentiable. It must be continuous over the whole interval.
+]
+
+#theorem(title: [Second Fundamental Theorem of Calculus])[
+  Let $f in Riemann[a, b]$. Define $F(x) := int_a^x f$. Then, $F$ is continuous on $[a, b]$, and if $f$ is continuous at $c$, then $F$ is differentiable at $c$ and $F'(c) = f(c)$.
+]
+
+#theorem(title: [u-substitution])[
+  Let $f : [c, d] to Reals$ be continuous and $g : [a, b] subset [c, d]$ continuously differentiable. Then,
+  $ int_a^b f(g(x)) g'(x) d x = int_(g(a))^(g(b)) f(u) d u. $
+
+  Note that in this case, $u = g(x)$ and $d u = g'(x) d x$.
+]
+
+== Logarithm and exponential
+
+#see[38 Logs and Exponentials]
+
+#definition(title: [Natural logarithm])[
+  $ ln(x) := int_1^x 1/t d t. $
+]
+
+#theorem[
+  $ln(x)$ is the unique function that satisfies:
+  - $ln(1) = 0$
+  - $ln$ is differentiable and $L'(x) = 1/x$
+  - $ln(x y) = ln(x) + ln(y)$
+  - $ln$ is strictly increasing; it's domain is $(0, infinity)$ and its image is $Reals$
+  - If $q$ is rational, then $ln(x^q) = q ln(x)$
+]
+
+#definition(title: [Logarithm])[
+  $ log_b (a) := ln(a)/ln(b) . $
+
+  Thus,
+  $ ln(x) = log_e (x). $
+]
+
+#definition(title: [Natural exponent])[
+  $ exp(x) := ln^(-1) (x). $
+
+  Equivalently, $exp$ is the unique solution to the initial-value differential equation problem
+  $ y' = y, y(0) = 1. $
+
+  Equivalently,
+  $ exp(x) := sum_(n = 0)^infinity (x^n)/(n!). $
+]
+
+#theorem[
+  $exp(x)$ is the unique function that satisfies:
+  - $exp(0) = 1$
+  - $exp(x + y) = exp(x) exp(y)$
+  - For any rational $q$, $exp(q x) = exp(x)^q$
+  - $exp(x)$ is strictly increasing and bijective from $Reals$ to $(0, infinity)$
+  - $display(lim_(x to infinity) exp(x) = infinity)$
+  - $display(lim_(x to -infinity) exp(x) = 0)$
+  - $display(d/(d x) exp(x) = exp(x))$
+]
+
+#definition(title: [Exponent])[
+  Let $x > 0$ and $y in Reals$. Then,
+  $ x^y := exp(y ln(x)). $
+
+  Thus,
+  $ exp(x) = e^x. $
+]
+
+= Sequences of functions
+
+== Pointwise convergence
+
+#definition(title: [Pointwise convergence])[
+  Let ${f_1, f_2, ...}$ be a sequence of functions. Let $S$ be the set of all points $x$ for which the sequence ${f_1 (x), f_2 (x), ...}$ converges. Then, $S$ is the domain of the limit function 
+  $ f(x) := lim_(n to infinity) f_n (x). $
+
+  ${f_n}$ #defname[converges pointwise] to $f$ on $S$.
+]
+
+== Uniform convergence
+
+#definition(title: [Uniform convergence])[
+  Let ${f_n}$ be a sequence of functions. ${f_n}$ #defname[converges uniformly] to $f$ on $S$ iff for every $epsilon > 0$ there exists $N$ s.t. $n > N$ implies $abs(f(x) - f_n (x)) < epsilon$ for all $x in S$.
+]
+
+#definition[
+  Let ${f_n}$ be a sequence of functions on $S$. Let $M > 0$ be a constant so that $abs(f_n(x)) <= M$ for all $x$ and $n$. Then, ${f_x}$ is #defname[uniformly bounded] by $M$ by $S$.
+]
+
+#theorem[
+  Let $f_n to f$ uniformly on $S$ and let each $f_n$ be bounded. Then, $f$ is bounded and the sequence ${f_n}$ is uniformly bounded on $S$.
+]
+
+#definition(title: [Uniform norm])[
+  Let $f$ be a bounded function on domain $S$. Then, define the #defname[uniform norm] or #defname[infinity norm] of $f$ on $S$ is
+
+  $ norm(f)_infinity = norm(f)_u := sup{abs(f(x)) : x in S}. $
+]
+
+#theorem[
+  A sequence of bounded functions $f_n$ converges uniformly to $f$ iff
+  $ lim_(n to infinity) norm(f_n - f)_infinity = 0. $
+]
+
+#theorem[
+  Let ${f_n}$ be a sequence of functions. Then there exists a function $f$ s.t. $f_n to f$ uniformly iff the sequence satisfies the #defname[Cauchy condition]: for every $epsilon > 0$ there exists $N$ s.t. if $m, n > N$, then $abs(f_n (x) - f_m (x)) < epsilon$ for all $x$.
+]
+
+#definition[
+  A series converges uniformly iff its sequence of partial sums converges uniformly.
+]
+
+#theorem(title: [Weierstraß $M$-test])[
+  Let $M_n$ be a sequence of nonnegative numbers s.t. $abs(f_n (x)) <= M_n$ for all $x$ and $n$. Then, $sum f_n$ converges uniformly if $sum M$ converges.
+]
+
+== Continuity, integrability, and differentiability of limit functions
+
+#see[41 Interchanging limits]
+
+#theorem(title: [Interchanging limits])[
+  When $f_n to f$ uniformly, then
+  $ lim_(x to a) f(x) = lim_(x to a) lim_(n to infinity) f_n (x) = lim_(n to infinity) lim_(x to a) f_n (x) = lim_(n to infinity) f_n (a) = f(a). $
+]
+
+#theorem[
+  Let ${f_n}$ be a sequence of continuous functions $S to Reals$, where $S$ is some domain. If the sequence converges uniformly to a function $f$, then $f$ is also continuous.
+]
+
+#theorem[
+  Let ${f_n}$ be a sequence of integrable functions on $[a, b]$ that converges uniformly to $f$. Then $f$ is integrable, and $ int_a^b f = lim_(n to infinity) int_a^b f_n. $
+]
+
+#theorem[
+  Let each term of ${f_n}$ be differentiable at each point of $(a, b)$ and assume that these derivatives converge $f'_n to g$ uniformly on $(a, b)$. Further, assume that there is at least one point $x_0 in (a, b)$ s.t. ${f_n (x_0)}$ converges. Then,
+  - There is a function $f$ s.t. $f_n to f$ uniformly on $(a, b)$, and
+  - For each point in $x$ in $(a, b)$, the derivative $f'(x)$ exists and equals $g(x)$.
+]
+
+#theorem[
+  - The power series of a function converges uniformly upon its interval of convergence.
+  - Inside the interval of convergence, the power series represents a continuous function.
+  - The function is integrable, and the integral of the sum of the series is the sum of the integrals of the terms
+  - The derivatives of the power sums converge uniformly, and the partial sums of the series add to $f(x_0)$ at $x_0$, so the derivative theorem's conditions are satisfied, and you can differentiate a power series term-by-term to obtain the derivative of the function to which it converges.
 ]
 
 #if(not is-previewing) [
