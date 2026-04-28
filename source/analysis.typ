@@ -1511,6 +1511,55 @@ The integral operator is additive, linear, and monotonic:
   - The derivatives of the power sums converge uniformly, and the partial sums of the series add to $f(x_0)$ at $x_0$, so the derivative theorem's conditions are satisfied, and you can differentiate a power series term-by-term to obtain the derivative of the function to which it converges.
 ]
 
+= Picard's theorem
+
+#definition(title: [Interior])[
+  If $I$ is an interval with endpoints $a$ and $b$, $I ior$ is its #defname[interior], defined as
+
+  $ (a, b) $
+
+  The interior of a finite union of intervals is the union of the interiors of those intervals.
+
+  For more complicated sets, we can use the definition from topology: if $A$ is a set, then $A ior$ is the union of all open sets contained in $A$.
+]
+
+#definition(title: [First-order ordinary differential equation])[
+  Let $I, J$ in $Reals$ be closed, bounded intervals. Let $F : I times J to Reals$ be a function. Then,
+  $ f'(x) = F(x, f(x)) $ 
+
+  is a #defname[first-order differential equation]. This is also written
+
+  $ y' = F(x, y). $
+
+  If we know that 
+  $ f(x_0) = y_0, $
+
+  then we have an #defname[initial-value problem] whose solution is the function $f : I to J$ which satisfies both conditions:
+  $ f'(x) = F(x, f(x)) #h(7mm) f(x_0) = y_0. $
+]
+
+#definition(title: [Lipschitz in the second variable])[
+  $F : Reals^2 to Reals$ is #defname[Lipschitz in the second variable] iff there exists $L in Reals$ s.t.
+
+  $ abs(F(x, y) - F(x, z)) <= L abs(y - z) "for all" y, z in J "and" x in I. $
+]
+
+#theorem(title: [Picard's theorem])[
+  Let $I, J in Reals$ be closed bounded intervals with $(x_0, y_0) in I ior times J ior$.
+
+  If $F : I times J to Reals$ is continuous and Lipschitz in the second variable, then there exists $h > 0$ s.t. $[x_0 - h, x_0 + h] subset I$ and a unique differentiable function $f : [x_0 - h, x_0 + h] to J$ s.t.
+
+  $ f'(x) = F(x, f(x)) #h(7mm) f(x_0) = y_0. $
+
+  *In short,* if $F$ is continuous and Lipschitz in the second variable, the initial value problem has a unique solution on some interval around $x_0$.
+
+  The unique solution can be constructed via the following procedure:
+  1. Define $f_0 (x) := y_0$.
+  2. For each $k in Naturals^+$, define the #defname[$k$th Picard iterate]:
+  $ f_k (x) := y_0 + int_(x_0)^x F(t, f_(k - 1) (t)) d t $
+  3. The sequence of Picard iterates converges uniformly to the solution $f$.
+]
+
 #if(not is-previewing) [
 
 #colbreak()
