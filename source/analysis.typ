@@ -65,6 +65,8 @@
 
 #set math.vec(delim: "[")
 
+#let infty = math.infinity
+
 = Sets, relations, functions, and order
 
 == Logic
@@ -417,6 +419,8 @@ In this class, we assume the Axiom of Choice.
     - $x = y$
     - $x > y$
   - *Transitivity*: If $x < y$ and $y < z$, then $x < z$.
+  - *Translation*: If $x < y$, then for any $x$, $x + z < y + z$.
+  - *Positive closure*: If $x > 0$ and $y > 0$ then $x y > 0$.
 ]
 
 #definition(title: [Upper bound])[
@@ -1558,6 +1562,128 @@ The integral operator is additive, linear, and monotonic:
   2. For each $k in Naturals^+$, define the #defname[$k$th Picard iterate]:
   $ f_k (x) := y_0 + int_(x_0)^x F(t, f_(k - 1) (t)) d t $
   3. The sequence of Picard iterates converges uniformly to the solution $f$.
+]
+
+= Construction of the reals
+
+Let's assume that we have constructed the rationals. We must now construct the reals by taking Cauchy sequences of rationals, but we don't yet know that their (possibly irrational) limits exist, and there are multiple Cauchy sequences which converge to the same real which must be considered the same.
+
+#definition(title: [Null sequence])[
+  A sequence $N$ of rational numbers is a #defname[null sequence] iff its limit (in $epsilon$-$N$) is zero.
+]
+
+#definition(title: [Equivalence of Cauchy sequences])[
+  Two Cauchy sequences are #defname[equivalent] if the sequence of their differences is a null sequence:
+
+  $ {a_n} equiv {b_n} "iff" {a_n - b_n} to 0. $
+
+  Equivalence of Cauchy sequences is an equivalence relation.
+]
+
+#definition(title: [Real numbers])[
+  $Reals$ is the set of equivalence classes of Cauchy sequences of rational numbers under the above definition. Define $({a_n})$ to be the equivalence class of ${a_n}$. Define 
+  $ ({a_n}) + ({b_n}) :&= ({a_n + b_n}) \
+  ({a_n}) ({b_n}) :&= ({a_n b_n}). $
+
+  This satisfies the definiton of the reals as the unique complete ordered field.
+]
+
+= Lebesgue integrability condition
+
+== Topology of the reals
+
+#definition(title: [Open set])[
+  The following are #defname[open]:
+  - The empty set
+  - Open intervals
+  - Unions of open sets
+  - Finite intersections of open sets
+  - The whole space
+
+  A set is #defname[closed] if it is the complement of an open set.
+
+  The collection of closed sets is closed under finite union and arbitrary intersection.
+]
+
+#definition(title: [Continuity])[
+  Let $f : X to Y$ be a function from topological space $X$ to topological space $Y$. Then, $f$ is continuous iff $f^(-1)(A) subset X <=> A$ is open in $Y$.
+]
+
+#theorem[
+  The following are equivalent:
+  - $f$ is continuous (under $epsilon$-$delta$)
+  - $f$ is continuous under the above definition
+  - The inverse image of any closed set in $Reals$ is closed in $Reals$
+]
+
+#definition(title: [Oscillation])[
+  Let $f : Reals to Reals$ and $S subset Reals$. The #defname[oscillation] of $f$ on $S$ is defined as
+
+  $ omega_f (S) := sup{f(S)} - inf{f(S)}. $
+
+  If the supremum or infimum does not exist, it is defined as $+ infinity$.
+
+  The #defname[oscillation] of $f$ at the point $x in S$ is defined as
+  $ lim_(epsilon to 0) omega_f (S inter (x - epsilon, x + epsilon)). $
+]
+
+#theorem[
+  $f$ is continuous at $x_0$ iff the oscillation of $f$ at $x_0$ is zero.
+]
+
+#definition(title: [Open cover])[
+  An #defname[open cover] of $X$ is a collection of open sets whose union contains all of $X$.
+]
+
+#definition(title: [Compactness])[
+  A space where every open cover has a finite subcover.
+]
+
+#theorem[
+  Subsets of $Reals^n$ are compact iff they are closed and bounded.
+]
+
+== Measure
+
+#definition(title: [Measure])[
+  A #defname[measure] is a function that takes a subset $S$ of the reals, and returns its "size" denoted $abs(S)$, following the following properties:
+  - $0 <= abs(S) <= infty$.
+  - $abs(emptyset) = 0$.
+  - $S' := {x + a : x in S} ==> abs(S') = abs(S)$.
+  - $abs((0, 1)) = abs([0, 1]) = 1$.
+  - #defname[Countably additive]: If ${S_i}$ is a countable collection of disjoint sets, $abs(union S_i) = sum_i abs(S_i)$ .
+
+  Axiom of choice implies that no such function can exist. Axiom of determinacy implies such a function exists.
+
+  To avoid this, we define some nice sets as #defname[measurable], and leave the masure undefined for other sets.
+]
+
+=== Lebesgue outer measure
+
+#definition(title: [Lebesgue outer measure])[
+  Cover the set with a countable number of disjoint open intervals, and sum their totals. Take the infimum of all such coverings.
+
+  $ lambda^* (S) := inf { sum(b_i - a_i) {(a_i, b_i)}_(i in Integers^+) "is such a cover"}. $
+
+  Every set has such an outer measure, but it does not necessarily satisfy countable additivity. We define sets to be measurable if their outer measures satisfy said property.
+
+  A set has #defname[measure 0] iff its outer measure is zero.
+]
+
+#theorem[
+  - Every countable subset of $Reals$ has measure 0.
+  - A subset of a measure 0 set also has measure 0.
+  - Any countable union of measure 0 sets has measure 0.
+]
+
+== Lebesgue integrability condition
+
+#theorem(title: [Lebesgue Integrability Condition])[
+  $f : [a, b] to Reals$ is Riemann-integrable iff it is bounded and its set of discontinuities has measure 0.
+]
+
+#corollary[
+  Let $f : [a, b] to [c, d]$ be integrable and $g : [c, d] to Reals$ continuous. Then, $g compose f$ is integrable.
 ]
 
 #if(not is-previewing) [
