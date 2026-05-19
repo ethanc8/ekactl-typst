@@ -1,7 +1,7 @@
 #import "@local/ethan-standard-style:0.1.0": *
 #show: ekactl-style.with(
   section-number: 4,
-  title: "Real analysis"
+  title: "[v2.1] Real analysis"
 )
 
 #import "@preview/cetz:0.4.2"
@@ -89,29 +89,23 @@
 == Fields
 
 #definition(title: [Field])[
-  A #defname[field] $FF$ is any set equipped with two relations, #defname[addition] ($+$) and #defname[multiplication] ($*$), which satisfy the following properties:
-  - *Closure axiom:* If $x$ and $y$ are in $FF$, so are both $x + y$ and $x y$.
-  - *Commutativity axioms:* $x + y = y + x$ and $x y = y x$.
-  - *Associativity axioms:* $(x + y) + z = x + (y + z)$ and $(x y) z = x (y z)$.
-  - *Distributivity axiom:* $x(y + z) = x y + x z$.
-  - *Substitution axioms:* $w = x "and" y + z ==> w + y = x + z "and" w y = x z$.
-  - *Additive inverse axiom:* Given $x, y in FF$, there exists $z in FF$ s.t. $x + z = y$ (i.e. all addition problems have solutions).
-  - *Multiplicative inverse axiom:* There exists some number in $FF$ which is not equal to $0$. If $x, y in FF$ s.t. $x != 0$, then there exists a real number $z$ s.t. $x z = y$. This $z$ is denoted $(y\/x)$.
-
-  It is also equipped with an equivalence relation named #defname[equality].
+  A #defname[field] $FF$ is any set with relations $+$, $*$, and $=$ which satisfies
+  - If $x$ and $y$ are in $FF$, so are both $x + y$ and $x y$.
+  - $x + y = y + x$ and $x y = y x$.
+  - $(x + y) + z = x + (y + z)$ and $(x y) z = x (y z)$.
+  - $x(y + z) = x y + x z$.
+  - $w = x "and" y + z ==> w + y = x + z "and" w y = x z$.
+  - Given $x, y in FF$, there exists $z in FF$ s.t. $x + z = y$ (i.e. all addition problems have solutions).
+  - There exists some number in $FF$ which is not equal to $0$. If $x, y in FF$ s.t. $x != 0$, then there exists a real number $z$ s.t. $x z = y$. This $z$ is denoted $(y\/x)$.
+  - $=$ is an equivalence relation.
 ]
 
 == Order
 
 #definition(title: [Order])[
-  Let $S$ be a set. An #defname[order] $<$ is a relation that satisfies the order axioms:
-  - *Trichotomy:* For any $x, y in S$, exactly one of:
-    - $x < y$
-    - $x = y$
-    - $x > y$
+  A relation $<$ that satisfies the [total] order axioms:
+  - *Trichotomy:* $x < y$, $x = y$, xor $x > y$.
   - *Transitivity*: If $x < y$ and $y < z$, then $x < z$.
-  - *Translation*: If $x < y$, then for any $x$, $x + z < y + z$.
-  - *Positive closure*: If $x > 0$ and $y > 0$ then $x y > 0$.
 ]
 
 #definition(title: [Dedekind completeness])[
@@ -123,15 +117,9 @@
 == Ordered fields
 
 #definition(title: [Ordered field])[
-  A field $FF$ is an #defname[ordered field] iff it has an order $<$ #defname[compatible with arithmetic], i.e. satisfying the properties:
-  - *Translation*: If $x < y$, then $x + z < y + z$ for all $z$.
-  - *Positive closure:* If $x>0$ and $y>0$, then $x y > 0$.
-
-  An element $x$ is #defname[positive] if $x > 0$ and #defname[negative] if $x < 0$. The set containing all positive elements of $FF$ is denoted $FF^+$, and the set containing all negative elements of $FF$ is denoted $FF^-$.
-]
-
-#theorem[
-  If $a, b in FF$ and $a <= b + epsilon$ for every positive $epsilon$, then $a <= b$ (if $FF$ is an ordered field).
+  A field with an order satisfying
+  - *Transl.:* If $x < y$, then $x + z < y + z$ for all $z$.
+  - *Pos. closure:* If $x>0$ and $y>0$, then $x y > 0$.
 ]
 
 == Real numbers
@@ -194,6 +182,12 @@
 ]
 
 Note - monotonic does not require strictly increasing/decreasing, it can be stable at some points.
+
+#theorem[
+  A bounded monotonically increasing sequence converges to its supremum.
+
+  A bounded monotonically decreasing sequence converges to its infimum.
+]
 
 #theorem[
   Every nonempty bounded subset of the reals has an increasing sequence converging to its supremum and a decreasing sequence converging to its infimum.
@@ -874,10 +868,12 @@ Note - monotonic does not require strictly increasing/decreasing, it can be stab
 ]
 
 #theorem[
-  - The power series of a function converges uniformly upon its interval of convergence.
-  - Inside the interval of convergence, the power series represents a continuous function.
-  - The function is integrable, and the integral of the sum of the series is the sum of the integrals of the terms
-  - The derivatives of the power sums converge uniformly, and the partial sums of the series add to $f(x_0)$ at $x_0$, so the derivative theorem's conditions are satisfied, and you can differentiate a power series term-by-term to obtain the derivative of the function to which it converges.
+  Upon its interval of convergence:
+  - The power series of a function converges uniformly to a continuous integrable
+  - The integral of the sum of the series is the sum of the integrals of the terms
+  - The derivatives of the power sums converge uniformly
+  - The partial sums of the series add to $f(x_0)$ at $x_0$
+  - Can differentiate a power series term-by-term to obtain the derivative of the function to which it converges.
 ]
 
 = Picard's theorem
@@ -940,14 +936,10 @@ Note - monotonic does not require strictly increasing/decreasing, it can be stab
   Cover the set with a countable number of disjoint open intervals, and sum their totals. Take the infimum of all such coverings.
 
   $ lambda^* (S) := inf { sum(b_i - a_i) {(a_i, b_i)}_(i in Integers^+) "is such a cover"}. $
-
-  Every set has such an outer measure, but it does not necessarily satisfy countable additivity. We define sets to be measurable if their outer measures satisfy said property.
-
-  A set has #defname[measure 0] iff its outer measure is zero.
 ]
 
 #theorem[
-  - Every countable subset of $Reals$ has measure 0.
+  - Every countable subset of $Reals$ has [Lebesgue outer] measure 0.
   - A subset of a measure 0 set also has measure 0.
   - Any countable union of measure 0 sets has measure 0.
 ]
@@ -961,3 +953,133 @@ Note - monotonic does not require strictly increasing/decreasing, it can be stab
 #corollary[
   Let $f : [a, b] to [c, d]$ be integrable and $g : [c, d] to Reals$ continuous. Then, $g compose f$ is integrable.
 ]
+
+= Counterexamples & Constructions
+
+== Pathological Functions
+
+#let P(n, body) = [*P#n.* #body]
+
+#P[1][
+  *Dirichlet function*: $D(x) = 1$ if $x in QQ$, $0$ if $x in.not QQ$.
+  _Properties_: bounded; nowhere continuous (every interval contains both rationals
+  and irrationals); NOT integrable ($U(P, D) = 1$, $L(P, D) = 0$ for any partition $P$);
+  can be written as $D(x) = lim_(m -> infinity) (lim_(n -> infinity) cos^(2n)(m! pi x))$.
+]
+
+#P[2][
+  *Thomae's function* (Modified Dirichlet): $f(p/q) = 1/q$ (lowest terms),
+  $f("irrational") = 0$.
+  _Properties_: bounded; continuous at every irrational (hence almost everywhere);
+  discontinuous at every rational; Riemann integrable with $integral_0^1 f = 0$;
+  discontinuities are countable (measure 0). Shows the Lebesgue Integrability
+  Condition in action.
+]
+
+#P[3][
+  $f(x) = x sin(1/x)$, $f(0) = 0$.
+  _Properties_: continuous everywhere; uniformly continuous on $[0, 1]$;
+  NOT Lipschitz at $0$ (oscillates arbitrarily steeply); NOT differentiable at $0$.
+]
+
+#P[4][
+  $f(x) = x^2 sin(1/x)$, $f(0) = 0$.
+  _Properties_: differentiable everywhere; $f'(0) = 0$;
+  $f'(x) = 2x sin(1/x) - cos(1/x)$ for $x != 0$;
+  $f' arrow.not 0$ as $x -> 0$, so $f'$ is NOT continuous at $0$
+  ($f$ is differentiable but $f' in.not C^1$).
+]
+
+#P[5][
+  $f_n(x) = x^n$ on $[0, 1]$.
+  Pointwise limit: $f(x) = 0$ for $x < 1$, $f(1) = 1$ (discontinuous).
+  Convergence is NOT uniform: $norm(f_n - f)_infinity = 1$ for all $n$.
+  Shows the uniform limit of continuous functions need not hold under pointwise convergence.
+]
+
+#P[6][
+  *Weierstraß function*: $W(x) = sum_(n=0)^infinity (1/2)^n cos(3^n pi x)$.
+  Continuous everywhere, nowhere differentiable
+  ($norm(f_n - f)_infinity -> 0$ by the Weierstraß $M$-test, but derivatives blow up).
+  Limit of smooth functions can fail to be smooth.
+]
+
+#P[7][
+  $f(x) = sqrt(x)$ on $[0, 1]$.
+  Uniformly continuous (compact domain and continuous).
+  NOT Lipschitz at $0$: $abs(sqrt(x) - 0) / abs(x - 0) = 1/sqrt(x) -> infinity$.
+  Shows uniform continuity $arrow.double.not$ Lipschitz.
+]
+
+#P[8][
+  $f(x) = 1/x$ on $(0, 1)$.
+  Continuous. NOT uniformly continuous ($delta$ must depend on position;
+  Cauchy sequences map to non-Cauchy sequences). NOT bounded.
+  Shows $f : (a, b) -> RR$ is uniformly continuous if and only if it extends continuously to $[a, b]$.
+]
+
+#P[9][
+  $f(x) = abs(x)$.
+  Uniformly continuous; Lipschitz (constant $K = 1$);
+  NOT differentiable at $0$.
+  Shows Lipschitz $arrow.double.not$ differentiable.
+]
+
+#P[10][
+  If $abs(f(x) - f(y)) <= (x - y)^2$ for all $x, y$, then
+  $f'(x) = lim_(h -> 0) (f(x + h) - f(x))/h = 0$ everywhere,
+  so $f$ is constant.
+]
+
+#P[11][
+  The alternating harmonic series $sum (-1)^n / n$ converges
+  (by the alternating series test) but NOT absolutely (since $sum 1/n$ diverges).
+  Any real number can be achieved by rearrangement (Riemann Rearrangement Theorem).
+]
+
+== Property Constructions (No Proof)
+
+- *Continuous, not uniformly continuous*:
+  $f(x) = x^2$ on $RR$; or $sin(1/x)$ on $(0, 1]$.
+
+- *Uniformly continuous, not Lipschitz*:
+  $f(x) = sqrt(x)$ on $[0, 1]$.
+
+- *Lipschitz, not differentiable*:
+  $f(x) = abs(x)$ (constant $K = 1$).
+
+- *Pointwise convergent, not uniformly convergent*:
+  $f_n(x) = x^n$ on $[0, 1]$.
+
+- *Uniformly convergent, but derivatives may not converge*:
+  $f_n(x) = sin(n x)/n -> 0$ uniformly, but $f_n'(x) = cos(n x) arrow.not 0$.
+
+- *Bounded, not integrable*:
+  Dirichlet function $D(x)$.
+
+- *Integrable, not continuous (even with dense discontinuities)*:
+  Thomae's function.
+
+- *Integrable $f$, injective $g$, but $f compose g$ not integrable*:
+  Take $f$ = Thomae (discontinuous on $QQ$) and $g$ a bijection mapping
+  irrationals to rationals (e.g. Cantor-based);
+  $f compose g$ is $0$ on irrationals, $1/q$ on images of rationals ---
+  can be made non-integrable.
+
+- *Sequence with $limsup != liminf$*:
+  ${(-1)^n}$: $limsup = 1$, $liminf = -1$.
+
+- *Limit comparison test failure*:
+  $sum 1/n$ and $sum 1/n^2$: ratio $-> infinity$, both diverge/converge differently ---
+  shows the limit comparison test requires $0 < L < infinity$.
+
+== Quick Reference: Implications
+
+- Lipschitz $=>$ Uniformly continuous $=>$ Continuous
+- Differentiable $=>$ Continuous
+- Uniformly convergent $=>$ Pointwise convergent
+- Absolutely convergent $=>$ Convergent
+- Closed $+$ bounded $<==>$ Sequentially compact
+- Continuous $=>$ Integrable
+
+None of these reverse in general.
