@@ -1,7 +1,7 @@
 #import "@local/ethan-standard-style:0.1.0": *
 #show: ekactl-style.with(
   section-number: 4,
-  title: "[v2.4] Real analysis"
+  title: "[v2.5] Real analysis"
 )
 
 #import "@preview/cetz:0.4.2"
@@ -66,22 +66,18 @@
 
 #definition(title: [Injective])[
   A function $f$ is #defname[injective] or #defname[one-to-one] iff:
-  - $f(a) = f(b) => a = b$, or equivalently
+  - $f(a) = f(b) => a = b$, or equiv.
   - $a != b => f(a) != f(b)$
 ]
 
 #definition(title: [Surjective])[
   A function $f : A to B$ is #defname[surjective] or #defname[onto] iff:
-  - $f(A) = B$ (its image is its codomain), or equivalently
+  - $f(A) = B$ (its image is its codomain), or equiv.
   - for every $b in B$ there exists $a in A$ s.t. $f(a) = b$
 ]
 
 #theorem[
-  Composition of relations preserves the following properties:
-  - function
-  - injective
-  - surjective
-  - continuous
+  Composition of relations preserves the following properties: function, injective, surjective, continuous.
 ]
 
 = Fields and order
@@ -150,12 +146,7 @@
 == Topology of the reals
 
 #definition(title: [Open set])[
-  The following are #defname[open]:
-  - The empty set
-  - Open intervals
-  - Unions of open sets
-  - Finite intersections of open sets
-  - The whole space
+  The following are #defname[open]: the empty set, open intervals, unions of open sets, finite intersections of open sets, the whole space.
 
   A set is #defname[closed] if it is the complement of an open set.
 
@@ -1039,12 +1030,17 @@ Note - monotonic does not require strictly increasing/decreasing, it can be stab
 ]
 
 #P[11][
-  The alternating harmonic series $sum (-1)^n / n$ converges
+  *Alternating harmonic series*: $sum (-1)^n / n$ converges
   (by the alternating series test) but NOT absolutely (since $sum 1/n$ diverges).
   Any real number can be achieved by rearrangement (Riemann Rearrangement Theorem).
 ]
 
-== Property Constructions (No Proof)
+#P[12][
+  *Topologist's sine curve*: $f(x) = sin(1/x)$ on $(0, 1]$.
+  _Properties_: continuous on $(0, 1]$; NOT uniformly continuous on $(0, 1]$. Differentiable on $(0, 1]$; NOT differentiable at $0$. Integrable on $[0, 1]$ (with arbitrary value of $f(0)$).
+]
+
+== Property Constructions
 
 - *Continuous, not uniformly continuous*:
   $f(x) = x^2$ on $RR$; or $sin(1/x)$ on $(0, 1]$.
@@ -1082,11 +1078,20 @@ Note - monotonic does not require strictly increasing/decreasing, it can be stab
 
 == Quick Reference: Implications
 
+Functions:
+
 - Lipschitz $=>$ Uniformly continuous $=>$ Continuous
-- Differentiable $=>$ Continuous
+- Differentiable $=>$ Continuous $=>$ Integrable
+- Continuous + compact domain $=>$ Uniformly continuous
+
+Sequences:
 - Uniformly convergent $=>$ Pointwise convergent
 - Absolutely convergent $=>$ Convergent
 - Closed $+$ bounded $<==>$ Sequentially compact
-- Continuous $=>$ Integrable
 
-None of these reverse in general.
+== Contents
+
+1 Basics 2 Fields and order 3 Sequences 4 Series \
+5 Limits and continuity 6 Derivatives 7 Integrals \
+8 Sequences of functions 9 Picard's theorem \
+10 Lebesgue integrability criterion
