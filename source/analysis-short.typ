@@ -1,7 +1,7 @@
 #import "@local/ethan-standard-style:0.1.0": *
 #show: ekactl-style.with(
   section-number: 4,
-  title: "[v2.2] Real analysis"
+  title: "[v2.3] Real analysis"
 )
 
 #import "@preview/cetz:0.4.2"
@@ -168,11 +168,13 @@
 
 == Absolute values
 
-#theorem(title: [Corollaries of the Triangle Inequality])[
-  For any $x, y in Reals$:
+#theorem(title: [Triangle Inequality])[
+  For any $x, y in Reals$ or ${x_n} subset Reals$, or integrable $f$:
   $ abs(x + y) &<= abs(x) + abs(y) \
   abs(x - y) &<= abs(x) + abs(y) \
-  abs(abs(x) + abs(y)) &<= abs(x - y) $
+  abs(abs(x) - abs(y)) &<= abs(x - y) \
+  abs(x_1 + x_2 + dots.c + x_n) &<= abs(x_1) + abs(x_2) + dots.c + abs(x_n) \
+  abs(int_a^b f(x) d x) &<= int_a^b abs(f(x)) d x $
 ]
 
 = Sequences
@@ -306,7 +308,7 @@ Note - monotonic does not require strictly increasing/decreasing, it can be stab
 #theorem(title: [Bolzano-Weierstrass for Sequences])[
   Every bounded sequence of real numbers (or in $Reals^n$) has a convergent subsequence.
 
-  In topology terms, a subset of $Reals^n$ is sequentially compact iff it is closed and bounded.
+  In topology terms, a subset of $Reals^n$ is sequentially compact (every sequence has a convergent subsequence) and compact (every open cover has a finite subcover) iff it is closed and bounded.
 ]
 
 #definition(title: [Open ball])[
