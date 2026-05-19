@@ -1,7 +1,7 @@
 #import "@local/ethan-standard-style:0.1.0": *
 #show: ekactl-style.with(
   section-number: 4,
-  title: "[v2.1] Real analysis"
+  title: "[v2.2] Real analysis"
 )
 
 #import "@preview/cetz:0.4.2"
@@ -753,6 +753,11 @@ Note - monotonic does not require strictly increasing/decreasing, it can be stab
 
 #definition[
   $ int_a^b f(x) d x := -int_b^a f(x) d x. $
+]
+
+#theorem(title: [Integration by parts])[
+  If $u$ and $v$ are integrable and have continuous derivatives,
+  $ int_a^b u(x) v'(x) d x = [u(x) v(x)]_a^b - int_a^b u'(x) v(x) d x. $
 ]
 
 == Integrals of continuous functions
