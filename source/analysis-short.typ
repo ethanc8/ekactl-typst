@@ -1,10 +1,12 @@
 #import "@local/ethan-standard-style:0.1.0": *
 #show: ekactl-style.with(
   section-number: 4,
-  title: "[v2.5] Real analysis"
+  title: "[v2.6] Real analysis"
 )
 
 #import "@preview/cetz:0.4.2"
+
+#set text(size: 10pt)
 
 #let seeline(it) = []
 
@@ -1091,7 +1093,4 @@ Sequences:
 
 == Contents
 
-1 Basics 2 Fields and order 3 Sequences 4 Series \
-5 Limits and continuity 6 Derivatives 7 Integrals \
-8 Sequences of functions 9 Picard's theorem \
-10 Lebesgue integrability criterion
+#outline(title: none)
