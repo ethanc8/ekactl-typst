@@ -1,7 +1,7 @@
 #import "@local/ethan-standard-style:0.1.0": *
 #show: ekactl-style.with(
   section-number: 4,
-  title: "[v2.3] Real analysis"
+  title: "[v2.4] Real analysis"
 )
 
 #import "@preview/cetz:0.4.2"
@@ -954,7 +954,7 @@ Note - monotonic does not require strictly increasing/decreasing, it can be stab
 == Lebesgue integrability condition
 
 #theorem(title: [Lebesgue Integrability Condition])[
-  $f : [a, b] to Reals$ is Riemann-integrable iff it is bounded and its set of discontinuities has measure 0.
+  $f : S to Reals$, where $S$ is compact (closed and bounded), is Riemann-integrable iff it is bounded and its set of discontinuities has measure 0.
 ]
 
 #corollary[
