@@ -324,3 +324,44 @@ The most useful notation for a line is in parametric form:
   If $n$ is normal to both planes, and $P_1 in Pi_1$ and $P_2 in Pi_2$, then the answer is
   $ |op("proj")_n arrow(P_1 P_2)| $
 ]
+
+= Functions and quadric surfaces
+
+== Functions of two variables
+
+#see[#link("file:///home/ethan/Projects/UIUC/ProficiencyExam/MATH241-MVC/Calculus%20Early%20Transcendentals%209th%20Edition%20by%20James%20Stewart,%20Daniel%20K.%20Clegg,%20Saleem%20Watson,%20Lothar%20Redlin.pdf#page=934")[Stewart [12.6]]]
+
+#see[Colley [2.1], Trimm [3.1, 3.2], Brummet [MVCWUP:Feb4(35-41)]]
+
+#definition(title: [Function])[
+  All functions $f : X to Y$ are defined by:
+  - A domain set $X$
+  - A codomain set $Y$
+  - A rule of assignment that associates a unique element $y in Y$ to each element $x in X$
+]
+
+#definition(title: [Graph])[
+  The graph of $f : X subset.eq Reals^n to Reals$ is the set
+  $ {(x_1, dots, x_n, f(x)) : x = (x_1, dots, x_n)} $
+  Specifically, for $f : Reals^2 to Reals$ the graph is the set
+  $ {(x, y, z) : (x, y) in X "and" z = f(x, y)} $
+]
+
+#definition(title: [Level set])[
+  Let $f : X subset.eq Reals^n to Reals$. The *level set at height $c$ of $f$* is the set in $Reals^n$ defined by the equation $f(arrow(a)) = c$, where $c$ is a constant. This is equivalent to the set
+  $ { arrow(x) in Reals^n : f(arrow(x)) = c } $
+
+  In $Reals^2$, this is also called a *level curve*.
+]
+
+#definition(title: [Contour set])[
+  Let $f : X subset.eq Reals^n to Reals$. The *contour set at height $c$ of $f$* is the set in $Reals^(n+1)$ defined by the two equations $z = f(arrow(a))$ and $z = c$, where $c$ is a constant. This is equivalent to the set
+  $ { arrow(x) in Reals^(n+1) : z = f(arrow(x)) = c } $
+
+  If $f : X subset.eq Reals^2 to Reals$, this is also called a *contour curve*. It is equivalent to the level curve, except it is located in $Reals^3$ rather than $Reals^2$.
+]
+
+= Limits
+
+= Differentiation
+
