@@ -1130,3 +1130,39 @@ $
   For any set $X$, $abs(X) < abs(powerset(X))$.
 ]
 
+= Graphs
+
+#definition(title: [Graph])[
+  A graph consists of a set of nodes $V$ and edges $E$. Each edge is an unordered pair of nodes. If ${x, y}$ is an edge, it is considered to be an edge between nodes $x$ and $y$, and $x$ and $y$ are called #defname[neighbors] and #defname[adjacent].
+]
+
+#definition(title: [Degree])[
+  The degree of a node $v$, written $deg(v)$, is the number of edges which end at $v$.
+]
+
+#theorem(title: [Handshaking Theorem])[
+  The sum of the degrees of all of the nodes of a graph is twice the number of edges of the graph:
+
+  $ sum_(v in V) deg(V) = 2 abs(E). $
+]
+
+#definition(title: [Complete graph])[
+  The complete graph on $n$ nodes, denoted $K_n$, is the graph with $n$ nodes in which each node is connected to every other node.
+
+  The number of edges in $K_n$ is
+  $ sum_(k=1)^n (n - k) = sum_(k=0)^(n - 1) k = (n(n-1))/2. $
+]
+
+#definition(title: [Cycles and wheels])[
+  For any $n > 3$, $C_n$, the #defname[cycle graph] with $n$ nodes, is the graph with $n$ nodes $v_1, ..., v_n$ with an edge between each $v_i$ to $v_(i + 1)$, plus an edge from $v_n$ to $v_1$, resulting in $n$ edges:
+  #image("image-21.png")
+
+  $W_n$, the #defname[wheel] with $n + 1$ nodes ($n$ "exterior" nodes), is like $C_n$ except with an extra hub connected to all the others, resulting in $2n$ edges:
+  #image("image-22.png")
+]
+
+#definition(title: [Isomorphism])[
+  
+]
+
+
