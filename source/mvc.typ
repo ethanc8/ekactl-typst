@@ -361,6 +361,72 @@ The most useful notation for a line is in parametric form:
   If $f : X subset.eq Reals^2 to Reals$, this is also called a *contour curve*. It is equivalent to the level curve, except it is located in $Reals^3$ rather than $Reals^2$.
 ]
 
+== Quadric surfaces
+
+#see[#link("https://nathandunfield.github.io/quadrics/index.html")]
+
+#definition(title: [Elliptic paraboloid])[
+  The graph of the equation
+  $ z = A x^2 + B y^2 $
+  where $A$ and $B$ have the same sign.
+
+  The vertical cross-sections are parabolas, while the horizontal cross-sections are ellipses. Increasing $abs(A)$ makes it steeper in the $x$-direction, while increasing $abs(B)$ makes it steeper in the $y$-direction.
+
+  #image("image-23.png")
+]
+
+#definition(title: [Hyperbolic paraboloid])[
+  The graph of the equation
+  $ z = A x^2 + B y^2 $
+  where $A$ and $B$ have opposite sides.
+
+  The vertical cross-sections are parabolas, while the horizontal are hyperbolas. Increasing $abs(A)$ makes it steeper in the $x$-direction, while increasing $abs(B)$ makes it steeper in the $y$-direction.
+
+  #image("image-24.png")
+]
+
+#definition(title: [Ellipsoid])[
+  The graph of the equation
+  $ (x^2)/(A^2) + (y^2)/(B^2) + (z^2)/(C^2) = 1. $
+
+  All of its cross-sections are ellipses.
+
+  Increasing $abs(A)$ makes it wider in the $x$-direction, $abs(B)$ makes it wider in the $y$-direction, and $abs(C)$ makes it wider in the $z$-direction.
+
+  #image("image-26.png")
+]
+
+#definition(title: [Double cone])[
+  The graph of the equation
+  $ z^2 = A x^2 + B y^2. $
+
+  The vertical cross-sections are hyperbolas, and the horizontal cross-sections are ellipses. Some of its diagonal cross-sections ara parabolas. All of its cross-sections are called #defname[conic sections].
+
+  Increasing $abs(A)$ makes it steeper in the $x$-direction, while increasing $abs(B)$ makes it steeper in the $y$-direction.
+
+  #image("image-27.png")
+]
+
+#definition(title: [Hyperboloid of one sheet])[
+  The graph of the equation
+  $ (x^2)/(A^2) + (y^2)/(B^2) - (z^2)/(C^2) = 1. $
+
+  The vertical cross-sections are hyperbolas, and the horizontal cross-sections are ellipses. Increasing $abs(A)$ makes it wider in the $x$-direction, while increasing $abs(B)$ makes it wider in the $y$-direction. Increasing $abs(C)$ makes it wider in both directions. $abs(A)$ and $abs(B)$ affect the "hole" in the middle while $abs(C)$ does not.
+
+  #image("image-28.png")
+]
+
+#definition(title: [Hyperboloid of two sheets])[
+  The graph of the equation
+  $ - (x^2)/(A^2) - (y^2)/(B^2) + (z^2)/(C^2) = 1. $
+
+  It can be distinguished from the hyperboloid of one sheet by the fact that it is missing some cross-sections; an easy way to check is to check the cross-sections at $x = 0$, $y = 0$, and $z = 0$.
+
+  The vertical cross-sections are hyperbolas, and the horizontal cross-sections (where they exist) are ellipses. Increasing $abs(A)$ makes it wider in the $x$-direction, while increasing $abs(B)$ makes it wider in the $y$-direction. Increasing $abs(C)$ makes it wider in both directions. $abs(A)$ and $abs(B)$ do not affect the "gap" between the top and bottom "sheets", while $abs(C)$ does affect the gap.
+
+  #image("image-29.png")
+]
+
 = Limits
 
 = Differentiation
