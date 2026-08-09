@@ -64,6 +64,7 @@
 #let int = math.integral
 
 #set math.vec(delim: "[")
+#set math.mat(delim: "[")
 
 #let infty = math.infinity
 
@@ -72,6 +73,8 @@
 #let cross = math.times
 
 #let detmat(..rows) = math.mat(..rows, delim: "|")
+
+#let grad = math.nabla
 
 = Vectors
 
@@ -237,6 +240,18 @@
   Consider the parallelepiped determined by $vn(a), vn(b), vn(c) in Reals^3$, shown above. The area of its base is $abs(b cross c)$. Let $theta$ be the angle between $a$ and $b cross c$; then, its height is $abs(a) abs(cos theta)$. Thus, the volume of the parallelepiped is
 
   $ V = A h = abs(b cross c) abs(a) abs(cos theta) = abs(a times (b cross c)). $
+]
+
+== Useful properties
+
+#theorem(title: [Cauchy-Schwarz inequality])[
+  For all $vn(x), vn(y) in Reals^n$,
+  $ abs(vn(x) dot vn(y)) <= abs(vn(x)) abs(vn(y)). $
+]
+
+#theorem(title: [Triangle inequality])[
+  For all $vn(x), vn(y) in Reals^n$,
+  $ abs(vn(x) + vn(y)) <= abs(vn(x)) + abs(vn(y)). $
 ]
 
 = Lines and planes
@@ -429,5 +444,194 @@ The most useful notation for a line is in parametric form:
 
 = Limits
 
+#definition(title: [Limit])[
+  If $f : X to Reals$, where $X subset.eq Reals^n$, then $lim_(x to a) f(vn(x)) = L$ iff for every $epsilon > 0$ there exists $delta > 0$ s.t. $vn(x) in X$ and $0 < abs(vn(x) - vn(a)) < delta$ implies $abs(f(vn(x)) - L) < epsilon$.
+]
+
+*Warning:* The limit might be different along different paths to $vn(a)$! If different paths result in different limits, then there is no limit.
+
+#definition(title: [Continuity])[
+  If $f : X to Reals$, where $X subset.eq Reals^n$, then $f$ is #defname[continuous] at $vn(a)$ iff
+  $ lim_(vn(x) to vn(a)) f(vn(x)) = f(vn(a)). $
+
+  $f$ is #defname[continuous] on $X$ iff $f$ is continuous at every $vn(a) in X$.
+]
+
+#theorem(title: [Limit laws])[
+  $ lim_(vn(x) to vn(a)) f(vn(x)) + g(vn(x)) &= lim_(vn(x) to vn(a)) f(vn(x)) + lim_(vn(x) to vn(a)) g(vn(x)) \
+  lim_(vn(x) to vn(a)) f(vn(x)) g(vn(x)) &= (lim_(vn(x) to vn(a)) f(vn(x)))(lim_(vn(x) to vn(a)) g(vn(x))) \
+  lim_(vn(x) to vn(a)) f(vn(x))/g(vn(x)) &= (lim_(vn(x) to vn(a)) f(vn(x)))/(lim_(vn(x) to vn(a)) g(vn(x))) \ $
+]
+
+#theorem(title: [Squeeze theorem])[
+  If
+  - $g(vn(x)) <= f(vn(x)) <= h(vn(x))$ for all $vn(x)$ in an open ball containing $vn(a)$, except possibly at $vn(a)$ itself, and
+  - $lim_(vn(x) to vn(a)) g(vn(x)) = lim_(vn(x) to vn(a)) h(vn(x)) = L$,
+  then $lim_(vn(x) to vn(a)) f(vn(x)) = L$.
+]
+
+
 = Differentiation
+
+== Partial derivatives
+
+#see[Colley [2.3, 2.4], Trimm [3.4, DiffEq-1.0], Brummet [11, 12.5, MVCWUP:Feb12/22(48-54)]]
+
+#see[NMD [8, 9], Stewart []]
+
+#definition(title: [Partial derivative with respect to $x$])[
+  The partial derivative of $f(x, y)$ with respect to $x$ is
+  $ lim_(h to 0) (f(a + h, b) - f(a, b))/h $
+
+  Let $z = f(x, y)$. Then the partial derivative is denoted by
+  $ f_x (x, y) = f_x = (partial f)/(partial x) = partial/(partial x) f(x, y) = (partial z)/(partial x) = D_x f $
+]
+
+#definition(title: [Partial derivative])[
+  The partial derivative of $f(arrow(x))$ with respect to the $i$th variable is
+  $ (partial f(arrow(x)))/(partial x_i) = lim_(h to 0) (f(vec(x_0, dots.v, x_i + h, dots.v, x_n)) - f(arrow(x)))/h $
+
+  This is equivalent to letting $F(x_i) = f(arrow(x))$ and finding $F'(x_i)$.
+]
+
+#definition(title: [Higher-order partial])[
+  The result of taking the partial derivative of a partial derivative, which may be higher-order.
+
+  A partial derivative that is not higher-order is called a *first-order partial*. A partial derivative of a first-order partial is a second-order partial, a partial derivative of a second-order partial is a third-order partial, etc.
+
+  A higher-order partial which is the result of taking the partial with respect to $x_1$, then with respect to $x_2$, then with respect to $x_3, dots, x_n$, is denoted by
+  $ f_(x_1 dots x_n) = partial/(partial x_n) dots partial/(partial x_1) f $
+
+  $x_1 dots x_n$ do not have to be distinct. If $x_1 dots x_n$ are not all the same then the higher-order partial is called a *mixed partial derivative*.
+]
+
+#definition(title: [$C^k$ function])[
+  Where $k$ is a nonnegative integer, a function $f : X in Reals^n to Reals$ is of order $C^k$ at point $arrow(x) in X$ iff its $k$-th order and lower partials exist and are continuous at $arrow(x)$.
+
+  It is of order $C^infty$ at point $arrow(x)$ iff it is of order $C^k$ at $arrow(x)$ for all $k in Naturals$.
+
+  It is of order $C^k$ iff it is of order $C^k$ at all $x in arrow(x)$.
+]
+
+#theorem[
+  Let $f : X in Reals^n to Reals$ whose $k$-th order and lower partials exist and are continuous on $X$. Then its $k$-th order and lower partials may be evaluated in any order, i.e.
+  $ f_(x_1 dots x_n) = f_(x_n dots x_1) = f_(x_1 x_3 x_27 dots x_4) = dots $
+]
+
+#definition(title: [Gradient])[
+  $ grad f(arrow(x)) = vec((partial f(x))/(partial x_1), dots.v, (partial f(x))/(partial x_n)) $
+]
+
+== Differentiability
+
+#see[Colley [2.3], Trimm [3.5], Brummet [13.5]]
+
+#see[Stewart [14.4], NMD [9]]
+
+#definition(title: [Linear map])[
+  $f : Reals^n to Reals$ is a #defname[linear map] iff $f(vn(x)) = A vn(x)$ for some $1 times n$ constant matrix $A$.
+]
+
+#definition(title: [Affine map])[
+  $f : Reals^n to Reals$ is a #defname[affine map] iff $f(vn(x)) = A vn(x)+ b$ for some $1 times n$ constant matrix $A$ and constant scalar $b in Reals$.
+
+  The #defname[differential] of an affine function is the associated linear function $d f(vn(x)) = A vn(x)$.
+
+  An affine function $f : Reals to Reals$ is of the form $f(x) = a x + b$. Its differential is $d f(x) = a x$.
+
+  An affine function $f : Reals^3 to Reals$ is of the form $f(x) = a x + b y + c z + d$. Its differential is $d f(x) = a x + b y + c z$.
+]
+
+#definition(title: [Differential])[
+  The #defname[differential] of $f : Reals to Reals$ at $a$ is
+  $ d f_a (x) := f'(a) x. $
+
+  The differential of $f : Reals^n to Reals$ is
+  $ grad f(arrow(a)) dot (arrow(x) - arrow(a)) = sum (partial f_i)/(partial x_i) (Delta x_i) = sum (partial f_i)/(partial x_i) (x_i - a_i). $
+]
+
+#definition[
+  Let $f : Reals to Reals$ and $y = f(x)$. For small values of $Delta x$, $Delta y approx d f_a (Delta x) = f'(a) Delta x$:
+
+  #image("image-31.png")
+
+  For the sake of convenience, we define $d x := Delta x$ and 
+  $ d y := d f_a (d x) = f'(a) d x = (d y)/(d x) d x. $
+
+  The #defname[linear approximation] of $f$ at $a$ is
+  $ f(a + Delta x) approx h(x) :&= f(a) + f'(a) Delta x \
+  &= f(a) + f'(a) (x - a) \
+  &= f(a) + d y. $
+]
+
+#definition(title: [Linear approximation ($Reals^n to Reals$)])[
+  The *linear approximation* or *tangent plane ($Reals^3$) or hyperplane* to the graph of a function $f$ at the point $arrow(a)$ is expressed by
+  $ L(arrow(x)) = f(arrow(a)) + grad f(arrow(a)) dot (arrow(x) - arrow(a)) $
+
+  In $Reals^3$, this is equivalent to the plane
+  $ z = L(x, y) &= f(a, b) + f_x (a, b) (x - a) + f_y (a, b) (y - b) \
+  &= f(vn(a)) + f_x (vn(a)) Delta x + f_y (vn(a)) Delta y. $
+]
+
+#definition(title: [Linear approximation ($Reals^n to Reals^m$)])[
+  The *linear approximation* to a vector-valued function $f$ at the point $arrow(a)$ is expressed by
+  $ L(arrow(x)) = f(arrow(a)) + D f(arrow(a))(arrow(x) - arrow(a)) $
+]
+
+#definition(title: [Differentiability])[
+  Let $f : X subset.eq Reals^n to Reals^m$, where $X$ is an open subset of $Reals^n$, and let $arrow(a) in X$. $f$ is differentiable at $a$ iff all of its partial derivatives exist and
+  $ lim_(arrow(x) to arrow(a)) (f(arrow(x)) - L(arrow(x)))/(|arrow(x) - arrow(a)|) = 0 $
+  where $L(arrow(x))$ is the linear approximation to $f$ at $arrow(a)$.
+
+  If $f : Reals^3 to Reals$, then we can instead say $f$ is differentiable iff
+  $ lim_(vn(x) to vn(a)) (Delta z - (f_x (vn(a)) Delta x + f_y (vn(a)) Delta y))/(vn(x) - vn(a)) = 0. $
+]
+
+#theorem[
+  Differentiability implies continuity.
+]
+
+#theorem(title: [Differentiability shortcut])[
+  Let $f : X subset.eq Reals^n to Reals^m$ be a vector-valued function. If all partial derivatives $(partial f_i)/(partial x_j)$ exist and are continuous in an open ball around $arrow(a)$ in $X$, then $F$ is differentiable at $arrow(a)$.
+]
+
+== Chain rule
+
+#see[Colley [2.5], Trimm [3.8, 6.5, DiffEq-1.0], Brummet [12, MVCWUP:Feb24(58-61)]]
+
+#definition(title: [Jacobian])[
+  If $f : X subset.eq Reals^n to Reals^m$ is a vector-valued function, then the Jacobian is
+  $ D f(vec(x_1, x_2, dots.v, x_n)) = vec(grad f_1, grad f_2, dots.v, grad f_m) = mat(
+    (partial f_1)/(partial x_1), (partial f_1)/(partial x_2), dots.h, (partial f_1)/x_n;
+    (partial f_2)/(partial x_1), (partial f_2)/(partial x_2), dots.h, (partial f_2)/x_n;
+    dots.v, dots.v, dots.down, dots.v;
+    (partial f_m)/(partial x_1), (partial f_m)/(partial x_2), dots.h, (partial f_m)/x_n;
+  ) $
+]
+
+#theorem(title: [Multivariable chain rule])[
+  Suppose $X subset.eq Reals^m$ and $T subset.eq Reals^n$ are open and $f : X subset.eq Reals^m to Reals^p$ and
+  $r : T subset.eq Reals^n to Reals^m$ are defined so that $r(T) subset.eq X$. We wish to find the derivative of
+
+  $ f compose r : T subset.eq Reals^n to Reals^m to Reals^p. $
+
+  If $r$ is
+  differentiable at $t_0 in T$ and $f$ is differentiable at $x_0 = r(t_0)$, then
+  the composite $f compose r$ is differentiable at $t_0$, and we have
+  $ D(f compose r)(t_0) = D f(x_0) D r(t_0). $
+
+  When $p = 1$ and $n = 1$ (i.e. $f compose r : T subset.eq Reals to Reals^m to Reals$), this reduces to
+  $ (f compose r)'(t_0) = grad f(x_0) dot r'(t_0). $
+
+  When $p = 1$ (i.e. $f compose r : T subset.eq Reals^n to Reals^m to Reals$), define $u := f(x_1, dots, x_m)$ where
+  $x_j := r_j (t_1, dots, t_n)$. Then for each $i = 1, 2, dots, n$,
+  $ frac(diff u, diff t_i)
+      = frac(diff u, diff x_1) frac(diff x_1, diff t_i)
+      + frac(diff u, diff x_2) frac(diff x_2, diff t_i)
+      + dots.c
+      + frac(diff u, diff x_m) frac(diff x_m, diff t_i). $
+
+  In $Reals^3$, if $n = 1$, $p = 1$, and $m = 3$ (i.e. $f compose r : T subset.eq Reals to Reals^3 to Reals$), define $(x, y, z) := (x_1, x_2, x_3)$. Then,
+  $ (d (f compose r))/(d t) = (partial f)/(partial x) (d x)/(d t) + (partial f)/(partial y) (d y)/(d t) + (partial f)/(partial z) (d z)/(d t). $
+]
 
