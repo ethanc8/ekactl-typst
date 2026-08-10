@@ -67,7 +67,7 @@
 
 #let infty = math.infinity
 
-#let vn = math.arrow // vec name
+#let vn = math.vn // vn name
 
 #let cross = math.times
 
@@ -106,9 +106,9 @@
 See the properties of fields in the LinAlg notes for definitions of addition and scalar multiplication.
 
 #definition(title: [Displacement vector])[
-  The vector from the end of $arrow(A)$ to the end of $arrow(B)$ when their starts are in the same location.
+  The vector from the end of $vn(A)$ to the end of $vn(B)$ when their starts are in the same location.
 
-  $ arrow(A B) = arrow(B) - arrow(A) $
+  $ vn(A B) = vn(B) - vn(A) $
 ]
 
 === Dot and cross products
@@ -119,17 +119,17 @@ See the properties of fields in the LinAlg notes for definitions of addition and
 ]
 
 #theorem(title: [Properties of dot product])[
-  For $arrow(a), arrow(b), arrow(c) in Reals^n$ and $k in Reals$:
-  - $arrow(a) dot arrow(a) = |arrow(a)|^2$
-  - $arrow(a) dot arrow(a) = 0$ iff $arrow(a) = 0$
-  - Commutativity: $arrow(a) dot arrow(b) = arrow(b) dot arrow(a)$
-  - Distributivity: $arrow(a) dot (arrow(b) + arrow(c)) = arrow(a) dot arrow(b) + arrow(a) dot arrow(c)$
-  - Distributivity: $(k arrow(a)) dot b = k(arrow(a) dot arrow(b)) = a dot (k arrow(b))$
-  - $arrow(a) dot arrow(b) = 0$ iff $a perp b$, $a = 0$, or $b = 0$.
+  For $vn(a), vn(b), vn(c) in Reals^n$ and $k in Reals$:
+  - $vn(a) dot vn(a) = |vn(a)|^2$
+  - $vn(a) dot vn(a) = 0$ iff $vn(a) = 0$
+  - Commutativity: $vn(a) dot vn(b) = vn(b) dot vn(a)$
+  - Distributivity: $vn(a) dot (vn(b) + vn(c)) = vn(a) dot vn(b) + vn(a) dot vn(c)$
+  - Distributivity: $(k vn(a)) dot b = k(vn(a) dot vn(b)) = a dot (k vn(b))$
+  - $vn(a) dot vn(b) = 0$ iff $a perp b$, $a = 0$, or $b = 0$.
 ]
 
 #definition(title: [Cross product])[
-  For $arrow(a), arrow(b) in Reals^3$, the unique vector $a times b$ satisfying
+  For $vn(a), vn(b) in Reals^3$, the unique vector $a times b$ satisfying
   - $|a times b|$ is the area of the parallelogram spanned by $a$ and $b$
   - $a times b = 0$ iff $a parallel b$, $a = 0$, or $b = 0$.
   - $a times b$ is orthogonal to $a$ and $b$.
@@ -146,7 +146,7 @@ See the properties of fields in the LinAlg notes for definitions of addition and
 
 #theorem(title: [Calculation of cross product])[
   Where $a, b in Reals^n$ and $theta$ is the angle between $a$ and $b$:
-  $ a times b &= vec(a_2 b_3 - a_3 b_2, a_3 b_1 - a_1 b_3, a_1 b_2 - a_2 b_1) = mat(delim: "|", hat(i), hat(j), hat(k); a_1, a_2, a_3; b_1, b_2, b_3) \
+  $ a times b &= vn(a_2 b_3 - a_3 b_2, a_3 b_1 - a_1 b_3, a_1 b_2 - a_2 b_1) = mat(delim: "|", hat(i), hat(j), hat(k); a_1, a_2, a_3; b_1, b_2, b_3) \
     &= hat(i) mat(delim: "|", a_2, a_3; b_2, b_3)
     + hat(j) mat(delim: "|", a_1, a_3; b_1, b_3)
     + hat(k) mat(delim: "|", a_1, a_2; b_1, b_2) $
@@ -189,7 +189,7 @@ The most useful notation for a line is in parametric form:
 #definition(title: [Plane])[
   A plane $Pi$ is determined uniquely by a point $P$ in the plane and a normal vector $n$.
 
-  A plane is the set of points $A$ in space such that $arrow(A P)$ is perpendicular to $n$.
+  A plane is the set of points $A$ in space such that $vn(A P)$ is perpendicular to $n$.
 ]
 
 #theorem(title: [Scalar equation for a plane in $Reals^3$])[
@@ -203,7 +203,7 @@ The most useful notation for a line is in parametric form:
 ]
 
 #procedure(title: [Equation of plane containing three points])[
-  If $A, B, C in Reals^3$ are points on our plane, then we can find the normal vector by performing $n = arrow(A B) times arrow(A C) = (B - A) times (C - A)$ (since $arrow(A B)$ and $arrow(A C)$ are vectors on the plane).
+  If $A, B, C in Reals^3$ are points on our plane, then we can find the normal vector by performing $n = vn(A B) times vn(A C) = (B - A) times (C - A)$ (since $vn(A B)$ and $vn(A C)$ are vectors on the plane).
 ]
 
 #theorem(title: [Parametric equation for a plane in $Reals^3$])[
@@ -217,14 +217,14 @@ The most useful notation for a line is in parametric form:
 
 #procedure(title: [Distance between point and line])[
   Let $P$ be the point, and $A + L t$ be the line. Then the distance is
-  $ |arrow(A P) - op("proj")_L arrow(A P)| = arrow(P) $
+  $ |vn(A P) - op("proj")_L vn(A P)| = vn(P) $
 ]
 
 #procedure(title: [Distance between parallel planes])[
   Let $Pi_1$ and $Pi_2$ be the two planes.
 
   If $n$ is normal to both planes, and $P_1 in Pi_1$ and $P_2 in Pi_2$, then the answer is
-  $ |op("proj")_n arrow(P_1 P_2)| $
+  $ |op("proj")_n vn(P_1 P_2)| $
 ]
 
 === Cylindrical and spherical coordinates
@@ -269,15 +269,15 @@ The most useful notation for a line is in parametric form:
 ]
 
 #definition(title: [Level set])[
-  Let $f : X subset.eq Reals^n to Reals$. The *level set at height $c$ of $f$* is the set in $Reals^n$ defined by the equation $f(arrow(a)) = c$, where $c$ is a constant. This is equivalent to the set
-  $ { arrow(x) in Reals^n : f(arrow(x)) = c } $
+  Let $f : X subset.eq Reals^n to Reals$. The *level set at height $c$ of $f$* is the set in $Reals^n$ defined by the equation $f(vn(a)) = c$, where $c$ is a constant. This is equivalent to the set
+  $ { vn(x) in Reals^n : f(vn(x)) = c } $
 
   In $Reals^2$, this is also called a *level curve*.
 ]
 
 #definition(title: [Contour set])[
-  Let $f : X subset.eq Reals^n to Reals$. The *contour set at height $c$ of $f$* is the set in $Reals^(n+1)$ defined by the two equations $z = f(arrow(a))$ and $z = c$, where $c$ is a constant. This is equivalent to the set
-  $ { arrow(x) in Reals^(n+1) : z = f(arrow(x)) = c } $
+  Let $f : X subset.eq Reals^n to Reals$. The *contour set at height $c$ of $f$* is the set in $Reals^(n+1)$ defined by the two equations $z = f(vn(a))$ and $z = c$, where $c$ is a constant. This is equivalent to the set
+  $ { vn(x) in Reals^(n+1) : z = f(vn(x)) = c } $
 
   If $f : X subset.eq Reals^2 to Reals$, this is also called a *contour curve*. It is equivalent to the level curve, except it is located in $Reals^3$ rather than $Reals^2$.
 ]
@@ -289,13 +289,13 @@ The most useful notation for a line is in parametric form:
 #see[Trimm [3.3, DiffEq-1.0], Brummet [09, MVCWUP:Feb11(42-46)], Colley [2.2]]
 
 #definition(title: [Limit])[
-  $lim_(arrow(x) to arrow(a)) f(arrow(x)) = arrow(L)$ if for all $epsilon > 0$, there exists $delta > 0$ s.t. if $0 < |arrow(x) - arrow(a)| < delta$ then $|f(arrow(a)) - arrow(L)| < epsilon$.
+  $lim_(vn(x) to vn(a)) f(vn(x)) = vn(L)$ if for all $epsilon > 0$, there exists $delta > 0$ s.t. if $0 < |vn(x) - vn(a)| < delta$ then $|f(vn(a)) - vn(L)| < epsilon$.
 ]
 
 #definition(title: [Continuity])[
-  Let $f : X subset.eq Reals^n to Reals^m$ and let $arrow(a) in X$. Then $f$ is continuous at point $arrow(a)$ iff
-  $ lim_(arrow(x) to arrow(a)) f(arrow(x)) = f(arrow(a)) $
-  If $f$ is continuous at all $arrow(a) in X$, then we say that $f$ is continuous.
+  Let $f : X subset.eq Reals^n to Reals^m$ and let $vn(a) in X$. Then $f$ is continuous at point $vn(a)$ iff
+  $ lim_(vn(x) to vn(a)) f(vn(x)) = f(vn(a)) $
+  If $f$ is continuous at all $vn(a) in X$, then we say that $f$ is continuous.
 ]
 
 === Differentiation
@@ -311,10 +311,10 @@ The most useful notation for a line is in parametric form:
 ]
 
 #definition(title: [Partial derivative])[
-  The partial derivative of $f(arrow(x))$ with respect to the $i$th variable is
-  $ (partial f(arrow(x)))/(partial x_i) = lim_(h to 0) (f(vec(x_0, dots.v, x_i + h, dots.v, x_n)) - f(arrow(x)))/h $
+  The partial derivative of $f(vn(x))$ with respect to the $i$th variable is
+  $ (partial f(vn(x)))/(partial x_i) = lim_(h to 0) (f(vn(x_0, dots.v, x_i + h, dots.v, x_n)) - f(vn(x)))/h $
 
-  This is equivalent to letting $F(x_i) = f(arrow(x))$ and finding $F'(x_i)$.
+  This is equivalent to letting $F(x_i) = f(vn(x))$ and finding $F'(x_i)$.
 ]
 
 #definition(title: [Higher-order partial])[
@@ -329,11 +329,11 @@ The most useful notation for a line is in parametric form:
 ]
 
 #definition(title: [$C^k$ function])[
-  Where $k$ is a nonnegative integer, a function $f : X in Reals^n to Reals$ is of order $C^k$ at point $arrow(x) in X$ iff its $k$-th order and lower partials exist and are continuous at $arrow(x)$.
+  Where $k$ is a nonnegative integer, a function $f : X in Reals^n to Reals$ is of order $C^k$ at point $vn(x) in X$ iff its $k$-th order and lower partials exist and are continuous at $vn(x)$.
 
-  It is of order $C^infty$ at point $arrow(x)$ iff it is of order $C^k$ at $arrow(x)$ for all $k in Naturals$.
+  It is of order $C^infty$ at point $vn(x)$ iff it is of order $C^k$ at $vn(x)$ for all $k in Naturals$.
 
-  It is of order $C^k$ iff it is of order $C^k$ at all $x in arrow(x)$.
+  It is of order $C^k$ iff it is of order $C^k$ at all $x in vn(x)$.
 ]
 
 #theorem[
@@ -342,7 +342,7 @@ The most useful notation for a line is in parametric form:
 ]
 
 #definition(title: [Gradient])[
-  $ grad f(arrow(x)) = vec((partial f(x))/(partial x_1), dots.v, (partial f(x))/(partial x_n)) $
+  $ grad f(vn(x)) = vn((partial f(x))/(partial x_1), dots.v, (partial f(x))/(partial x_n)) $
 ]
 
 === Implicit surfaces
@@ -358,7 +358,7 @@ The most useful notation for a line is in parametric form:
 ]
 
 #theorem[
-  The gradient $grad F(arrow(x))$ is the normal vector to the tangent plane to the implicit surface defined by $F(arrow(x)) = k$, where $k$ is a constant.
+  The gradient $grad F(vn(x))$ is the normal vector to the tangent plane to the implicit surface defined by $F(vn(x)) = k$, where $k$ is a constant.
 
   Equivalently, if $x_0$ is a point on the level set $S = { x in X : F(x) = k }$ where $F : X subset.eq Reals^n to Reals$, then the vector $grad F(x_0)$ is perpendicular to $S$.
 ]
@@ -369,7 +369,7 @@ The most useful notation for a line is in parametric form:
 
 #definition(title: [Jacobian])[
   If $f : X subset.eq Reals^n to Reals^m$ is a vector-valued function, then the Jacobian is
-  $ D f(vec(x_1, x_2, dots.v, x_n)) = vec(grad f_1, grad f_2, dots.v, grad f_m) = mat(
+  $ D f(vn(x_1, x_2, dots.v, x_n)) = vn(grad f_1, grad f_2, dots.v, grad f_m) = mat(
     (partial f_1)/(partial x_1), (partial f_1)/(partial x_2), dots.h, (partial f_1)/x_n;
     (partial f_2)/(partial x_1), (partial f_2)/(partial x_2), dots.h, (partial f_2)/x_n;
     dots.v, dots.v, dots.down, dots.v;
@@ -400,12 +400,12 @@ The most useful notation for a line is in parametric form:
 
 #definition(title: [Tangent vector])[
   Given a path $r : Reals to Reals^3$, the tangent vector to said path at some point $P$ is given by $r'(t)$, provided that $r'(t) != 0$. In $Reals^3$,
-  $ r'(t) = lim_(h to 0) (r(t + h) - r(t))/h = vec((d x)/(d t), (d y)/(d t), (d z)/(d t)) $
+  $ r'(t) = lim_(h to 0) (r(t + h) - r(t))/h = vn((d x)/(d t), (d y)/(d t), (d z)/(d t)) $
 ]
 
 #definition(title: [Derivative of vector-valued function])[
   Let $f : T subset.eq Reals to Reals^m$. Then
-  $ f'(t) = vec(f_1'(t), f_2'(t), dots.v, f_m'(t)) $
+  $ f'(t) = vn(f_1'(t), f_2'(t), dots.v, f_m'(t)) $
 ]
 
 === Differentiability
@@ -413,26 +413,26 @@ The most useful notation for a line is in parametric form:
 #see[Colley [2.3], Trimm [3.5], Brummet [13.5]]
 
 #definition(title: [Linear approximation ($Reals^n to Reals$)])[
-  The *linear approximation* or *tangent plane ($Reals^3$) or hyperplane* to the graph of a function $f$ at the point $arrow(a)$ is expressed by
-  $ L(arrow(x)) = f(arrow(a)) + grad f(arrow(a)) dot (arrow(x) - arrow(a)) $
+  The *linear approximation* or *tangent plane ($Reals^3$) or hyperplane* to the graph of a function $f$ at the point $vn(a)$ is expressed by
+  $ L(vn(x)) = f(vn(a)) + grad f(vn(a)) dot (vn(x) - vn(a)) $
 
   In $Reals^3$, this is equivalent to the plane
   $ z = L(x, y) = f(a, b) + f_x (a, b) (x - a) + f_y (a, b) (y - b) $
 ]
 
 #definition(title: [Linear approximation ($Reals^n to Reals^m$)])[
-  The *linear approximation* to a vector-valued function $f$ at the point $arrow(a)$ is expressed by
-  $ L(arrow(x)) = f(arrow(a)) + D f(arrow(a))(arrow(x) - arrow(a)) $
+  The *linear approximation* to a vector-valued function $f$ at the point $vn(a)$ is expressed by
+  $ L(vn(x)) = f(vn(a)) + D f(vn(a))(vn(x) - vn(a)) $
 ]
 
 #definition(title: [Differentiability])[
-  Let $f : X subset.eq Reals^n to Reals^m$, where $X$ is an open subset of $Reals^n$, and let $arrow(a) in X$. $f$ is differentiable at $a$ iff all of its partial derivatives exist and
-  $ lim_(arrow(x) to arrow(a)) (f(arrow(x)) - L(arrow(x)))/(|arrow(x) - arrow(a)|) = 0 $
-  where $L(arrow(x))$ is the linear approximation to $f$ at $arrow(a)$.
+  Let $f : X subset.eq Reals^n to Reals^m$, where $X$ is an open subset of $Reals^n$, and let $vn(a) in X$. $f$ is differentiable at $a$ iff all of its partial derivatives exist and
+  $ lim_(vn(x) to vn(a)) (f(vn(x)) - L(vn(x)))/(|vn(x) - vn(a)|) = 0 $
+  where $L(vn(x))$ is the linear approximation to $f$ at $vn(a)$.
 ]
 
 #theorem(title: [Differentiability shortcut])[
-  Let $f : X subset.eq Reals^n to Reals^m$ be a vector-valued function. If all partial derivatives $(partial f_i)/(partial x_j)$ exist and are continuous in a neighborhood of $arrow(a)$ in $X$, then $F$ is differentiable at $arrow(a)$.
+  Let $f : X subset.eq Reals^n to Reals^m$ be a vector-valued function. If all partial derivatives $(partial f_i)/(partial x_j)$ exist and are continuous in a neighborhood of $vn(a)$ in $X$, then $F$ is differentiable at $vn(a)$.
 ]
 
 === Directional derivative
@@ -440,18 +440,18 @@ The most useful notation for a line is in parametric form:
 #see[Colley [2.6], Trimm [3.7], Brummet [14]]
 
 #definition(title: [Directional derivative])[
-  Let $f : X subset.eq Reals^n to Reals$, where $X$ is an open subset of $Reals^n$, and let $arrow(a) in X$. If $arrow(v)$ is any unit vector in $X$, then the directional derivative of $f$ at $a$ in the direction of $v$ is
-  $ D_(arrow(v)) f(arrow(a)) = lim_(h to 0) (f(arrow(a) + h arrow(v)) - f(arrow(a)))/h $
+  Let $f : X subset.eq Reals^n to Reals$, where $X$ is an open subset of $Reals^n$, and let $vn(a) in X$. If $vn(v)$ is any unit vector in $X$, then the directional derivative of $f$ at $a$ in the direction of $v$ is
+  $ D_(vn(v)) f(vn(a)) = lim_(h to 0) (f(vn(a) + h vn(v)) - f(vn(a)))/h $
 ]
 
 #theorem[
   If $f$ is differentiable at $a$, then
-  $ D_(arrow(v)) f(arrow(a)) = grad f(arrow(a)) dot arrow(v) $
+  $ D_(vn(v)) f(vn(a)) = grad f(vn(a)) dot vn(v) $
 ]
 
 #theorem[
   The gradient is the path of steepest ascent, i.e.
-  $ D_(indmap(grad f(arrow(a)))) f(arrow(a)) = max { D_(arrow(v)) f(arrow(a)) : arrow(v) in Reals^n } $
+  $ D_(indmap(grad f(vn(a)))) f(vn(a)) = max { D_(vn(v)) f(vn(a)) : vn(v) in Reals^n } $
   where $f : X subset.eq Reals^n to Reals$.
 ]
 
@@ -466,7 +466,7 @@ The most useful notation for a line is in parametric form:
 #see[Colley [4.1], Brummet [15, MVCWUP:69-74(Mar 4-6)]]
 
 #theorem(title: [Quasi-First Derivative Test])[
-  If $f : X subset.eq Reals^n to Reals$ has a local maximum or minimum at $arrow(a)$ and the first order partial derivatives exist, then $grad f dot arrow(a) = 0$, or equivalently all the partials are equal to 0.
+  If $f : X subset.eq Reals^n to Reals$ has a local maximum or minimum at $vn(a)$ and the first order partial derivatives exist, then $grad f dot vn(a) = 0$, or equivalently all the partials are equal to 0.
 ]
 
 #theorem(title: [Extreme Value Theorem])[
@@ -474,7 +474,7 @@ The most useful notation for a line is in parametric form:
 ]
 
 #definition(title: [Critical point of $f$])[
-  A point $arrow(c)$ in the domain of $f$ where all of the partial derivatives of $f$ at $arrow(c)$ equal 0.
+  A point $vn(c)$ in the domain of $f$ where all of the partial derivatives of $f$ at $vn(c)$ equal 0.
 ]
 
 #definition(title: [Saddle point])[
@@ -482,11 +482,11 @@ The most useful notation for a line is in parametric form:
 ]
 
 #theorem(title: [Method to find absolute minima and maxima])[
-  Let $C$ be the set of all critical points of $f$. Then, the absolute maximum is $max {f(arrow(c)) : arrow(c) in C}$ and the absolute minimum is $min {f(arrow(c)) : arrow(c) in C}$.
+  Let $C$ be the set of all critical points of $f$. Then, the absolute maximum is $max {f(vn(c)) : vn(c) in C}$ and the absolute minimum is $min {f(vn(c)) : vn(c) in C}$.
 ]
 
 #theorem(title: [Method to find absolute minima and maxima with a constraint])[
-  Let $C$ be the set of all critical points of $f$. Let $S$ be the union of $C$ and the boundary of the constraint (the constraint constrains the domain on which we are finding absolute minima and maxima). Then, the absolute maximum is $max {f(arrow(c)) : arrow(c) in C}$ and the absolute minimum is $min {f(arrow(c)) : arrow(c) in C}$.
+  Let $C$ be the set of all critical points of $f$. Let $S$ be the union of $C$ and the boundary of the constraint (the constraint constrains the domain on which we are finding absolute minima and maxima). Then, the absolute maximum is $max {f(vn(c)) : vn(c) in C}$ and the absolute minimum is $min {f(vn(c)) : vn(c) in C}$.
 ]
 
 === Some linalg stuff
@@ -543,39 +543,39 @@ The most useful notation for a line is in parametric form:
 
 The *first-order Taylor polynomial* is just the linear approximation
 
-$ T_1(arrow(x)) = f(arrow(a)) + grad f(arrow(a)) dot (arrow(x) - arrow(a)) $
+$ T_1(vn(x)) = f(vn(a)) + grad f(vn(a)) dot (vn(x) - vn(a)) $
 
 #definition(title: [Second-order Taylor polynomial])[
-  The second degree Taylor polynomial for a function $f in Reals^n to Reals$ at point $arrow(a)$ evaluated at point $arrow(x)$, where $arrow(h) := arrow(x) - arrow(a)$, is:
-  $ T_2(arrow(x)) &= f(arrow(a)) + sum_(i=1)^n f_(x_i)(arrow(a)) h_i + 1/2 sum_(i,j=1)^n f_(x_i x_j)(arrow(a)) h_i h_j \
-    &= f(arrow(a)) + grad f(arrow(a)) dot arrow(h) + 1/2 arrow(h)^T H f(arrow(a)) arrow(h) $
+  The second degree Taylor polynomial for a function $f in Reals^n to Reals$ at point $vn(a)$ evaluated at point $vn(x)$, where $vn(h) := vn(x) - vn(a)$, is:
+  $ T_2(vn(x)) &= f(vn(a)) + sum_(i=1)^n f_(x_i)(vn(a)) h_i + 1/2 sum_(i,j=1)^n f_(x_i x_j)(vn(a)) h_i h_j \
+    &= f(vn(a)) + grad f(vn(a)) dot vn(h) + 1/2 vn(h)^T H f(vn(a)) vn(h) $
 ]
 
 Higher-order Taylor polynomials are not very useful.
 
 #theorem(title: [Second Derivative Test])[
-  Let $X$ be an open subset of $Reals^n$ and $f : X to Reals$ whose 2nd-order and lower partials exist and are continuous on $X$ (f is of class $C^2$). Let $arrow(a) in X$ be a critical point of $f$. Then
-  - If the Hessian $H f(arrow(a))$ is positive definite, then $f$ has a local minimum at $arrow(a)$.
-  - If the Hessian $H f(arrow(a))$ is negative definite, then $f$ has a local maximum at $arrow(a)$.
-  - If $det H f(arrow(a)) != 0$ but $H f(arrow(a))$ is neither positive nor negative definite, then $f$ has a saddle point at $arrow(a)$.
+  Let $X$ be an open subset of $Reals^n$ and $f : X to Reals$ whose 2nd-order and lower partials exist and are continuous on $X$ (f is of class $C^2$). Let $vn(a) in X$ be a critical point of $f$. Then
+  - If the Hessian $H f(vn(a))$ is positive definite, then $f$ has a local minimum at $vn(a)$.
+  - If the Hessian $H f(vn(a))$ is negative definite, then $f$ has a local maximum at $vn(a)$.
+  - If $det H f(vn(a)) != 0$ but $H f(vn(a))$ is neither positive nor negative definite, then $f$ has a saddle point at $vn(a)$.
 
   Equivalently if $X subset.eq Reals^2$, let
-  $ D := f_(x x)(arrow(a)) f_(y y)(arrow(a)) - (f_(x y)(arrow(a)))^2 = det H f(arrow(a)) $
+  $ D := f_(x x)(vn(a)) f_(y y)(vn(a)) - (f_(x y)(vn(a)))^2 = det H f(vn(a)) $
   Then
-  - If $D > 0$ and $f_(x x)(arrow(a)) > 0$, then $f$ has a local minimum at $arrow(a)$.
-  - If $D > 0$ and $f_(x x)(arrow(a)) < 0$, then $f$ has a local maximum at $arrow(a)$.
-  - If $D < 0$, then $f$ has a saddle point at $arrow(a)$.
+  - If $D > 0$ and $f_(x x)(vn(a)) > 0$, then $f$ has a local minimum at $vn(a)$.
+  - If $D > 0$ and $f_(x x)(vn(a)) < 0$, then $f$ has a local maximum at $vn(a)$.
+  - If $D < 0$, then $f$ has a saddle point at $vn(a)$.
   - If $D = 0$ the test is inconclusive.
 
-  (Note that if $f_(x x)(arrow(a)) = 0$ then $D <= 0$.)
+  (Note that if $f_(x x)(vn(a)) = 0$ then $D <= 0$.)
 ]
 
 === Lagrange multiplier
 
 #theorem[
-  If $f(arrow(x)_0) = c$ is an extreme value (absolute max or min) of $f$ on $g$ (the constraint is ${ arrow(x) : g(arrow(x)) = k }$) and $grad g(arrow(x)_0) != 0$, then at $arrow(x)_0$, the level set ${ arrow(x) : f(arrow(x)) = c }$ is tangent to $g(arrow(x)) = k$.
+  If $f(vn(x)_0) = c$ is an extreme value (absolute max or min) of $f$ on $g$ (the constraint is ${ vn(x) : g(vn(x)) = k }$) and $grad g(vn(x)_0) != 0$, then at $vn(x)_0$, the level set ${ vn(x) : f(vn(x)) = c }$ is tangent to $g(vn(x)) = k$.
 
-  Equivalently, if $f(arrow(x)_0) = c$ is an extreme value (absolute max or min) of $f$ on $g$ and $grad g(arrow(x)_0) != 0$, then $grad f(arrow(x)_0) = lambda grad g(arrow(x)_0)$, where $lambda in Reals$ is called the *Lagrange multiplier*.
+  Equivalently, if $f(vn(x)_0) = c$ is an extreme value (absolute max or min) of $f$ on $g$ and $grad g(vn(x)_0) != 0$, then $grad f(vn(x)_0) = lambda grad g(vn(x)_0)$, where $lambda in Reals$ is called the *Lagrange multiplier*.
 ]
 
 == Integration
@@ -635,7 +635,7 @@ Higher-order Taylor polynomials are not very useful.
 
 #theorem(title: [General change of variables])[
   Given a function $f : Reals^n to Reals^m$ which takes in an argument in the coordinate system $X$, and $T_(X U) : Reals^n to Reals^n$ is a transformation from coordinates in $X$ to coordinates in $U$,
-  $ integral dots.c integral_R f(arrow(x)) dif x_1 dots dif x_n = integral dots.c integral_R f(T_(X U) (arrow(u))) abs(det D T_(X U)^(-1)) dif u_1 dots dif u_n $
+  $ integral dots.c integral_R f(vn(x)) dif x_1 dots dif x_n = integral dots.c integral_R f(T_(X U) (vn(u))) abs(det D T_(X U)^(-1)) dif u_1 dots dif u_n $
 
   where $abs(det D T_(X U)^(-1))$ is the absolute determinant of the Jacobian of $T_(X U)^(-1)$ (the transformation from coordinates in $U$ to coordinates in $X$), which is also denoted by
   $ abs((partial(x_1, dots, x_n))/(partial(u_1, dots, u_n))) $
@@ -646,7 +646,7 @@ Higher-order Taylor polynomials are not very useful.
 
 #example(title: [Cartesian to spherical])[
   Converting from Cartesian coordinates to spherical coordinates in $Reals^3$:
-  $ vec(x, y, z) = T_(X P)^(-1) (vec(rho, phi, theta)) = vec(rho sin phi cos theta, rho sin phi sin theta, rho cos phi) $
+  $ vn(x, y, z) = T_(X P)^(-1) (vn(rho, phi, theta)) = vn(rho sin phi cos theta, rho sin phi sin theta, rho cos phi) $
   so then the absolute Jacobian determinant is
   $ abs(det T_(X P)^(-1)) = rho^2 sin phi $
 ]
@@ -660,9 +660,9 @@ Higher-order Taylor polynomials are not very useful.
 ]
 
 #definition(title: [Flow line])[
-  A flow line of a vector field $F : X subset.eq Reals^n to Reals^n$ is a differentiable path $arrow(x) : I to Reals^n$ (where $I$ is an interval on $Reals$) such that
-  $ arrow(x)'(t) = F(arrow(x)(t)) $
-  That is, the velocity vector of $arrow(x)$ at time $t$ is given by the value of the vector field $F$ at the point on $x$ at time $t$.
+  A flow line of a vector field $F : X subset.eq Reals^n to Reals^n$ is a differentiable path $vn(x) : I to Reals^n$ (where $I$ is an interval on $Reals$) such that
+  $ vn(x)'(t) = F(vn(x)(t)) $
+  That is, the velocity vector of $vn(x)$ at time $t$ is given by the value of the vector field $F$ at the point on $x$ at time $t$.
 ]
 
 #procedure(title: [Approximating flow line])[
@@ -672,10 +672,10 @@ Higher-order Taylor polynomials are not very useful.
 === Conservative vector field
 
 #definition(title: [Conservative vector field])[
-  A vector field $arrow(F)$ is conservative iff there exists $f : Reals^n to Reals$ such that $arrow(F) = grad f$ at all points in $Reals^n$. Then $f$ is called the *potential function* for $F$.
+  A vector field $vn(F)$ is conservative iff there exists $f : Reals^n to Reals$ such that $vn(F) = grad f$ at all points in $Reals^n$. Then $f$ is called the *potential function* for $F$.
 ]
 
-*Note*: Sometimes in physics, the potential function is defined such that $arrow(F) = - grad f$ -- for example, $arrow(E) = grad V$ in E+M.
+*Note*: Sometimes in physics, the potential function is defined such that $vn(F) = - grad f$ -- for example, $vn(E) = grad V$ in E+M.
 
 #lemma[
   A conservative vector field is irrotational.
@@ -687,48 +687,48 @@ Higher-order Taylor polynomials are not very useful.
 
 #definition(title: [Del operator])[
   In $Reals^3$, del is defined by
-  $ grad := vec((partial)/(partial x), (partial)/(partial y), (partial)/(partial z)) $
+  $ grad := vn((partial)/(partial x), (partial)/(partial y), (partial)/(partial z)) $
 
   In $Reals^n$, del is defined by
-  $ grad = vec((partial)/(partial x_1), dots.v, (partial)/(partial x_n)) $
+  $ grad = vn((partial)/(partial x_1), dots.v, (partial)/(partial x_n)) $
 
   Del is an operator; it takes in a function and outputs a function.
 ]
 
 #definition(title: [Divergence])[
-  Let $arrow(F) : X subset.eq Reals^n to Reals^n$ be a differentiable vector field. Then the divergence of $arrow(F)$ is the scalar field
-  $ op("div") arrow(F) = grad dot arrow(F) = (partial F_1)/(partial x_1) + dots.c + (partial F_n)/(partial x_n) $
+  Let $vn(F) : X subset.eq Reals^n to Reals^n$ be a differentiable vector field. Then the divergence of $vn(F)$ is the scalar field
+  $ op("div") vn(F) = grad dot vn(F) = (partial F_1)/(partial x_1) + dots.c + (partial F_n)/(partial x_n) $
 ]
 
 #lemma[
-  If $arrow(F)$ represents the flow rate of a fluid, then $op("div") arrow(F)$ represents the net mass flow through each point in the domain of $arrow(F)$:
-  - If $op("div") arrow(F) > 0$, then more fluid is flowing out than in.
-  - If $op("div") arrow(F) < 0$, then more fluid is flowing in than out.
-  - If $op("div") arrow(F) = 0$, then the same amount of fluid flows in as flows out. In this case, $arrow(F)$ is considered *incompressible* and *solenoidal*.
+  If $vn(F)$ represents the flow rate of a fluid, then $op("div") vn(F)$ represents the net mass flow through each point in the domain of $vn(F)$:
+  - If $op("div") vn(F) > 0$, then more fluid is flowing out than in.
+  - If $op("div") vn(F) < 0$, then more fluid is flowing in than out.
+  - If $op("div") vn(F) = 0$, then the same amount of fluid flows in as flows out. In this case, $vn(F)$ is considered *incompressible* and *solenoidal*.
 
   The divergence of a vector field represents how "outgoing" the field is at each point, and how source-like (if positive) or sink-like (if negative) each point is.
 ]
 
 #definition(title: [Curl ($Reals^3$)])[
-  Let $arrow(F) : X subset.eq Reals^3 to Reals^3$ be a differentiable vector field on $Reals^3$. Then the curl of $arrow(F)$ is the vector field
-  $ op("curl") arrow(F) = grad times arrow(F) $
+  Let $vn(F) : X subset.eq Reals^3 to Reals^3$ be a differentiable vector field on $Reals^3$. Then the curl of $vn(F)$ is the vector field
+  $ op("curl") vn(F) = grad times vn(F) $
 ]
 
 #definition(title: [Curl ($Reals^2$)])[
-  Let $arrow(F) : X subset.eq Reals^2 to Reals^2$ be a differentiable vector field on $Reals^2$. Then the curl of $arrow(F)$ is the scalar field
-  $ op("curl") arrow(F) = (partial F_2)/(partial x) - (partial F_1)/(partial y) $
+  Let $vn(F) : X subset.eq Reals^2 to Reals^2$ be a differentiable vector field on $Reals^2$. Then the curl of $vn(F)$ is the scalar field
+  $ op("curl") vn(F) = (partial F_2)/(partial x) - (partial F_1)/(partial y) $
 
-  This is equivalent to the magnitude of $grad times arrow(F)$, where counterclockwise is positive and clockwise is negative (by right-hand rule).
+  This is equivalent to the magnitude of $grad times vn(F)$, where counterclockwise is positive and clockwise is negative (by right-hand rule).
 ]
 
 #definition(title: [Irrotational])[
-  If $grad times arrow(F) = 0$ everywhere on the vector field $arrow(F) : X subset.eq Reals^n to Reals^n$, then $arrow(F)$ is considered *irrotational*.
+  If $grad times vn(F) = 0$ everywhere on the vector field $vn(F) : X subset.eq Reals^n to Reals^n$, then $vn(F)$ is considered *irrotational*.
 ]
 
 #lemma[
-  Let there exist an infinitesimally small sphere at the point $arrow(x) in X$. Let $arrow(F) : X subset.eq Reals^3 to Reals^3$ be a vector field that represents the velocity of a fluid at each point in $X$. Then $op("curl") arrow(F)$ is the unique vector such that
-  - The direction of $op("curl") arrow(F)$ is along the axis of rotation of the sphere, following the right-hand rule.
-  - The magnitude of $op("curl") arrow(F)$ is the speed of the rotation of the sphere.
+  Let there exist an infinitesimally small sphere at the point $vn(x) in X$. Let $vn(F) : X subset.eq Reals^3 to Reals^3$ be a vector field that represents the velocity of a fluid at each point in $X$. Then $op("curl") vn(F)$ is the unique vector such that
+  - The direction of $op("curl") vn(F)$ is along the axis of rotation of the sphere, following the right-hand rule.
+  - The magnitude of $op("curl") vn(F)$ is the speed of the rotation of the sphere.
 ]
 
 === Line integrals
@@ -737,13 +737,13 @@ Higher-order Taylor polynomials are not very useful.
   If $C$ is a smooth plane curve defined by $x = x(t), y = y(t), a <= t <= b$, then
   $ integral_C f(x, y) dif s := integral_a^b f(x(t), y(t)) sqrt(((d x)/(d t))^2 + ((d y)/(d t))^2) dif t $
 
-  This generalizes to higher dimensions -- if $C$ is a smooth curve defined by $arrow(x) = arrow(x)(t), a <= t <= b$, where $x in Reals^n$, then
-  $ integral_C f(arrow(x)) dif s = integral_a^b f(arrow(x)(t)) sqrt(((d x_1)/(d t))^2 + dots.c + ((d x_n)/(d t))^2) dif t $
+  This generalizes to higher dimensions -- if $C$ is a smooth curve defined by $vn(x) = vn(x)(t), a <= t <= b$, where $x in Reals^n$, then
+  $ integral_C f(vn(x)) dif s = integral_a^b f(vn(x)(t)) sqrt(((d x_1)/(d t))^2 + dots.c + ((d x_n)/(d t))^2) dif t $
 ]
 
 #definition(title: [Line integral of a vector field along a smooth curve])[
-  If $F$ is any continuous vector field defined on a smooth curve $C$ defined by $arrow(r)(t), a <= t <= b$, then
-  $ integral_C arrow(F) dot dif arrow(r) = integral_C arrow(F) dot hat(T) dif s = integral_a^b arrow(F)(arrow(r)(t)) dot arrow(r)'(t) dif t $
+  If $F$ is any continuous vector field defined on a smooth curve $C$ defined by $vn(r)(t), a <= t <= b$, then
+  $ integral_C vn(F) dot dif vn(r) = integral_C vn(F) dot hat(T) dif s = integral_a^b vn(F)(vn(r)(t)) dot vn(r)'(t) dif t $
 
   It represents the work done by moving a particle along the curve $C$, if $F$ is a force field.
 ]
@@ -751,28 +751,28 @@ Higher-order Taylor polynomials are not very useful.
 // MVCWUP - Apr 29
 
 #definition(title: [Orientation-preserving reparamaterization])[
-  Let $arrow(x) : [a, b] to Reals^n$ be a piecewise $C^1$ path, and let $arrow(F) : X subset Reals^n to Reals^n$ whose domain $X$ contains the image of $arrow(x)$.
+  Let $vn(x) : [a, b] to Reals^n$ be a piecewise $C^1$ path, and let $vn(F) : X subset Reals^n to Reals^n$ whose domain $X$ contains the image of $vn(x)$.
 
-  If $arrow(y) : [c, d] to Reals^n$ is any reparametrization of $arrow(x)$, then
-  - If $arrow(y)$ is *orientation-preserving*, then $integral_y arrow(F) dif s = integral_x arrow(F) dif s$.
-  - If $arrow(y)$ is *orientation-reversing*, then $integral_y arrow(F) dif s = 0 integral_x arrow(F) dif s$.
+  If $vn(y) : [c, d] to Reals^n$ is any reparametrization of $vn(x)$, then
+  - If $vn(y)$ is *orientation-preserving*, then $integral_y vn(F) dif s = integral_x vn(F) dif s$.
+  - If $vn(y)$ is *orientation-reversing*, then $integral_y vn(F) dif s = 0 integral_x vn(F) dif s$.
 ]
 
 #definition(title: [Path independence])[
-  A vector field $arrow(F)$ is path-independent iff for any two paths $C_1$ and $C_2$ which have the same start and end points,
-  $ integral_(C_1) arrow(F) dot dif arrow(r) = integral_(C_2) arrow(F) dot dif arrow(r) $
+  A vector field $vn(F)$ is path-independent iff for any two paths $C_1$ and $C_2$ which have the same start and end points,
+  $ integral_(C_1) vn(F) dot dif vn(r) = integral_(C_2) vn(F) dot dif vn(r) $
 ]
 
 #theorem(title: [Fundamental Theorem of Line Integrals])[
-  Let $C$ be a smooth curve given by the function $arrow(r)(t)$ defined on the interval $t in [a, b]$. Let $f$ be a differentiable function whose gradient $grad f$ is continuous on $C$. Then
-  $ integral_C grad f dot dif arrow(r) = f(arrow(r)(b)) - f(arrow(r)(a)) $
+  Let $C$ be a smooth curve given by the function $vn(r)(t)$ defined on the interval $t in [a, b]$. Let $f$ be a differentiable function whose gradient $grad f$ is continuous on $C$. Then
+  $ integral_C grad f dot dif vn(r) = f(vn(r)(b)) - f(vn(r)(a)) $
 
   In other words, the line integral of a conservative field along a curve is equal to the potential difference between its endpoints.
 
   This implies that the following statements are equivalent (each implies the others):
-  - The vector field $arrow(F)$ is conservative
-  - The vector field $arrow(F)$ is path-independent
-  - $integral.cont_C arrow(F) dot dif arrow(r) = 0$ for every closed path $C$.
+  - The vector field $vn(F)$ is conservative
+  - The vector field $vn(F)$ is path-independent
+  - $integral.cont_C vn(F) dot dif vn(r) = 0$ for every closed path $C$.
 ]
 
 === Green's Theorem
@@ -780,15 +780,15 @@ Higher-order Taylor polynomials are not very useful.
 #theorem(title: [Green's Theorem])[
   Let $partial D$ be a positively oriented, piecewise smooth, simple closed curve in the $x y$-plane, and $D$ be the region bounded by $partial D$. If $P$ and $Q$ have continuous partial derivatives on an open region containing $D$, then
   $ integral.cont_(partial D) P dif x + Q dif y = integral.double_D ((partial Q)/(partial x) - (partial P)/(partial y)) dif A $
-  Equivalently, if $arrow(F) = x, y mapsto vec(P(x, y), Q(x, y))$, then
-  $ integral.cont_(partial D) arrow(F) dot dif arrow(r) = integral.double_D op("curl") arrow(F) dif A $
+  Equivalently, if $vn(F) = x, y mapsto vn(P(x, y), Q(x, y))$, then
+  $ integral.cont_(partial D) vn(F) dot dif vn(r) = integral.double_D op("curl") vn(F) dif A $
 
   In other words, the circulation of a vector field along a curve is the same as the sum of the curls within the region bounded by the curve.
 ]
 
 #definition(title: [Circulation])[
-  The circulation of the vector field $arrow(F)$ around the curve $C$ is
-  $ integral.cont_C arrow(F) dot dif arrow(r) $
+  The circulation of the vector field $vn(F)$ around the curve $C$ is
+  $ integral.cont_C vn(F) dot dif vn(r) $
 
   It measures how much $F$ aligns with the curve $C$.
 ]
@@ -798,20 +798,20 @@ Higher-order Taylor polynomials are not very useful.
 === Parametric surfaces
 
 #definition(title: [Parametric/parameterized surface])[
-  Let $arrow(X) : D subset.eq Reals^2 to Reals^3$ be a one-to-one function (except possibly at the boundary of $D$). Then the image of $X$ is called a parameterized surface.
+  Let $vn(X) : D subset.eq Reals^2 to Reals^3$ be a one-to-one function (except possibly at the boundary of $D$). Then the image of $X$ is called a parameterized surface.
 ]
 
 #definition(title: [Normal vector to a parameterized surface])[
-  Let $arrow(X) = vec(u, v) mapsto vec(x(u,v), y(u,v), z(u,v))$ be a parameterization of a surface, and let $arrow(u)$ be a vector in the domain of $arrow(X)$. Then the tangent vector along the $u$-axis is $arrow(X)_u (arrow(u))$, where
-  $ arrow(X)_u = vec((partial x)/(partial u), (partial y)/(partial u), (partial z)/(partial u)) $
-  and similarly the tangent vector along the $v$-axis is $arrow(X)_v (arrow(u))$.
+  Let $vn(X) = vn(u, v) mapsto vn(x(u,v), y(u,v), z(u,v))$ be a parameterization of a surface, and let $vn(u)$ be a vector in the domain of $vn(X)$. Then the tangent vector along the $u$-axis is $vn(X)_u (vn(u))$, where
+  $ vn(X)_u = vn((partial x)/(partial u), (partial y)/(partial u), (partial z)/(partial u)) $
+  and similarly the tangent vector along the $v$-axis is $vn(X)_v (vn(u))$.
 
-  Then the normal vector to the parameterized surface at the point $arrow(u)$ is
-  $ arrow(N) = arrow(X)_u (arrow(u)) times arrow(X)_v (arrow(v)) $
+  Then the normal vector to the parameterized surface at the point $vn(u)$ is
+  $ vn(N) = vn(X)_u (vn(u)) times vn(X)_v (vn(v)) $
 ]
 
 #definition(title: [Smooth])[
-  A paramaterization $arrow(X)$ of a surface is smooth at a point if its normal vector is not equal to 0 at that point.
+  A paramaterization $vn(X)$ of a surface is smooth at a point if its normal vector is not equal to 0 at that point.
 
   A surface is smooth at a point if there exists a paramaterization for that surface which is smooth at that point.
 
@@ -821,8 +821,8 @@ Higher-order Taylor polynomials are not very useful.
 === Surface integrals
 
 #definition(title: [Scalar surface integral])[
-  The surface integral of $f$ over the surface $S$ which is paramaterized by $arrow(X) : D subset.eq Reals^2 to Reals^3 = (u, v) to (x, y, z)$ and where $D$ is the domain of $arrow(X)$ is
-  $ integral.double_S f dif S = integral.double_D f(arrow(X)(u,v)) abs(arrow(X)_u times arrow(X)_v) dif A $
+  The surface integral of $f$ over the surface $S$ which is paramaterized by $vn(X) : D subset.eq Reals^2 to Reals^3 = (u, v) to (x, y, z)$ and where $D$ is the domain of $vn(X)$ is
+  $ integral.double_S f dif S = integral.double_D f(vn(X)(u,v)) abs(vn(X)_u times vn(X)_v) dif A $
   ($dif S$ is a part of the surface area, $dif A$ is a part of the domain)
 ]
 
@@ -848,8 +848,8 @@ Higher-order Taylor polynomials are not very useful.
 ]
 
 #definition(title: [Vector surface integral, flux])[
-  The surface integral or flux of the vector field $arrow(F)$ over the surface $S$ which is paramaterized by $arrow(X) : D subset.eq Reals^2 to Reals^3 = (u, v) to (x, y, z)$ and where $D$ is the domain of $arrow(X)$ is
-  $ integral.double_S arrow(F) dot dif arrow(S) = integral.double_D F(arrow(X)(u,v)) dot (arrow(X)_u times arrow(X)_v) dif u dif v $
+  The surface integral or flux of the vector field $vn(F)$ over the surface $S$ which is paramaterized by $vn(X) : D subset.eq Reals^2 to Reals^3 = (u, v) to (x, y, z)$ and where $D$ is the domain of $vn(X)$ is
+  $ integral.double_S vn(F) dot dif vn(S) = integral.double_D F(vn(X)(u,v)) dot (vn(X)_u times vn(X)_v) dif u dif v $
 ]
 
 === Stokes' Theorem
@@ -863,8 +863,8 @@ Higher-order Taylor polynomials are not very useful.
 ]
 
 #theorem(title: [Stokes' Theorem])[
-  Let $S$ be an oriented smooth surface, bounded by a curve $partial S$, composed of finitely many simple closed smooth differentiable ($C^1$) curves with positive orientation. Let $arrow(F)$ be a differentiable ($C^1$) vector field whose domain includes $S$. Then
-  $ integral.cont_(partial S) arrow(F) dot dif arrow(r) = integral.double_S grad times arrow(F) dot dif arrow(S) $
+  Let $S$ be an oriented smooth surface, bounded by a curve $partial S$, composed of finitely many simple closed smooth differentiable ($C^1$) curves with positive orientation. Let $vn(F)$ be a differentiable ($C^1$) vector field whose domain includes $S$. Then
+  $ integral.cont_(partial S) vn(F) dot dif vn(r) = integral.double_S grad times vn(F) dot dif vn(S) $
 
   In other words, the circulation of a vector field along a curve is the same as the sum of the curls within the surface bounded by the curve.
 ]
@@ -875,8 +875,8 @@ Higher-order Taylor polynomials are not very useful.
 === Gauss's Theorem
 
 #theorem(title: [Gauss's Theorem / Divergence theorem])[
-  Let $D$ be a solid region in $Reals^3$, bounded by a surface $partial D$, composed of finitely many smooth closed surfaces with positive orientation. Let $arrow(F)$ be a differentiable ($C^1$) vector field whose domain includes $D$. Then
-  $ integral.surf_(partial D) arrow(F) dot dif arrow(S) = integral.triple_D grad dot F dif V $
+  Let $D$ be a solid region in $Reals^3$, bounded by a surface $partial D$, composed of finitely many smooth closed surfaces with positive orientation. Let $vn(F)$ be a differentiable ($C^1$) vector field whose domain includes $D$. Then
+  $ integral.surf_(partial D) vn(F) dot dif vn(S) = integral.triple_D grad dot F dif V $
 
   In other words, the flux of a vector field through a closed surface is the same as the sum of the divergences of the vector field through the region bounded by the surface.
 

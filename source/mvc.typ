@@ -76,6 +76,8 @@
 
 #let grad = math.nabla
 
+#let Jacobian = $"J"$
+
 = Vectors
 
 == $Reals^n$
@@ -298,13 +300,13 @@ The most useful notation for a line is in parametric form:
 ]
 
 #theorem(title: [Vector equation for a plane in $Reals^3$])[
-  If $vec(n) in Reals^3$ is the *normal vector* to the plane (vector perpendicular to the plane), and $vec(P) in Reals^3$ is a point on the plane, then any other point $vec(r) in Reals^3$ satisfies:
+  If $vn(n) in Reals^3$ is the *normal vector* to the plane (vector perpendicular to the plane), and $vn(P) in Reals^3$ is a point on the plane, then any other point $vn(r) in Reals^3$ satisfies:
 
-  $ vec(n) dot (vec(r) - vec(P)) = 0 $
+  $ vn(n) dot (vn(r) - vn(P)) = 0 $
 
   or equivalently:
 
-  $ vec(n) dot vec(r) = vec(n) dot vec(P) $
+  $ vn(n) dot vn(r) = vn(n) dot vn(P) $
 
   We can also write it as a scalar equation:
 
@@ -321,7 +323,7 @@ The most useful notation for a line is in parametric form:
 
 #theorem(title: [Parametric equation for a plane in $Reals^3$])[
   If $a, b in Reals^3$ are nonparallel nonzero vectors on the plane, and $P in Reals^3$ is a point on the plane, then the parametric equation for the plane is:
-  $ vec(x)(s, t) = vec(P) + s vec(a) + t vec(b) $
+  $ vn(x)(s, t) = vn(P) + s vn(a) + t vn(b) $
 ]
 
 == Distance
@@ -513,13 +515,9 @@ The most useful notation for a line is in parametric form:
   It is of order $C^k$ iff it is of order $C^k$ at all $x in arrow(x)$.
 ]
 
-#theorem[
+#theorem(title: [Clairaut's theorem])[
   Let $f : X in Reals^n to Reals$ whose $k$-th order and lower partials exist and are continuous on $X$. Then its $k$-th order and lower partials may be evaluated in any order, i.e.
   $ f_(x_1 dots x_n) = f_(x_n dots x_1) = f_(x_1 x_3 x_27 dots x_4) = dots $
-]
-
-#definition(title: [Gradient])[
-  $ grad f(arrow(x)) = vec((partial f(x))/(partial x_1), dots.v, (partial f(x))/(partial x_n)) $
 ]
 
 == Differentiability
@@ -575,7 +573,7 @@ The most useful notation for a line is in parametric form:
 
 #definition(title: [Linear approximation ($Reals^n to Reals^m$)])[
   The *linear approximation* to a vector-valued function $f$ at the point $arrow(a)$ is expressed by
-  $ L(arrow(x)) = f(arrow(a)) + D f(arrow(a))(arrow(x) - arrow(a)) $
+  $ L(arrow(x)) = f(arrow(a)) + Jacobian f(arrow(a))(arrow(x) - arrow(a)) $
 ]
 
 #definition(title: [Differentiability])[
@@ -599,15 +597,7 @@ The most useful notation for a line is in parametric form:
 
 #see[Colley [2.5], Trimm [3.8, 6.5, DiffEq-1.0], Brummet [12, MVCWUP:Feb24(58-61)]]
 
-#definition(title: [Jacobian])[
-  If $f : X subset.eq Reals^n to Reals^m$ is a vector-valued function, then the Jacobian is
-  $ D f(vec(x_1, x_2, dots.v, x_n)) = vec(grad f_1, grad f_2, dots.v, grad f_m) = mat(
-    (partial f_1)/(partial x_1), (partial f_1)/(partial x_2), dots.h, (partial f_1)/x_n;
-    (partial f_2)/(partial x_1), (partial f_2)/(partial x_2), dots.h, (partial f_2)/x_n;
-    dots.v, dots.v, dots.down, dots.v;
-    (partial f_m)/(partial x_1), (partial f_m)/(partial x_2), dots.h, (partial f_m)/x_n;
-  ) $
-]
+#see[NMD [10], Stewart [14.5]]
 
 #theorem(title: [Multivariable chain rule])[
   Suppose $X subset.eq Reals^m$ and $T subset.eq Reals^n$ are open and $f : X subset.eq Reals^m to Reals^p$ and
@@ -618,7 +608,7 @@ The most useful notation for a line is in parametric form:
   If $r$ is
   differentiable at $t_0 in T$ and $f$ is differentiable at $x_0 = r(t_0)$, then
   the composite $f compose r$ is differentiable at $t_0$, and we have
-  $ D(f compose r)(t_0) = D f(x_0) D r(t_0). $
+  $ Jacobian(f compose r)(t_0) = Jacobian f(x_0) Jacobian r(t_0). $
 
   When $p = 1$ and $n = 1$ (i.e. $f compose r : T subset.eq Reals to Reals^m to Reals$), this reduces to
   $ (f compose r)'(t_0) = grad f(x_0) dot r'(t_0). $
@@ -635,3 +625,64 @@ The most useful notation for a line is in parametric form:
   $ (d (f compose r))/(d t) = (partial f)/(partial x) (d x)/(d t) + (partial f)/(partial y) (d y)/(d t) + (partial f)/(partial z) (d z)/(d t). $
 ]
 
+== Gradient and Jacobian
+
+#definition(title: [Derivative of vector-valued function])[
+  Let $f : T subset.eq Reals to Reals^m$. Then
+  $ f'(t) = vec(f_1'(t), f_2'(t), dots.v, f_m'(t)) $
+]
+
+#definition(title: [Gradient])[
+  $ grad f(arrow(x)) = vec((partial f(x))/(partial x_1), dots.v, (partial f(x))/(partial x_n)) $
+]
+
+#theorem[
+  $grad f(vn(a))$ is orthogonal to the level set of $f$ at $vn(a)$.
+]
+
+#definition(title: [Jacobian])[
+  If $f : X subset.eq Reals^n to Reals^m$ is a vector-valued function, then the Jacobian is
+  $ Jacobian f (vec(x_1, x_2, dots.v, x_n)) &= vec(grad f_1, grad f_2, dots.v, grad f_m) = mat((partial f)/(partial x_1), (partial f)/(partial x_2), dots.c, (partial f)/(partial x_n)) \
+  &= mat(
+    (partial f_1)/(partial x_1), (partial f_1)/(partial x_2), dots.h, (partial f_1)/x_n;
+    (partial f_2)/(partial x_1), (partial f_2)/(partial x_2), dots.h, (partial f_2)/x_n;
+    dots.v, dots.v, dots.down, dots.v;
+    (partial f_m)/(partial x_1), (partial f_m)/(partial x_2), dots.h, (partial f_m)/(partial x_n);
+  ). $
+
+  The Jacobian $Jacobian f$ is also called $D f$ or $nabla f$.
+]
+
+== Directional derivative
+
+#see[Colley [2.6], Trimm [3.7], Brummet [14]]
+
+#see[NMD [11]]
+#definition(title: [Directional derivative])[
+  Let $f : X subset.eq Reals^n to Reals$, where $X$ is an open subset of $Reals^n$, and let $vn(a) in X$. If $vn(v)$ is any unit vector in $X$, then the directional derivative of $f$ at $vn(a)$ in the direction of $vn(v)$ is
+  $ D_(vn(v)) f(vn(a)) = lim_(h to 0) (f(vn(a) + h vn(v)) - f(vn(a)))/h $
+]
+
+#theorem[
+  If $f$ is differentiable at $vn(a)$, then
+  $ D_(vn(v)) f(vn(a)) = grad f(vn(a)) dot vn(v) $
+]
+
+#theorem[
+  The gradient points in the direction of steepest ascent, and its magnitude is the derivative in that direction:
+  $ abs(grad f(vn(a))) = D_(grad f(vn(a))) f(vn(a)) = max { D_(vn(v)) f(vn(a)) : vn(v) in Reals^n } $
+  where $f : X subset.eq Reals^n to Reals$.
+]
+
+#theorem[
+  Let $f : X subset.eq Reals^n to Reals$, and let $(vn(a), k) in Reals^(n + 1)$. Then $grad f(vn(a))$ is orthogonal to the level curve at height $k$.
+
+  Thus, the tangent plane to the surface described by $f(vn(x)) = k$ at point $vn(a)$ is the plane with normal vector $grad f(vn(a))$.
+]
+
+#example[
+  The electric potential $V$'s negative gradient is called $vn(E)$:
+  $ vn(E) = - grad V. $
+
+  This is because in electrostatics, opposites attract, so positive charges want to follow the steepest descent to an area with low electric potential. $grad V$ points to the steepest ascent, so $-grad V$ points to the steepest descent.
+]
