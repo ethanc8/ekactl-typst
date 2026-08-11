@@ -77,8 +77,14 @@
 #let grad = math.nabla
 
 #let Jacobian = $"J"$
+#let transpose = $"T"$
+#let Hessian = $"H"$
 
-= Vectors
+#let include-non-tested-content = true
+
+#let non-tested-content(x) = x
+
+= Vectors, matrices
 
 == $Reals^n$
 
@@ -90,6 +96,29 @@
   $ Reals^3 = { (x, y, z) : x, y, z in Reals } $
 
   $x, y, z$ should be presented such that the coordinate system is right-handed ($hat(k) = hat(i) cross hat(j)$ should have direction according to the right-hand rule).
+]
+
+#definition(title: [Open set])[
+  An open set $U$ in $Reals^n$ satisfies the following equivalent conditions:
+  - It is the (possibly infinite) union of open balls $B(x, epsilon)$
+  - It is the (possibly infinite) union of open sets
+  - Every $x in U$ has some $B(x, epsilon) subset.eq U$
+  - Is its interior: $U ior = U$
+  - Does not contain its boundary: $bound U parallel U$
+  - It is the complement of a closed set
+]
+
+#definition(title: [Accumulation point])[
+  $x$ is an #defname[accumulation point] of $A$ iff every neighborhood of $x$ (such as $B(x, epsilon)$) contains a point of $A$ other than $x$.
+]
+
+#definition(title: [Closed set])[
+  A closed set $C$ in $Reals^n$ satisfies the following equivalent conditions:
+  - It is the complement of an open set
+  - It contains all of its accumulation points
+  - If a sequence $x_k to x$ has all $x_k in C$, then its limit $x$ is also in $C$
+  - It is its closure: $cl(C) = C$
+  - It contains its boundary: $bound C subset.eq C$
 ]
 
 == Vector space
@@ -242,6 +271,40 @@
   Consider the parallelepiped determined by $vn(a), vn(b), vn(c) in Reals^3$, shown above. The area of its base is $abs(b cross c)$. Let $theta$ be the angle between $a$ and $b cross c$; then, its height is $abs(a) abs(cos theta)$. Thus, the volume of the parallelepiped is
 
   $ V = A h = abs(b cross c) abs(a) abs(cos theta) = abs(a times (b cross c)). $
+]
+
+== Matrices
+
+#definition(title: [Matrix multiplication])[
+  The matrix multiplication of the $m times n$ matrix $A$ and the $n times p$ matrix $B$ is made by dot-producting the rows of the first by the columns of the second:
+  $ [A B_(i j)] = [A_(i *) dot B_(* j)] = [sum_(k=1)^n A_(i k) B_(k j)] $
+]
+
+#definition(title: [Positive definite])[
+  Let $A$ be a matrix. Then $A$ is positive definite iff any of the following equivalent conditions are true:
+  - For all $v in Reals^n setminus {0}$, $v^transpose A v > 0$
+  - All leading principal minors of $A$ are positive
+  - All eigenvalues of $A$ are positive
+  - All pivots of $A$ are positive
+]
+
+#definition(title: [Negative definite])[
+  Let $A$ be a matrix. Then $A$ is negative definite iff any of the following equivalent conditions are true:
+  - For all $v in Reals^n setminus {0}$, $v^transpose A v < 0$
+  - The $k$th-order leading principal minor is negative if $k$ is odd and positive if $k$ is even
+  - All eigenvalues of $A$ are negative
+  - All pivots of $A$ are negative
+  - $-A$ is positive definite
+]
+
+*Positive semidefinite* and *negative semidefinite* are the same except that the determinant/eigenvalue/pivot/$v^transpose A v$ could also be 0.
+
+#definition(title: [Principal minor])[
+  The determinant of a submatrix of a matrix.
+]
+
+#definition(title: [Leading principal minor])[
+  The $k$th-order leading principal minor is the determinant of the top left submatrix of a matrix, where the 1st-order leading principal minor is the determinant of the 1x1 matrix at its top left corner, the 2nd-order is the determinant of the 2x2 matrix at its top left corner, etc.
 ]
 
 == Useful properties
@@ -658,19 +721,28 @@ The most useful notation for a line is in parametric form:
 #see[Colley [2.6], Trimm [3.7], Brummet [14]]
 
 #see[NMD [11]]
+
+#see[#link("https://youtu.be/7JEWlfFoJJQ")]
+
 #definition(title: [Directional derivative])[
   Let $f : X subset.eq Reals^n to Reals$, where $X$ is an open subset of $Reals^n$, and let $vn(a) in X$. If $vn(v)$ is any unit vector in $X$, then the directional derivative of $f$ at $vn(a)$ in the direction of $vn(v)$ is
   $ D_(vn(v)) f(vn(a)) = lim_(h to 0) (f(vn(a) + h vn(v)) - f(vn(a)))/h $
+
+  We may wish to normalize the directional derivative:
+  $ D_(hat(v)) f(vn(a)) = lim_(h to 0) (f(vn(a) + h vn(v)) - f(vn(a)))/(h abs(v)) $  
 ]
 
 #theorem[
   If $f$ is differentiable at $vn(a)$, then
   $ D_(vn(v)) f(vn(a)) = grad f(vn(a)) dot vn(v) $
+
+  We may wish to normalize the directional derivative:
+  $ D_(hat(v)) f(vn(a)) = grad f(vn(a)) dot vn(v)/abs(v) $
 ]
 
 #theorem[
   The gradient points in the direction of steepest ascent, and its magnitude is the derivative in that direction:
-  $ abs(grad f(vn(a))) = D_(grad f(vn(a))) f(vn(a)) = max { D_(vn(v)) f(vn(a)) : vn(v) in Reals^n } $
+  $ abs(grad f(vn(a))) = D_hat(grad f(vn(a))) f(vn(a)) = max { D_(hat(v)) f(vn(a)) : vn(v) in Reals^n } $
   where $f : X subset.eq Reals^n to Reals$.
 ]
 
@@ -685,4 +757,107 @@ The most useful notation for a line is in parametric form:
   $ vn(E) = - grad V. $
 
   This is because in electrostatics, opposites attract, so positive charges want to follow the steepest descent to an area with low electric potential. $grad V$ points to the steepest ascent, so $-grad V$ points to the steepest descent.
+]
+
+#non-tested-content[#theorem[
+  The second directional derivative of $f$ in the direction of $vn(v)$ is given by
+  $ v^transpose (Hessian f) v. $
+]]
+
+= Extrema
+
+#see[Colley [4.1], Brummet [15, MVCWUP:69-80(Mar 4-6)]]
+
+#see[NMD [12, 13], Stewart [14.7]]
+
+#see[#link("https://youtu.be/7JEWlfFoJJQ")]
+
+== Local extrema
+
+#definition(title: [Critical point of $f$])[
+  A point $vn(c)$ in the domain of $f$ where all of the partial derivatives of $f$ at $vn(c)$ equal 0 or do not exist, or equivalently $grad f(vn(c)) = 0$ or does not exist.
+]
+
+#definition(title: [Saddle point])[
+  A critical point that is not a max or min.
+]
+
+#theorem(title: [by Fermat's Theorem])[
+  If $f : X subset.eq Reals^n to Reals$ has a local maximum or minimum at $vn(a)$ and the first order partial derivatives exist, then $vn(a)$ is a critical point.
+]
+
+#definition(title: [Hessian matrix])[
+  The Hessian matrix $Hessian f$ of a function $f : X subset.eq Reals^n to Reals$ is the matrix of second-order partials
+  $ [Hessian f_(i j)] = [(partial^2 f)/(partial x_i partial x_j)] $
+
+  If $X subset.eq Reals^2$, then
+  $ Hessian f = mat(f_(x x), f_(x y); f_(y x), f_(y y)) $
+
+  The Hessian is the transpose of the Jacobian of the gradient:
+  $ Hessian f = (Jacobian grad f)^transpose. $
+]
+
+#theorem(title: [Second partial derivative test])[
+  Let $X$ be an open subset of $Reals^n$ and $f : X to Reals$ whose 2nd-order and lower partials exist and are continuous on $X$ (f is of class $C^2$). Let $vn(a) in X$ be a critical point of $f$. Then
+  - If the Hessian $Hessian f(vn(a))$ is positive definite, then $f$ has a local minimum at $vn(a)$.
+    - Easiest way to check is that the leading principal minors (determinant of the top left submatrices) are positive.
+    - This is equivalent to the second derivative $v^transpose (Hessian f) v$ being positive.
+  - If the Hessian $Hessian f(vn(a))$ is negative definite, then $f$ has a local maximum at $vn(a)$.
+    - Easiest way to check is that the 1st leading principal minor is negative, 2nd is positive, 3rd is negative, etc.
+    - This is equivalent to the second derivative $v^transpose (Hessian f) v$ being positive.
+  - If $det Hessian f(vn(a)) != 0$ but $Hessian f(vn(a))$ is neither positive nor negative definite, then $f$ has a saddle point at $vn(a)$.
+  - If the Hessian has both positive and negative eigenvalues, then $f$ has a saddle point at $vn(a)$.
+  - Otherwise, the Hessian must be positive semidefinite or negative semidefinite, and the test is inconclusive.
+
+  If $X subset.eq Reals^2$, let
+  $ D := f_(x x)(vn(a)) f_(y y)(vn(a)) - (f_(x y)(vn(a)))^2 = det Hessian f(vn(a)) $
+  Then
+  - If $D > 0$ and $f_(x x)(vn(a)) > 0$, then $f$ has a local minimum at $vn(a)$.
+  - If $D > 0$ and $f_(x x)(vn(a)) < 0$, then $f$ has a local maximum at $vn(a)$.
+  - If $D < 0$, then $f$ has a saddle point at $vn(a)$.
+  - If $D = 0$ the test is inconclusive.
+
+  (Note that if $f_(x x)(vn(a)) = 0$ then $D <= 0$.)
+]
+
+== Taylor polynomials
+
+#see[#link("https://youtu.be/V4iscOnH6W8")]
+
+The #defname[first-order Taylor polynomial] is just the linear approximation
+
+$ T_1(vn(x)) = f(vn(a)) + grad f(vn(a)) dot (vn(x) - vn(a)) $
+
+#definition(title: [Second-order Taylor polynomial])[
+  The #defname[second-order Taylor polynomial] for a function $f in Reals^n to Reals$ at point $vn(a)$ evaluated at point $vn(x)$, where $vn(h) := vn(x) - vn(a)$, is:
+  $ T_2(vn(x)) &= f(vn(a)) + sum_(i=1)^n f_(x_i)(vn(a)) h_i + 1/2 sum_(i,j=1)^n f_(x_i x_j)(vn(a)) h_i h_j \
+    &= f(vn(a)) + grad f(vn(a)) dot vn(h) + 1/2 vn(h)^transpose (Hessian f(vn(a))) vn(h) $
+]
+
+Higher-order Taylor polynomials are not very useful.
+
+== Absolute extrema
+
+#theorem(title: [Extreme Value Theorem])[
+  Let $X$ be a closed and bounded subset of $Reals^n$ and suppose $f : X to Reals^n$ is continuous. Then $f$ attains an absolute maximum and an absolute minimum somewhere on $X$.
+]
+
+#theorem(title: [Method to find absolute minima and maxima with a constraint])[
+  Let $A$ be a closed bounded subset of $Reals^n$, and $C$ be the set of all critical points of $f$ contained within $A$. Let $S := C union bound A$, the union of $C$ and the boundary of $A$. Then, the absolute maximum is $max {f(vn(c)) : vn(c) in S}$ and the absolute minimum is $min {f(vn(c)) : vn(c) in S}$.
+]
+
+== Lagrange multiplier
+
+#see[#link("https://www.youtube.com/watch?v=8mjcnxGMwFo")]
+
+#theorem[
+  If $f(vn(x)_0) = c$ is an extreme value (absolute max or min) of $f$ on the set ${ vn(x) : g(vn(x)) = k }$ and $grad g(vn(x)_0) != 0$, then the following equivalent things are true:
+  - at $vn(x)_0$, the level set ${ vn(x) : f(vn(x)) = c }$ is tangent to $g(vn(x)) = k$.
+  - $grad f(vn(x)_0) = lambda grad g(vn(x)_0)$, where $lambda in Reals$ is called the *Lagrange multiplier*.
+]
+
+#procedure[
+  To find the extreme values of $f$ on the set ${ vn(x) : g(vn(x)) = k }$, solve the system of equations
+  $ grad f(vn(x)) &= lambda grad g(vn(x)) \
+  g(vn(x)) &= k. $
 ]

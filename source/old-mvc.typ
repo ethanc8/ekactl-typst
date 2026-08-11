@@ -67,7 +67,7 @@
 
 #let infty = math.infinity
 
-#let vn = math.vn // vn name
+#let vn = math.arrow // vector name
 
 #let cross = math.times
 
@@ -146,7 +146,7 @@ See the properties of fields in the LinAlg notes for definitions of addition and
 
 #theorem(title: [Calculation of cross product])[
   Where $a, b in Reals^n$ and $theta$ is the angle between $a$ and $b$:
-  $ a times b &= vn(a_2 b_3 - a_3 b_2, a_3 b_1 - a_1 b_3, a_1 b_2 - a_2 b_1) = mat(delim: "|", hat(i), hat(j), hat(k); a_1, a_2, a_3; b_1, b_2, b_3) \
+  $ a times b &= vec(a_2 b_3 - a_3 b_2, a_3 b_1 - a_1 b_3, a_1 b_2 - a_2 b_1) = mat(delim: "|", hat(i), hat(j), hat(k); a_1, a_2, a_3; b_1, b_2, b_3) \
     &= hat(i) mat(delim: "|", a_2, a_3; b_2, b_3)
     + hat(j) mat(delim: "|", a_1, a_3; b_1, b_3)
     + hat(k) mat(delim: "|", a_1, a_2; b_1, b_2) $
@@ -312,7 +312,7 @@ The most useful notation for a line is in parametric form:
 
 #definition(title: [Partial derivative])[
   The partial derivative of $f(vn(x))$ with respect to the $i$th variable is
-  $ (partial f(vn(x)))/(partial x_i) = lim_(h to 0) (f(vn(x_0, dots.v, x_i + h, dots.v, x_n)) - f(vn(x)))/h $
+  $ (partial f(vn(x)))/(partial x_i) = lim_(h to 0) (f(vec(x_0, dots.v, x_i + h, dots.v, x_n)) - f(vn(x)))/h $
 
   This is equivalent to letting $F(x_i) = f(vn(x))$ and finding $F'(x_i)$.
 ]
@@ -342,7 +342,7 @@ The most useful notation for a line is in parametric form:
 ]
 
 #definition(title: [Gradient])[
-  $ grad f(vn(x)) = vn((partial f(x))/(partial x_1), dots.v, (partial f(x))/(partial x_n)) $
+  $ grad f(vn(x)) = vec((partial f(x))/(partial x_1), dots.v, (partial f(x))/(partial x_n)) $
 ]
 
 === Implicit surfaces
@@ -369,7 +369,7 @@ The most useful notation for a line is in parametric form:
 
 #definition(title: [Jacobian])[
   If $f : X subset.eq Reals^n to Reals^m$ is a vector-valued function, then the Jacobian is
-  $ D f(vn(x_1, x_2, dots.v, x_n)) = vn(grad f_1, grad f_2, dots.v, grad f_m) = mat(
+  $ D f(vec(x_1, x_2, dots.v, x_n)) = vec(grad f_1, grad f_2, dots.v, grad f_m) = mat(
     (partial f_1)/(partial x_1), (partial f_1)/(partial x_2), dots.h, (partial f_1)/x_n;
     (partial f_2)/(partial x_1), (partial f_2)/(partial x_2), dots.h, (partial f_2)/x_n;
     dots.v, dots.v, dots.down, dots.v;
@@ -400,12 +400,12 @@ The most useful notation for a line is in parametric form:
 
 #definition(title: [Tangent vector])[
   Given a path $r : Reals to Reals^3$, the tangent vector to said path at some point $P$ is given by $r'(t)$, provided that $r'(t) != 0$. In $Reals^3$,
-  $ r'(t) = lim_(h to 0) (r(t + h) - r(t))/h = vn((d x)/(d t), (d y)/(d t), (d z)/(d t)) $
+  $ r'(t) = lim_(h to 0) (r(t + h) - r(t))/h = vec((d x)/(d t), (d y)/(d t), (d z)/(d t)) $
 ]
 
 #definition(title: [Derivative of vector-valued function])[
   Let $f : T subset.eq Reals to Reals^m$. Then
-  $ f'(t) = vn(f_1'(t), f_2'(t), dots.v, f_m'(t)) $
+  $ f'(t) = vec(f_1'(t), f_2'(t), dots.v, f_m'(t)) $
 ]
 
 === Differentiability
@@ -541,18 +541,6 @@ The most useful notation for a line is in parametric form:
   $ H f = mat(f_(x x), f_(x y); f_(y x), f_(y y)) $
 ]
 
-The *first-order Taylor polynomial* is just the linear approximation
-
-$ T_1(vn(x)) = f(vn(a)) + grad f(vn(a)) dot (vn(x) - vn(a)) $
-
-#definition(title: [Second-order Taylor polynomial])[
-  The second degree Taylor polynomial for a function $f in Reals^n to Reals$ at point $vn(a)$ evaluated at point $vn(x)$, where $vn(h) := vn(x) - vn(a)$, is:
-  $ T_2(vn(x)) &= f(vn(a)) + sum_(i=1)^n f_(x_i)(vn(a)) h_i + 1/2 sum_(i,j=1)^n f_(x_i x_j)(vn(a)) h_i h_j \
-    &= f(vn(a)) + grad f(vn(a)) dot vn(h) + 1/2 vn(h)^T H f(vn(a)) vn(h) $
-]
-
-Higher-order Taylor polynomials are not very useful.
-
 #theorem(title: [Second Derivative Test])[
   Let $X$ be an open subset of $Reals^n$ and $f : X to Reals$ whose 2nd-order and lower partials exist and are continuous on $X$ (f is of class $C^2$). Let $vn(a) in X$ be a critical point of $f$. Then
   - If the Hessian $H f(vn(a))$ is positive definite, then $f$ has a local minimum at $vn(a)$.
@@ -646,7 +634,7 @@ Higher-order Taylor polynomials are not very useful.
 
 #example(title: [Cartesian to spherical])[
   Converting from Cartesian coordinates to spherical coordinates in $Reals^3$:
-  $ vn(x, y, z) = T_(X P)^(-1) (vn(rho, phi, theta)) = vn(rho sin phi cos theta, rho sin phi sin theta, rho cos phi) $
+  $ vec(x, y, z) = T_(X P)^(-1) (vec(rho, phi, theta)) = vec(rho sin phi cos theta, rho sin phi sin theta, rho cos phi) $
   so then the absolute Jacobian determinant is
   $ abs(det T_(X P)^(-1)) = rho^2 sin phi $
 ]
@@ -687,10 +675,10 @@ Higher-order Taylor polynomials are not very useful.
 
 #definition(title: [Del operator])[
   In $Reals^3$, del is defined by
-  $ grad := vn((partial)/(partial x), (partial)/(partial y), (partial)/(partial z)) $
+  $ grad := vec((partial)/(partial x), (partial)/(partial y), (partial)/(partial z)) $
 
   In $Reals^n$, del is defined by
-  $ grad = vn((partial)/(partial x_1), dots.v, (partial)/(partial x_n)) $
+  $ grad = vec((partial)/(partial x_1), dots.v, (partial)/(partial x_n)) $
 
   Del is an operator; it takes in a function and outputs a function.
 ]
@@ -780,7 +768,7 @@ Higher-order Taylor polynomials are not very useful.
 #theorem(title: [Green's Theorem])[
   Let $partial D$ be a positively oriented, piecewise smooth, simple closed curve in the $x y$-plane, and $D$ be the region bounded by $partial D$. If $P$ and $Q$ have continuous partial derivatives on an open region containing $D$, then
   $ integral.cont_(partial D) P dif x + Q dif y = integral.double_D ((partial Q)/(partial x) - (partial P)/(partial y)) dif A $
-  Equivalently, if $vn(F) = x, y mapsto vn(P(x, y), Q(x, y))$, then
+  Equivalently, if $vn(F) = x, y mapsto vec(P(x, y), Q(x, y))$, then
   $ integral.cont_(partial D) vn(F) dot dif vn(r) = integral.double_D op("curl") vn(F) dif A $
 
   In other words, the circulation of a vector field along a curve is the same as the sum of the curls within the region bounded by the curve.
@@ -802,8 +790,8 @@ Higher-order Taylor polynomials are not very useful.
 ]
 
 #definition(title: [Normal vector to a parameterized surface])[
-  Let $vn(X) = vn(u, v) mapsto vn(x(u,v), y(u,v), z(u,v))$ be a parameterization of a surface, and let $vn(u)$ be a vector in the domain of $vn(X)$. Then the tangent vector along the $u$-axis is $vn(X)_u (vn(u))$, where
-  $ vn(X)_u = vn((partial x)/(partial u), (partial y)/(partial u), (partial z)/(partial u)) $
+  Let $vn(X) = vec(u, v) mapsto vec(x(u,v), y(u,v), z(u,v))$ be a parameterization of a surface, and let $vn(u)$ be a vector in the domain of $vn(X)$. Then the tangent vector along the $u$-axis is $vn(X)_u (vn(u))$, where
+  $ vn(X)_u = vec((partial x)/(partial u), (partial y)/(partial u), (partial z)/(partial u)) $
   and similarly the tangent vector along the $v$-axis is $vn(X)_v (vn(u))$.
 
   Then the normal vector to the parameterized surface at the point $vn(u)$ is
