@@ -62,6 +62,16 @@
 #let card = [card]
 
 #let int = math.integral
+#let oint = math.integral.cont
+#let iint = math.integral.double
+#let oiint = math.integral.surf
+#let iiint = math.integral.triple
+#let oiiint = math.integral.vol
+#let iiiint = math.integral.quad
+
+#let partial = math.upright(math.partial)
+
+#let Derivative = $upright(D)$
 
 #set math.vec(delim: "[")
 #set math.mat(delim: "[")
@@ -76,9 +86,9 @@
 
 #let grad = math.nabla
 
-#let Jacobian = $"J"$
-#let transpose = $"T"$
-#let Hessian = $"H"$
+#let Jacobian = $upright(J)$
+#let transpose = $upright(T)$
+#let Hessian = $upright(H)$
 
 #let include-non-tested-content = true
 
@@ -690,11 +700,6 @@ The most useful notation for a line is in parametric form:
 
 == Gradient and Jacobian
 
-#definition(title: [Derivative of vector-valued function])[
-  Let $f : T subset.eq Reals to Reals^m$. Then
-  $ f'(t) = vec(f_1'(t), f_2'(t), dots.v, f_m'(t)) $
-]
-
 #definition(title: [Gradient])[
   $ grad f(arrow(x)) = vec((partial f(x))/(partial x_1), dots.v, (partial f(x))/(partial x_n)) $
 ]
@@ -861,3 +866,218 @@ Higher-order Taylor polynomials are not very useful.
   $ grad f(vn(x)) &= lambda grad g(vn(x)) \
   g(vn(x)) &= k. $
 ]
+
+= Vector functions
+
+#see[#link("https://youtu.be/40r56pX4mqA"), #link("https://youtu.be/80J5s0pic8M")]
+
+#see[Brummet [MVCWUP:Feb24(55-56)]]
+
+#see[NMD [15], Stewart [13.1-13.4]]
+
+#definition(title: [Path])[
+  A #defname[path] or #defname[curve] in $Reals^n$ is the image of a function $f : I subset.eq Reals to Reals^n$, i.e. it is the set $f(I)$. If $I = [a, b]$, then the endpoints of the path are $f(a)$ and $f(b)$.
+]
+
+#definition(title: [Derivative of vector-valued function])[
+  Let $vn(f) : T subset.eq Reals to Reals^m$. Then
+  $ vn(f)'(t) := vec(f_1'(t), f_2'(t), dots.v, f_m'(t)) $
+]
+
+#theorem(title: [Differentiation rules])[
+  Let $vn(u), vn(v) : Reals to Reals^n$, $f : Reals to Reals$, $c in Reals$. Then,
+  $ d/(d t) vn(u)(t) + vn(v)(t) &= vn(u)'(t) + vn(v)'(t) \
+  d/(d t) c vn(u)(t) &= c vn(u)'(t) \
+  d/(d t) f(t) vn(u)(t) &= f'(t) vn(u)(t) + f(t) vn(u)'(t) \
+  d/(d t) vn(u)(t) dot vn(v)(t) &= vn(u)'(t) dot vn(v)(t) + vn(u)(t) dot vn(v)'(t) \
+  d/(d t) vn(u)(t) cross vn(v)(t) &= vn(u)'(t) cross vn(v)(t) + vn(u)(t) cross vn(v)'(t) \
+  d/(d t) vn(u)(f(t)) &= f'(t) vn(u)'(f(t)) $
+]
+
+#definition(title: [Tangent vector])[
+  Given a path $vn(r)(I)$ given by $vn(r) : I subset.eq Reals to Reals^3$, the tangent vector to said path at some point $P$ is given by $vn(r)'(t)$, provided that $vn(r)'(t) != 0$.
+]
+
+#definition(title: [Limit of vector-valued function])[
+  Let $vn(f) : X subset.eq Reals^n to Reals^m$. Then
+  $ lim vn(f)(t) := vec(lim f_1 (t), lim f_2 (t), dots.v, lim f_m (t)) $
+]
+
+#theorem[
+  $vn(f) : X subset.eq Reals^n to Reals^m$ is continuous at $vn(a)$ iff the components are continuous.
+]
+
+== Arc length
+
+#theorem(title: [Arc length])[
+  The length of a path $vn(r)([a, b])$ given by $vn(r) : [a, b] subset.eq Reals to Reals^3$ is
+
+  $ L = int_a^b abs(vn(r)'(t)) d t $
+]
+
+#definition(title: [Arc length function])[
+  Let $vn(r)(I)$ be a path given by $vn(r) : I subset.eq Reals to Reals^3$. Then the #defname[arc length function] from $a$, which takes in $t$ and returns the arc length traversed since $f(a)$, is
+  $ s(t) := int_a^t abs(vn(r)'(u)) d u $
+]
+
+#procedure(title: [Reparameterizing in terms of arc length])[
+  Let $vn(r)(I)$ be a path given by $vn(r) : I subset.eq Reals to Reals^3$. Let $s(t)$ be the arc length function of $vn(r)$ from $a$. Then, the reparameterization of $vn(r)$ in terms of arc length from $a$ is $vn(r) compose s^(-1)$.
+]
+
+== Curvature and torsion
+
+#definition(title: [Smooth])[
+  A parameterization $vn(r) : I subset.eq Reals to Reals^3$ is #defname[smooth] iff $vn(r)'$ is continuous and $vn(r)'(t) != 0$ for all $t in I$.
+
+  A path is smooth iff it has a smooth parameterization.
+]
+
+#definition(title: [Unit tangent vector])[
+  Let $vn(r)(I)$ be a path given by $vn(r) : I subset.eq Reals to Reals^3$. Then, its #defname[unit tangent vector] at $vn(r)(t)$ is
+  $ vn(T)(t) := (vn(r)'(t))/abs(vn(r)'(t)). $
+]
+
+#definition(title: [Curvature])[
+  Let $vn(r)(I)$ be a path given by $vn(r) : I subset.eq Reals to Reals^3$. The #defname[curvature] of $vn(r)$ at $t$ is the change in unit tangent vector per unit arc length:
+  $ kappa(t) := abs((d vn(T))/(d s)) = abs(vn(T)'(t))/(vn(r)'(t)) = abs(vn(r)'(t) cross vn(r)''(t))/abs(vn(r)'(t))^3. $
+]
+
+#definition(title: [Principal unit normal vector])[
+  Let $vn(r)(I)$ be a path given by $vn(r) : I subset.eq Reals to Reals^3$. Let $t$ be a point s.t. $kappa(t) != 0$. The #defname[principal unit normal vector] (also called #defname[unit normal]) of $vn(r)$ at $t$ is
+  $ vn(N)(t) := (vn(T)'(t))/abs(vn(T)'(t)). $
+
+  It is always perpendicular to $vn(T)(t)$, and indicates the direction in which the curve is turning at each point.
+]
+
+#definition(title: [Binormal vector])[
+  Let $vn(r)(I)$ be a path given by $vn(r) : I subset.eq Reals to Reals^3$. Let $t$ be a point s.t. $kappa(t) != 0$. The #defname[binormal vector] of $vn(r)$ at $t$ is
+  $ vn(B)(t) = vn(T)(t) cross vn(N)(t). $
+
+  The binormal vector is perpendicular to both $vn(T)(t)$ and $vn(N)(t)$, and is also a unit vector.
+]
+
+#definition(title: [Normal and osculating planes])[
+  The #defname[normal plane] is the plane determined by $vn(N)$ and $vn(B)$, and contains all lines orthogonal to $vn(T)$.
+
+  The #defname[osculating plane] is the plane determined by $vn(T)$ and $vn(N)$, and is the plane closest to containing the part of the curve near $vn(P) := vn(r)(t)$.
+
+  #image("image-33.png")
+]
+
+#definition(title: [Osculating circle])[
+  The #defname[circle of curvature] or #defname[osculating circle] of $C := vn(r)(I)$ at $vn(P) := vn(r)(t)$ is the circle in the osculating plane that passes through $vn(P)$ with radius $1/kappa$ and center a distance $1/kappa$ from $vn(P)$ along the vector $vn(N)$.
+
+  The center of said circle is called the #defname[center of curvature].
+
+  The circle of curvature shares the same tangent, normal, and curvature with the curve $C$ at $P$.
+
+  #image("image-34.png")
+]
+
+#definition(title: [Torsion])[
+  The #defname[torsion] of a curve is
+  $ tau(t) := - (d vn(B))/(d s) dot vn(N) = - (vn(B)'(t) dot vn(N)(t))/(vn(r)'(t)) = ((vn(r)'(t) cross vn(r)''(t)) dot vn(r)'''(t))/abs(vn(r)'(t) cross vn(r)''(t))^2. $
+
+  The torsion measures how much the curve "twists"; if $tau$ is positive, the curve twists out of the osculating plane at $P$ in the direction of the binormal, and if it's negative, it twists in the direction opposite the binormal.
+]
+
+== Kinematics
+
+#definition[
+  Let $vn(r)(t)$ be the position of a particle at time $t$.
+
+  Its #defname[velocity] at time $t$ is $vn(v)(t) := vn(r)'(t)$. Its #defname[acceleration] at time $t$ is $vn(a)(t) := vn(r)''(t)$.
+
+  Its #defname[speed] at time $t$ is $v(t) := abs(vn(r)'(t))$.
+]
+
+#theorem(title: [Tangential and normal components of acceleration])[
+  $ vn(v) = v vn(T). $
+  $ vn(a) = v' vn(T) + kappa v^2 vn(N). $
+]
+
+= Vector fields + line integrals
+
+#see[NMD [17-20], Stewart [16.1-16.3]]
+
+== Vector fields
+
+#definition(title: [Vector field])[
+  A vector field in $Reals^n$ is a mapping $F : X subset.eq Reals^n to Reals^n$.
+]
+
+#definition(title: [Flow line])[
+  A flow line of a vector field $F : X subset.eq Reals^n to Reals^n$ is a differentiable path $vn(x) : I to Reals^n$ (where $I$ is an interval on $Reals$) such that
+  $ vn(x)'(t) = F(vn(x)(t)) $
+  That is, the velocity vector of $vn(x)$ at time $t$ is given by the value of the vector field $F$ at the point on $x$ at time $t$.
+]
+
+#procedure(title: [Approximating flow line])[
+  Begin at a vector along the flow line. Then the next vector on the vector field in the direction pointed to by this vector is approximately along the flow line. So you can draw a curve through the vectors following the arrows.
+]
+
+#definition(title: [Conservative vector field])[
+  A vector field $vn(F)$ is conservative iff there exists $f : Reals^n to Reals$ such that $vn(F) = grad f$ at all points in $Reals^n$. Then $f$ is called the *potential function* for $F$.
+]
+
+#theorem(title: [Converse of Poincaré's lemma])[
+  If $vn(F) : D subset.eq Reals^n to Reals^n$ is a continuously differentiable ($C^1$) conservative vector field, then
+  $ (partial F_i)/(partial x_j) = (partial F_j)/(partial x_i) quad "for all" i != j. $
+
+  Equivalently, throughout $D$, $Jacobian vn(F) = (Jacobian vn(F))^transpose$ (the Jacobian is symmetric).
+]
+
+#theorem(title: [Poincaré's lemma])[
+  If $vn(F) : D subset.eq Reals^n to Reals^n$ is a continuously differentiable ($C^1$) vector field. If $D$ is simply connected and 
+  $ (partial F_i)/(partial x_j) = (partial F_j)/(partial x_i) quad "for all" i != j, $
+  or equivalently $Jacobian vn(F) = (Jacobian vn(F))^transpose$ (the Jacobian is symmetric), then $vn(F)$ is conservative.
+]
+
+*Note:* In $Reals^3$, $Jacobian vn(F) = (Jacobian vn(F))^transpose$ is equivalent to $vn(F)$ being irrotational ($grad cross vn(F) = 0$).
+
+== Line integrals
+
+#see[#link("https://youtu.be/WA5_a3C2iqY?si=a99FLFGMVS5xyEUM")]
+
+#definition(title: [Scalar line integral])[
+  If $C$ is a smooth curve defined by $vn(r) = vn(r)(t), a <= t <= b$, where $vn(r) in Reals^n$, then
+  $ integral_C f(vn(r)) dif s = integral_a^b f(vn(r)(t)) abs(vn(r)'(t)) dif t. $
+]
+
+#definition(title: [Line integral of a vector field along a smooth curve])[
+  If $F$ is any continuous vector field defined on a smooth curve $C$ defined by $vn(r)(t), a <= t <= b$, then
+  $ integral_C vn(F) dot dif vn(r) = integral_C vn(F) dot hat(T) dif s = integral_a^b vn(F)(vn(r)(t)) dot vn(r)'(t) dif t $
+
+  It represents the work done by moving a particle along the curve $C$, if $F$ is a force field.
+]
+
+#definition(title: [Path independence])[
+  A vector field $vn(F)$ is path-independent iff for any two paths $C_1$ and $C_2$ which have the same start and end points,
+  $ integral_(C_1) vn(F) dot dif vn(r) = integral_(C_2) vn(F) dot dif vn(r) $
+]
+
+#theorem(title: [Fundamental Theorem of Line Integrals])[
+  Let $C$ be a smooth curve given by the function $vn(r)(t)$ defined on the interval $t in [a, b]$. Let $f$ be a differentiable function whose gradient $grad f$ is continuous on $C$. Then
+  $ integral_C grad f dot dif vn(r) = f(vn(r)(b)) - f(vn(r)(a)) $
+
+  In other words, the line integral of a conservative field along a curve is equal to the potential difference between its endpoints.
+
+  This implies that the following statements are equivalent:
+  - The vector field $vn(F)$ is conservative
+  - The vector field $vn(F)$ is path-independent
+  - $integral.cont_C vn(F) dot dif vn(r) = 0$ for every closed path $C$.
+]
+
+#example[
+  The electric field caused by a single point charge $q$ is
+  $ vn(E)(x) = (epsilon_0 q)/(abs(vn(x))^3) vn(x). $
+
+  It's a conservative field, since $-V$ is its potential function:
+  $ vn(E) = - grad V. $
+
+  $int_C vn(E) dot dif s$ is the work per unit charge moving along the path $C$, and is equal to the voltage difference (by the Fundamental Theorem of Line Integrals):
+  $ int_C vn(E) dot dif s = V(vn(B)) - V(vn(A)), $
+  where $vn(A)$ and $vn(B)$ are the endpoints of $C$.
+]
+
+
