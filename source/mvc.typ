@@ -1080,4 +1080,163 @@ Higher-order Taylor polynomials are not very useful.
   where $vn(A)$ and $vn(B)$ are the endpoints of $C$.
 ]
 
+= Multiple integrals
 
+== Coordinate system
+
+#definition(title: [Polar coordinates])[
+  $ x = r cos theta wide y = r sin theta \
+  r^2 = x^2 + y^2 wide tan theta = y/x $
+]
+
+#definition(title: [Cylindrical coordinates])[
+  $ x = r cos theta wide y = r sin theta wide z = z \
+  r^2 = x^2 + y^2 wide tan theta = y/x wide z = z $
+
+  #image("image-38.png")
+]
+
+#definition(title: [Spherical coordinates])[
+  Let $vn(x)$ be a point, and call the line from $vn(0)$ to $vn(x)$ the "radius". It has three coordinates:
+  - $rho$ (or $r$), the #defname[radial distance] --- length of the radius 
+  - $theta$, the #defname[azimuthal angle] of the radius around the polar axis $z$, within the $x y$-plane
+  - $phi$, the #defname[polar angle] or #defname[inclination angle] between the radius and the polar axis $z$
+
+  Physicists use $phi$ for the azimuthal angle and $theta$ for the polar angle.
+
+  $ x = rho sin phi cos theta wide y = rho sin phi sin theta wide z = rho cos theta \
+  rho^2 = x^2 + y^2 + z^2 wide phi = cos^(-1) (z/rho) \
+  theta = cos^(-1) (x/(rho sin phi)) $
+
+  #image("image-39.png")
+]
+
+== Double integral
+
+#see[Colley [5.1, 5.2], Paul's Notes [15.1, 15.2, 15.3], Brummet [08, MVCWUP:Feb3(29-33)]]
+
+// Some of these equations were copied from Paul's Notes.
+
+#definition(title: [Double integral])[
+  The double integral of $f : X subset.eq Reals^2 to Reals$ over the rectangle $R$ is
+  $ integral.double_R f(x, y) dif A = lim_(n, m to infty) sum_(i=1)^n sum_(j=1)^m f(x_i^*, y_j^*) Delta A $
+
+  Generally, the double integral of $f$ over the region $R$ is
+  $ integral.double_R f(x, y) dif A = lim_(n to infty) sum_((x_i^*, y_j^*) in R) f(x_i^*, y_j^*) Delta A $
+  (choose $n$ points $(x_i^*, y_j^*)$ in $R$, then sum each $f(x_i^*, y_j^*) Delta A$)
+]
+
+#theorem(title: [Fubini's Theorem])[
+  If $f : X subset.eq Reals^2 to Reals$ is continuous on $[a, b] times [c, d]$, then
+  $ integral.double_R f(x, y) dif A &= integral_a^b integral_c^d f(x, y) dif y dif x \
+  &= integral_c^d integral_a^b f(x, y) dif x dif y $
+]
+
+#theorem[
+  If $f(x, y) = g(x) h(y)$ and $R = [a, b] times [c, d]$, then
+  $ integral.double_R f(x, y) dif A &= integral.double_R g(x) h(y) dif A \
+  &= (integral_a^b g(x) dif x)(integral_c^d h(y) dif y) $
+]
+
+#theorem[
+  If $f : X subset.eq Reals^2 to Reals$ is continuous on the region $D subset.eq X$, then define
+  $ F(x, y) := cases(
+    f(x, y) & "if" (x, y) in D \
+    0 & "if" (x, y) in.not D.
+  ) $
+
+  Let $R$ be a rectangle containing $D$. Then,
+  $ iint_D f(x, y) dif A = iint_R F(x, y) dif A. $
+]
+
+#definition(title: [Type I region])[
+  A #defname[type I region] is a region that lies between the graphs of two continuous functions of $x$:
+  $ D := { (x, y) : a <= x <= b, g_1(x) <= y <= g_2(x) }. $
+
+  #image("image-36.png")
+]
+
+#theorem(title: [Type I integrals])[
+  If $f : X subset.eq Reals^2 to Reals$ is defined on $D = { (x, y) : a <= x <= b, g_1(x) <= y <= g_2(x) }$, then
+  $ integral.double_D f(x, y) dif A = integral_a^b integral_(g_1(x))^(g_2(x)) f(x, y) dif y dif x $
+]
+
+#definition(title: [Type II region])[
+  A #defname[type I region] is a region that lies between the graphs of two continuous functions of $y$:
+  $ D := { (x, y) : h_1(y) <= x <= h_2(x), c <= y <= d }. $
+
+  #image("image-37.png")
+]
+
+#theorem(title: [Type II integrals])[
+  If $f : X subset.eq Reals^2 to Reals$ is defined on $D = { (x, y) : h_1(y) <= x <= h_2(x), c <= y <= d }$, then
+  $ integral.double_D f(x, y) dif A = integral_c^d integral_(h_1(y))^(h_2(y)) f(x, y) dif x dif y $
+]
+
+#theorem(title: [Reversing the order of integration])[
+  Sketch the bounds of the region of integration, then just redo the bounds from scratch.
+]
+
+#theorem(title: [Converting double integrals to polar])[
+  $ integral_a^b integral_c^d f(x, y) dif x dif y = integral_alpha^beta integral_gamma^delta f(x, y) thick r dif r dif theta \
+  =integral_alpha^beta integral_gamma^delta f(r cos theta, r sin theta) thick r dif r dif theta \ $
+
+  $a, b, c, d, alpha, beta, gamma, delta$ may be constants or may depend on the variables. To find the new bounds sketch the bounds and redo the bounds.
+
+  *Warning:* Don't forget the $r$ in $iint f med r dif r dif theta$!
+]
+
+== Triple integral
+
+#see[Stewart [15.6-15.8], Trimm [5.6, 5.7], ]
+
+#definition(title: [Triple integral])[
+  The triple integral of $f$ over the region $R$ is
+  $ integral.triple_R f dif A = lim_(n to infty) sum_((x_i^*, y_j^*, z_k^*) in R) f(x_i^*, y_j^*, z_k^*) Delta A $
+  (choose $n$ points $(x_i^*, y_j^*, z_k^*)$ in $R$, then sum each $f(x_i^*, y_j^*, z_k^*) Delta A$)
+]
+
+#theorem(title: [Fubini's Theorem])[
+  If $f : X subset.eq Reals^3 to Reals$ is continuous on $[a, b] times [c, d] times [r, s]$, then
+  $ iiint_R f(x, y) dif A &= int_r^s int_c^d int_a^b f(x, y) dif x dif y dif z $
+]
+
+We have type I, II, and III regions in 3-space just like in the plane, and we integrate just like with double integrals.
+
+#theorem(title: [Triple integrals in cylindrical coordinates])[
+  Let $f : Reals^3 to Reals$ be continuous and
+  $ D :&= {(r, theta) : alpha <= theta <= beta, quad h_1(theta) <= r <= h_2(theta)} \
+  E :&= {(x, y, z) : (x, y) in D, quad u_1(x, y) <= z <= u_2(x, y)}. $
+  Then,
+  $ iiint_E f(x, y, z) dif V = \
+  int_alpha^beta int_(h_1 (theta))^(h_2 (theta)) int_(u_1 (r cos theta, r sin theta))^(u_2 (r cos theta, r sin theta)) f(r cos theta, r sin theta, z) med r dif z dif r dif theta $
+
+  In short,
+  $ iiint f dif V = iiint f med r dif z dif r dif theta. $
+]
+
+#theorem(title: [Triple integrals in spherical coordinates])[
+  In short,
+  $ iiint f dif V = iiint f med rho^2 sin phi dif rho dif theta dif phi $
+]
+
+=== General change of variables
+
+#theorem(title: [General change of variables])[
+  Given a function $f : Reals^n to Reals^m$ which takes in an argument in the coordinate system $X$, and $T_(X U) : Reals^n to Reals^n$ is a transformation from coordinates in $X$ to coordinates in $U$,
+  $ integral dots.c integral_R f(vn(x)) dif x_1 dots dif x_n \
+  = integral dots.c integral_R f(T_(X U) (vn(u))) abs(det Jacobian T_(X U)^(-1)) dif u_1 dots dif u_n $
+
+  where $abs(det Jacobian T_(X U)^(-1))$ is the absolute determinant of the Jacobian of $T_(X U)^(-1)$ (the transformation from coordinates in $U$ to coordinates in $X$), which is also denoted by
+  $ abs(det Jacobian T_(X U)^(-1)) = abs(det Jacobian T_(U X)) = abs((partial(x_1, dots, x_n))/(partial(u_1, dots, u_n))) $
+
+  It can also be computed more easily by taking the inverse of $Jacobian T_(X U)$:
+  $ abs(det Jacobian T_(X U)^(-1)) = abs(1/(det Jacobian T_(X U))) $
+]
+
+#example(title: [Example: Cartesian to spherical])[
+  Converting from Cartesian coordinates to spherical coordinates in $Reals^3$:
+  $ vec(x, y, z) = T_(X italic(Rho))^(-1) (vec(rho, theta, phi)) = vec(rho sin phi cos theta, rho sin phi sin theta, rho cos phi) $
+  so then the absolute Jacobian determinant is
+  $ abs(det Jacobian T_(X italic(Rho))^(-1)) = rho^2 sin phi $
+]
