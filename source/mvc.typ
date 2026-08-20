@@ -55,7 +55,6 @@
 #let cl = math.overline // closure
 #let indmap = math.overline // induced
 #let ior = math.degree // interior
-#let bound = math.partial // boundary
 
 #let Riemann = $cal(R)$
 
@@ -70,6 +69,8 @@
 #let iiiint = math.integral.quad
 
 #let partial = math.upright(math.partial)
+#let bound = partial // boundary
+
 
 #let Derivative = $upright(D)$
 
@@ -93,6 +94,9 @@
 #let include-non-tested-content = true
 
 #let non-tested-content(x) = x
+
+#let div = math.op("div")
+#let curl = math.op("curl")
 
 = Vectors, matrices
 
@@ -1240,3 +1244,194 @@ We have type I, II, and III regions in 3-space just like in the plane, and we in
   so then the absolute Jacobian determinant is
   $ abs(det Jacobian T_(X italic(Rho))^(-1)) = rho^2 sin phi $
 ]
+
+= Div, curl, Green's theorem
+
+
+== Divergence and curl
+
+#see[#link("https://youtu.be/rB83DpBJQsE")[3Blue1Brown video]]
+
+#definition(title: [Del operator])[
+  In $Reals^3$, del is defined by
+  $ grad := vec((partial)/(partial x), (partial)/(partial y), (partial)/(partial z)) $
+
+  In $Reals^n$, del is defined by
+  $ grad := vec((partial)/(partial x_1), dots.v, (partial)/(partial x_n)) $
+
+  Del is an operator; it takes in a function and outputs a function.
+]
+
+#definition(title: [Divergence])[
+  Let $vn(F) : X subset.eq Reals^n to Reals^n$ be a differentiable vector field. Then the divergence of $vn(F)$ is the scalar field
+  $ div vn(F) = grad dot vn(F) = (partial F_1)/(partial x_1) + dots.c + (partial F_n)/(partial x_n) $
+]
+
+#lemma[
+  If $vn(F)$ represents the flow rate of a fluid, then $div vn(F)$ represents the net mass flow through each point in the domain of $vn(F)$:
+  - If $div vn(F) > 0$, then more fluid is flowing out than in.
+  - If $div vn(F) < 0$, then more fluid is flowing in than out.
+  - If $div vn(F) = 0$, then the same amount of fluid flows in as flows out. In this case, $vn(F)$ is considered *incompressible* and *solenoidal*.
+
+  The divergence of a vector field represents how "outgoing" the field is at each point, and how source-like (if positive) or sink-like (if negative) each point is.
+
+  #image("image-40.png")
+
+  The divergence is the average of $ "Step" dot "Difference"$ over all directions, with an infinitesimally small step.
+]
+
+#definition(title: [Curl ($Reals^3$)])[
+  Let $vn(F) : X subset.eq Reals^3 to Reals^3$ be a differentiable vector field on $Reals^3$. Then the curl of $vn(F)$ is the vector field
+  $ curl vn(F) = grad times vn(F) $
+]
+
+#definition(title: [Curl ($Reals^2$)])[
+  Let $vn(F) : X subset.eq Reals^2 to Reals^2$ be a differentiable vector field on $Reals^2$. Then the curl of $vn(F)$ is the scalar field
+  $ curl vn(F) = (partial F_2)/(partial x) - (partial F_1)/(partial y) $
+
+  This is equivalent to the magnitude of $grad times vn(F)$, where counterclockwise is positive and clockwise is negative (by right-hand rule).
+]
+
+#definition(title: [Irrotational])[
+  If $grad times vn(F) = 0$ everywhere on the vector field $vn(F) : X subset.eq Reals^n to Reals^n$, then $vn(F)$ is considered *irrotational*.
+]
+
+#lemma[
+  Let there exist an infinitesimally small sphere at the point $vn(x) in X$. Let $vn(F) : X subset.eq Reals^3 to Reals^3$ be a vector field that represents the velocity of a fluid at each point in $X$. Then $curl vn(F)$ is the unique vector such that
+  - The direction of $curl vn(F)$ is along the axis of rotation of the sphere, following the right-hand rule.
+  - The magnitude of $curl vn(F)$ is the speed of the rotation of the sphere.
+
+  #image("image-40.png")
+
+  The curl is the average of $ "Step" cross "Difference"$ over all directions, with an infinitesimally small step.
+]
+
+== Green's theorem
+
+#see[#link("https://youtu.be/8SwKD5_VL5o")[Video]]
+
+#see[NMD [30, 31], Stewart [16.4]]
+
+#theorem(title: [Green's Theorem])[
+  Let $bound D$ be a positively oriented (counterclockwise, i.e. $D$ is to the left as you follow $bound D$), piecewise smooth, simple closed curve in the $x y$-plane, and $D$ be the region bounded by $bound D$. If $P$ and $Q$ have continuous partial derivatives on an open region containing $D$, then
+  $ integral.cont_(bound D) P dif x + Q dif y = integral.double_D ((partial Q)/(partial x) - (partial P)/(partial y)) dif A $
+  Equivalently, if $vn(F) = x, y mapsto vec(P(x, y), Q(x, y))$, then
+  $ integral.cont_(bound D) vn(F) dot dif vn(r) = integral.double_D abs(grad cross vn(F)) dif A $
+
+  In other words, the circulation of a vector field along a curve is the same as the sum of the curls within the region bounded by the curve.
+]
+
+#definition(title: [Circulation])[
+  The circulation of the vector field $vn(F)$ around the curve $C$ is
+  $ integral.cont_C vn(F) dot dif vn(r) $
+
+  It measures how much $F$ aligns with the curve $C$.
+]
+
+#procedure(title: [Motivation of Green's Theorem])[
+  Let $D$ be a connected region bounded by $bound D = C$, and $D_1$ and $D_2$ be two disjoint connected halves of that region with $bound D_1$ and $bound D_2$. Then
+  $ oint_C f dif s = oint_C_1 f dif s + oint_C_2 f dif s. $
+
+  #image("image-41.png")
+
+  Now consider the circulation $oint_C vn(F) dot dif vn(r)$, and partition $D$ into infinitely many infinitesimally small areas $dif A$:
+
+  #image("image-42.png")
+
+  The circulation around an infinitesimally small area is the same as the curl on that area, so
+  $ integral.cont_(bound D) vn(F) dot dif vn(r) = integral.double_D abs(grad cross vn(F)) dif A. $
+]
+
+= Surfaces
+
+== Parametric surfaces
+
+#see[NMD [28], Stewart [16.6]]
+
+#definition(title: [Parametric/parameterized surface])[
+  Let $vn(X) : D subset.eq Reals^2 to Reals^3$ be a one-to-one function (except possibly at the boundary of $D$). Then the image of $X$ is called a parameterized surface.
+]
+
+#definition(title: [Normal vector to a parameterized surface])[
+  Let $vn(X) = vec(u, v) mapsto vec(x(u,v), y(u,v), z(u,v))$ be a parameterization of a surface, and let $vn(u)$ be a vector in the domain of $vn(X)$. Then the tangent vector along the $u$-axis is $vn(X)_u (vn(u))$, where
+  $ vn(X)_u = vec((partial x)/(partial u), (partial y)/(partial u), (partial z)/(partial u)) $
+  and similarly the tangent vector along the $v$-axis is $vn(X)_v (vn(u))$.
+
+  Then the normal vector to the parameterized surface at the point $vn(u)$ is
+  $ vn(N) = vn(X)_u (vn(u)) times vn(X)_v (vn(v)) $
+]
+
+#definition(title: [Smooth])[
+  A paramaterization $vn(X)$ of a surface is smooth at a point if its normal vector is not equal to 0 at that point.
+
+  A surface is smooth at a point if there exists a paramaterization for that surface which is smooth at that point.
+
+  Note that a smooth surface can have non-smooth paramaterizations.
+]
+
+== Surface integrals
+
+#see[#link("https://nmd.web.illinois.edu/classes/2024/241/notes/Lecture29.pdf")[NMD [29]], Stewart [16.7]]
+
+#definition(title: [Scalar surface integral])[
+  The surface integral of $f$ over the surface $S$ which is paramaterized by $vn(X) : D subset.eq Reals^2 to Reals^3 = (u, v) to (x, y, z)$ and where $D$ is the domain of $vn(X)$ is
+  $ integral.double_S f dif S = integral.double_D f(vn(X)(u,v)) abs(vn(X)_u times vn(X)_v) dif A $
+  ($dif S$ is a part of the surface area, $dif A$ is a part of the domain)
+]
+
+#definition(title: [Scalar surface integral in $Reals^3$ for function of two variables])[
+  (This is optional; the definition above can be used to derive this.)
+
+  The surface integral of $f$ over the surface $S$ defined by $z = g(x, y)$, whose domain is $D$, is
+  $ integral.double_S f dif S = integral.double_D f(x, y, g(x,y)) sqrt(((partial g)/(partial x))^2 + ((partial g)/(partial y))^2 + 1) dif A $
+]
+
+#definition(title: [Orientable surface])[
+  A smooth, connected surface $S$ is orientable iff it is possible to define a single normal vector at each point of $S$ such that the collection of these normal vectors varies continuously over $S$.
+]
+
+#definition(title: [Closed surface])[
+  A surface is closed iff it is the boundary of some solid region $E$.
+]
+
+#definition(title: [Oriented surface])[
+  A smooth, orientable surface together with a choice of its orientation.
+
+  If the surface is closed and encloses the region $E$, then it has a *positive orientation* when we choose the set of its normal vectors to point away from $E$ and a *negative orientation* when we choose the set of its normal vectors to point towards $E$.
+]
+
+#definition(title: [Vector surface integral, flux])[
+  The surface integral or flux of the vector field $vn(F)$ over the surface $S$ which is paramaterized by $vn(X) : D subset.eq Reals^2 to Reals^3 = (u, v) to (x, y, z)$ and where $D$ is the domain of $vn(X)$ is
+  $ integral.double_S vn(F) dot dif vn(S) = integral.double_D F(vn(X)(u,v)) dot (vn(X)_u times vn(X)_v) dif u dif v $
+]
+
+== Stokes' Theorem
+
+#definition(title: [Positive oriented boundary])[
+  Given a surface $S$ whose boundary is the curve $C$, the positive orientation of the curve is such that if one were to walk along the curve in that direction, with the vector upwards from the top of their head parallel to the normal vectors of $S$, the surface would be to that person's left. Equivalently, you could choose a normal vector and use the right-hand rule (thumb is the normal vector and the positive orientation is given by the curl of the fingers).
+
+  // #figure(
+  //   image("content/mvc/images/positive-oriented-boundary.png", width: 50mm),
+  // )
+]
+
+#theorem(title: [Stokes' Theorem])[
+  Let $S$ be an oriented smooth surface, bounded by a curve $partial S$, composed of finitely many simple closed smooth differentiable ($C^1$) curves with positive orientation. Let $vn(F)$ be a differentiable ($C^1$) vector field whose domain includes $S$. Then
+  $ integral.cont_(partial S) vn(F) dot dif vn(r) = integral.double_S (grad cross vn(F)) dot dif vn(S) $
+
+  In other words, the circulation of a vector field along a curve is the same as the sum of the curls within the surface bounded by the curve.
+]
+
+== Divergence theorem
+
+#theorem(title: [Gauss's Theorem / Divergence theorem])[
+  Let $D$ be a solid region in $Reals^3$, bounded by a surface $partial D$, composed of finitely many smooth closed surfaces with positive orientation. Let $vn(F)$ be a differentiable ($C^1$) vector field whose domain includes $D$. Then
+  $ integral.surf_(partial D) vn(F) dot dif vn(S) = integral.triple_D grad dot F dif V $
+
+  In other words, the flux of a vector field through a closed surface is the same as the sum of the divergences of the vector field through the region bounded by the surface.
+
+  This follows from that
+  - The ratio of flux to volume approaches the divergence as the volume becomes smaller.
+  - If the region is partitioned into smaller regions, the flux of the region is equal to the sum of the flux of the smaller regions (since the flux of the boundary of the two regions cancels out).
+]
+
