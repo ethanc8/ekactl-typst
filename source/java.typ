@@ -86,6 +86,16 @@
 	```
 ]
 
+#procedure(title: [Finding fully-qualified class name])[
+	```java
+	Class clazz = String.class; // by class name
+	Class clazz = instance.getClass(); // get from an instance 
+
+	System.out.println(clazz.getName());
+	System.out.println(clazz.getCanonicalName());
+	```
+]
+
 = Common packages
 
 - `java.util` — collections (`List`, `Map`, `Set`, `ArrayList`, `HashMap`, `Scanner`, `Random`, etc.)
