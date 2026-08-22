@@ -1115,6 +1115,28 @@ Higher-order Taylor polynomials are not very useful.
   #image("image-39.png")
 ]
 
+#block(breakable: false)[
+  The following may be useful:
+
+  #align(center)[
+    #table(
+      columns: 5,
+      align: center,
+      stroke: none,
+      table.vline(x: 2),
+      [$degree$], [$"rad"$], [$sin$], [$cos$], [$tan$],
+      table.hline(),
+      [$0 degree$], [$0$], [$0$], [$1$], [$0$],
+      [$30 degree$], [$pi/6$], [$1/2$], [$sqrt(3)/2$], [$1/sqrt(3)$],
+      [$45 degree$], [$pi/4$], [$sqrt(2)/2$], [$sqrt(2)/2$], [$1$],
+      [$60 degree$], [$pi/3$], [$sqrt(3)/2$], [$1/2$], [$sqrt(3)$],
+      [$90 degree$], [$pi/2$], [$1$], [$0$], [$"undef"$],
+    )
+  ]
+
+  $ cos^2 x + sin^2 x = 1. $
+]
+
 == Double integral
 
 #see[Colley [5.1, 5.2], Paul's Notes [15.1, 15.2, 15.3], Brummet [08, MVCWUP:Feb3(29-33)]]
