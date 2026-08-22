@@ -1108,7 +1108,7 @@ Higher-order Taylor polynomials are not very useful.
 
   Physicists use $phi$ for the azimuthal angle and $theta$ for the polar angle.
 
-  $ x = rho sin phi cos theta wide y = rho sin phi sin theta wide z = rho cos theta \
+  $ x = rho sin phi cos theta wide y = rho sin phi sin theta wide z = rho cos phi \
   rho^2 = x^2 + y^2 + z^2 wide phi = cos^(-1) (z/rho) \
   theta = cos^(-1) (x/(rho sin phi)) $
 
