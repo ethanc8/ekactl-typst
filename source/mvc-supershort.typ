@@ -105,9 +105,9 @@ $vn(a) cross vn(b)$ is orthogonal to both; direction by right-hand rule; magnitu
 
 = Planes
 
-*Vector equation* (normal $vn(n)$, point $vn(P)$): $vn(n) dot (vn(r) - vn(P)) = 0$
+*Vector equation* (normal $vn(n)$, point $vn(P)$): $vn(n) dot vn(r) = vn(n) dot vn(P)$
 
-*Normal to level surface* $F(vn(x)) = k$ at $vn(a)$: $grad F(vn(a))$; tangent plane: $grad F(vn(a)) dot (vn(r) - vn(a)) = 0$
+*Normal to level surface* $F(vn(x)) = k$ at $vn(a)$: $grad F(vn(a))$; tangent plane: $grad F(vn(a)) dot vn(r) = grad F(vn(a)) dot vn(a)$
 
 *Plane through three points* $A, B, C$: normal $vn(n) = arrow(A B) times arrow(A C)$
 
@@ -124,10 +124,11 @@ $ Jacobian vn(f)(vn(x)) = mat(
 For scalar $f : Reals^n to Reals$: $Jacobian f = (grad f)^transpose$ (a row vector).
 
 *Linear approximation* to $f: Reals^n to Reals$ at $vn(a)$ (tangent hyperplane to graph):
-$ L(vn(x)) = f(vn(a)) + grad f(vn(a)) dot (vn(x) - vn(a)) $
+$ L = f + grad f dot Delta vn(x) \
+L(vn(x)) = f(vn(a)) + grad f(vn(a)) dot (vn(x) - vn(a)) $
 
-*Chain rule* (generic): if $vn(r): Reals^n to Reals^m$ and $vn(f): Reals^m to Reals^p$, with $vn(x)_0 = vn(r)(vn(t)_0)$:
-$ Jacobian (vn(f) compose vn(r))(vn(t)_0) = Jacobian vn(f)(vn(x)_0) Jacobian vn(r)(vn(t)_0) $
+*Chain rule* (generic): if $vn(r): Reals^n to Reals^m$ and $vn(f): Reals^m to Reals^p$:
+$ Jacobian (vn(f) compose vn(r)) = Jacobian vn(f) Jacobian vn(r) $
 
 In $Reals^3$, $f compose vn(r) : T subset.eq Reals to Reals^3 to Reals$), with $(x, y, z) := (r_1, r_2, r_3)$:
 $ (d (f compose vn(r)))/(d t) = (partial f)/(partial x) (d x)/(d t) + (partial f)/(partial y) (d y)/(d t) + (partial f)/(partial z) (d z)/(d t). $
@@ -138,19 +139,19 @@ $ (d (f compose vn(r)))/(d t) = (partial f)/(partial x) (d x)/(d t) + (partial f
 
 = Curves
 
-*Arc length*: $L = int_a^b abs(vn(r)'(t)) dif t$; arc length function $s(t) = int_a^t abs(vn(r)'(u)) dif u$
+*Arc length*: $L = int_a^b abs((dif vn(r))/(dif t)) dif t$; arc length function $s(t) = int_a^t abs(vn(r)'(u)) dif u$
 
-*Unit tangent*: $vn(T)(t) = vn(r)'(t) \/ abs(vn(r)'(t))$
+*Unit tangent*: $vn(T) = hat(r') = vn(r)' \/ abs(vn(r)')$
 
 *Curvature* (rate of direction change per unit arc length):
-$ kappa(t) = abs((dif vn(T))/(dif s)) = abs(vn(T)'(t)) / abs(vn(r)'(t)) = abs(vn(r)'(t) cross vn(r)''(t)) / abs(vn(r)'(t))^3 $
+$ kappa = abs((dif vn(T))/(dif s)) = abs(vn(T)') / abs(vn(r)') = abs(vn(r)' cross vn(r)'') / abs(vn(r)')^3 $
 
-*Principal unit normal*: $vn(N)(t) = vn(T)'(t) \/ abs(vn(T)'(t))$; perpendicular to $vn(T)$, points toward center of curvature.
+*Principal unit normal*: $vn(N) = hat(T') = vn(T)' \/ abs(vn(T)')$; perpendicular to $vn(T)$, points toward center of curvature.
 
-*Binormal*: $vn(B)(t) = vn(T)(t) cross vn(N)(t)$; perpendicular to osculating plane; all three $(vn(T), vn(N), vn(B))$ are unit vectors forming a right-handed frame.
+*Binormal*: $vn(B) = vn(T) cross vn(N)$; perpendicular to osculating plane; all three $(vn(T), vn(N), vn(B))$ are unit vectors forming a right-handed frame.
 
 *Torsion* (rate of twisting out of the osculating plane; positive = twists toward $vn(B)$):
-$ tau(t) = -(dif vn(B))/(dif s) dot vn(N) = ((vn(r)'(t) cross vn(r)''(t)) dot vn(r)'''(t)) / abs(vn(r)'(t) cross vn(r)''(t))^2 $
+$ tau = -(dif vn(B))/(dif s) dot vn(N) = ((vn(r)' cross vn(r)'') dot vn(r)''') / abs(vn(r)' cross vn(r)'')^2 $
 
 = Extrema
 
@@ -177,10 +178,14 @@ $ grad f(vn(x)) = lambda grad g(vn(x)), quad g(vn(x)) = k $
 
 *2D curl*: $(partial Q)/(partial x) - (partial P)/(partial y)$ (the $z$-component of $grad cross vn(F)$).
 
-*Conservative field test*: on a simply connected domain, $vn(F)$ is conservative iff equivalent conditions
-- $vn(F) = grad f$ for some potential $f$
+*Conservative field test*: on a simply connected domain, the following are equivalent:
+- $vn(F)$ is conservative
 - $(partial F_i)/(partial x_j) = (partial F_j)/(partial x_i)$ for all $i != j$
 - $curl vn(F) = 0$ in 3D (irrotational)
+
+The following are always equivalent:
+- $vn(F)$ is conservative
+- $vn(F) = grad f$ for some potential $f$
 - $oint_C vn(F) dot dif vn(r) = 0$ for all closed $C$.
 
 *Finding a potential function*: integrate $F_1$ w.r.t. $x_1$ to get $f + g(x_2, dots, x_n)$; differentiate w.r.t. remaining variables and match against $F_2, F_3, dots$ to determine $g$.
@@ -188,10 +193,10 @@ $ grad f(vn(x)) = lambda grad g(vn(x)), quad g(vn(x)) = k $
 = Line integrals
 
 *Scalar line integral* (integrate $f$ over arc length):
-$ int_C f dif s = int_a^b f(vn(r)(t)) abs((dif vn(r))/(dif t)) dif t $
+$ int_C f dif s = int_a^b f med abs((dif vn(r))/(dif t)) dif t $
 
 *Vector line integral* (work done by $vn(F)$ along $C$):
-$ int_C vn(F) dot dif vn(r) = int_a^b vn(F)(vn(r)(t)) dot (dif vn(r))/(dif t) dif t $
+$ int_C vn(F) dot dif vn(r) = int_a^b vn(F) dot (dif vn(r))/(dif t) dif t $
 
 *FTLI*: if $vn(F) = grad f$, then $int_C vn(F) dot dif vn(r) = f(vn(r)(b)) - f(vn(r)(a))$ — work depends only on endpoints, not the path.
 
@@ -212,8 +217,8 @@ rho^2 = x^2+y^2+z^2 $
 $iiint f dif V = iiint f med rho^2 sin phi dif rho dif theta dif phi$
 
 *Change of variables* (transformation $T_(U X): U to X$, i.e. $vn(x) = T_(U X)(vn(u))$):
-$ int dots.c int_X f(vn(x)) dif x_1 dots dif x_n \
-= int dots.c int_U (f compose T_(U X))(vn(u)) abs(det Jacobian T_(U X)(vn(u))) dif u_1 dots dif u_n $
+$ int dots.c int_X f dif x_1 dots dif x_n \
+= int dots.c int_U f med abs(det Jacobian T_(U X)) dif u_1 dots dif u_n $
 $abs(det Jacobian T_(U X))$ is the local area/volume stretching factor. For polar, cylindrical, spherical the standard Jacobian determinants give the $r$ and $rho^2 sin phi$ factors above.
 
 = Surfaces
@@ -223,10 +228,10 @@ $abs(det Jacobian T_(U X))$ is the local area/volume stretching factor. For pola
 *For graph* $z=g(x,y)$: $vn(X)_x cross vn(X)_y = angle.l -g_x, -g_y, 1 angle.r$, so $abs(vn(X)_x cross vn(X)_y) = sqrt(g_x^2+g_y^2+1)$
 
 *Scalar surface integral* (integrate $f$ over surface area):
-$ iint_S f dif S = iint_D (f compose vn(X))(u,v) abs(vn(X)_u cross vn(X)_v) dif A $
+$ iint_S f dif S = iint_D f abs(vn(X)_u cross vn(X)_v) dif A $
 
 *Flux* (net flow of $vn(F)$ through oriented surface — sign depends on normal orientation):
-$ iint_S vn(F) dot dif vn(S) = iint_D vn(F)(vn(X)(u,v)) dot (vn(X)_u cross vn(X)_v) dif A $
+$ iint_S vn(F) dot dif vn(S) = iint_D vn(F) dot (vn(X)_u cross vn(X)_v) dif A $
 
 = Parameterizations of common surfaces
 
@@ -237,10 +242,18 @@ $ vn(X)(x, y) = vec(x, y, f(x, y)) quad vn(X)_x cross vn(X)_y = vec(- f_x, - f_y
 $ vn(X)(theta, z) = vec(R cos theta, R sin theta, z) $
 
 *Sphere of radius $R$:* 
-$ vn(X)(phi, theta) = vec(R sin phi cos theta, R sin phi sin theta, R cos theta) quad abs(vn(X)_phi cross vn(X)_theta) = R^2 sin phi $
+$ vn(X)(phi, theta) = vec(R sin phi cos theta, R sin phi sin theta, R cos phi) quad abs(vn(X)_phi cross vn(X)_theta) = R^2 sin phi $
+
+For an *ellipsoid* with equation $ (x^2)/(a^2) + (y^2)/(b^2) + (z^2)/(c^2)$, scale the outputs of sphere $vn(X)$ by $a$, $b$, $c$.
 
 *Cone $z = c r$:* 
 $ vn(X)(r, theta) = vec(r cos theta, r sin theta, c r) $
+
+*Surface of revolution of $f(x)$ around the $x$-axis:*
+$ vn(X)(u, v) = vec(u, f(u) cos v, f(u) sin v) $
+
+*Variable bounded by function:* If $z$ (in the output coordinate space) is bounded by $z in [0, h(u)]$, define
+$z := v h(u)$ with $v in [0, 1]$ to make the $u v$-domain a rectangle. 
 
 = The big three theorems
 
@@ -252,6 +265,10 @@ $ oint_(bound D) P dif x + Q dif y = iint_D ((partial Q)/(partial x) - (partial 
 *Stokes'* ($C = bound S$, consistently oriented; $S$ a surface): circulation around the boundary = total 3D curl through any spanning surface:
 $ oint_(bound S) vn(F) dot dif vn(r) = iint_S (grad cross vn(F)) dot dif vn(S) $
 $S$ can be replaced by any other surface sharing boundary $C$ — pick whichever is easier to integrate over.
+
+Green's is equivalent to Stokes' with the surface being in the $x y$-plane and the normal vector in the $+ z$-direction.
+
+For Green's, regions with holes can be done by orienting the outer boundary counterclockwise and the inner boundary clockwise; for Stokes' make sure they are oriented according to right-hand rule with thumb as the normal vector.
 
 #block(breakable: false)[
   *Divergence* ($S = bound E$, outward normals; $E$ a solid region): net outward flux through a closed surface = total divergence (source density) in the enclosed region:
