@@ -284,7 +284,7 @@
 
   Consider the parallelepiped determined by $vn(a), vn(b), vn(c) in Reals^3$, shown above. The area of its base is $abs(b cross c)$. Let $theta$ be the angle between $a$ and $b cross c$; then, its height is $abs(a) abs(cos theta)$. Thus, the volume of the parallelepiped is
 
-  $ V = A h = abs(b cross c) abs(a) abs(cos theta) = abs(a times (b cross c)). $
+  $ V = A h = abs(b cross c) abs(a) abs(cos theta) = a dot (b cross c). $
 ]
 
 == Matrices

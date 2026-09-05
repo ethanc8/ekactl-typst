@@ -1,7 +1,7 @@
 #import "@local/ethan-standard-style:0.1.0": *
 #show: ekactl-style.with(
 	section-number: 6,
-	title: "Linear algebra (old)"
+	title: "Linear algebra"
 )
 
 #import "@preview/cetz:0.4.2"
@@ -19,9 +19,6 @@
 	show math.equation: set text(stylistic-set: 1)
 	$cal(it)$
 }))
-
-#let closure(x) = $overline(#x)$
-#let inner(x) = $#x^circle.small$
 
 #let powerset = $cal(P)$
 #let nbhds = $cal(N)$
@@ -49,7 +46,9 @@
 #let Complex = sym.CC
 #let Rationals = sym.QQ
 
-#let Sphere = $SS$
+#let Field = sym.FF
+
+#let Sphere = sym.SS
 
 #let dun = math.union.sq // disjoint union
 #let cl = math.overline // closure
@@ -58,7 +57,7 @@
 
 #let Riemann = $cal(R)$
 
-#let card = [card]
+#let card = math.op("card")
 
 #let int = math.integral
 #let oint = math.integral.cont
@@ -70,9 +69,6 @@
 
 #let partial = math.upright(math.partial)
 #let bound = partial // boundary
-
-
-#let Derivative = $upright(D)$
 
 #set math.vec(delim: "[")
 #set math.mat(delim: "[")
@@ -87,25 +83,29 @@
 
 #let grad = math.nabla
 
+#let Derivative = $upright(D)$
 #let Jacobian = $upright(J)$
 #let transpose = $upright(T)$
 #let Hessian = $upright(H)$
 
-#let include-non-tested-content = true
-
-#let non-tested-content(x) = x
-
 #let div = math.op("div")
 #let curl = math.op("curl")
 
-Let $F = Reals$ or $F = Complex$.
+#let RREF = math.op("RREF")
+#let span = math.op("span")
 
-= Linear systems
+Let $Field$ be a field.
+
+= Linear systems and matrices
+
+== Linear systems
+
+#see[#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/math257/CompleteLectureNotes--Filled.pdf#Navigation7")[MATH 257 [Module 1]], Trimm [#link("https://github.com/ethanc8/ekactl-references/raw/trunk/linalg/trimm/unit-1/1.1%20Linear%20Equations.pdf")[1.1], #link("https://github.com/ethanc8/ekactl-references/raw/trunk/linalg/trimm/unit-1/1.2%20Elimination.pdf")[1.2], #link("https://github.com/ethanc8/ekactl-references/raw/trunk/linalg/trimm/unit-1/1.3%20Elementary%20Row%20Operations.pdf")[1.3]]]
 
 #definition(title: [Linear equation])[
 	An equation that can be written in the form
 	$ sum_k a_k x_k = y $
-	where all $a_k in F$ and $y in F$.
+	where all $a_k in Field$ and $y in Field$.
 ]
 
 #definition(title: [Solution to a linear equation])[
@@ -152,6 +152,8 @@ Let $F = Reals$ or $F = Complex$.
 
 == Matrices and rows
 
+#see[#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/math257/CompleteLectureNotes--Filled.pdf#Navigation13")[MATH 257 [Lecture 2]], Trimm [#link("https://github.com/ethanc8/ekactl-references/raw/trunk/linalg/trimm/unit-1/1.3%20Elementary%20Row%20Operations.pdf")[1.3]]]
+
 #definition[
 	An $m times n$ matrix is a rectangular array of numbers with $m$ rows and $n$ columns.
 	$ A = mat(
@@ -160,23 +162,39 @@ Let $F = Reals$ or $F = Complex$.
 		dots.v, dots.v, dots.down, dots.v;
 		a_(m 1), a_(m 2), dots.h, a_(m n);
 	) $
-	$a_(i j)$ is in the $i$th row and $j$th column of $A$
+	$a_(i j)$ is in the $i$th row and $j$th column of $A$.
+]
+
+#definition(title: [Coefficient and augmented matrix])[
+	Given a linear system $A X = Y$, its #defname[coefficient] matrix is $A$, and its #defname[augmented] matrix is $[ A | Y ]$.
+
+	Given a linear system,
+	$ a_11 x_1 + a_12 x_2 + dots.c + a_(1n) x_n = b_1 \
+		a_21 x_1 + a_22 x_2 + dots.c + a_(2n) x_n = b_2 \
+		dots.v \
+		a_(m 1) x_1 + a_(m 2) x_2 + dots.c + a_(m n) x_n = b_m $
+	we define its coefficient and augmented matrices to be
+	$ mat(
+		a_11, a_12, dots.h, a_(1n);
+		a_21, a_22, dots.h, a_(2n);
+		dots.v, dots.v, dots.down, dots.v;
+		a_(m 1), a_(m 2), dots.h, a_(m n);
+	) quad "and" quad mat(
+		augment: #4,
+		a_11, a_12, dots.h, a_(1n), b_1;
+		a_21, a_22, dots.h, a_(2n), b_2;
+		dots.v, dots.v, dots.down, dots.v, dots.v;
+		a_(m 1), a_(m 2), dots.h, a_(m n), b_m;
+	), $
+	respectively.
 ]
 
 #definition(title: [Elementary row operations])[
 	The elementary row operations are:
 
-	#definition(title: [Scaling])[
-		$R_i mapsto c R_i$ where $c$ is a nonzero scalar.
-	]
-
-	#definition(title: [Replacement])[
-		$R_i mapsto R_i + c R_j$ where $c$ is a scalar.
-	]
-
-	#definition(title: [Interchange])[
-		Swap $R_i$ and $R_j$.
-	]
+	- *Scaling:* $R_i mapsto c R_i$ where $c$ is a nonzero scalar.
+	- *Replacement:* $R_i mapsto R_i + c R_j$ where $c$ is a scalar.
+	- *Interchange:* Swap $R_i$ and $R_j$.
 ]
 
 #theorem(title: [Elementary row operations are invertible])[
@@ -184,24 +202,36 @@ Let $F = Reals$ or $F = Complex$.
 ]
 
 #definition(title: [Row equivalence])[
-	Two matrices are row-equivalent if each can be derived from the other using a finite number of elementary row operations.
+	Two matrices are row-equivalent iff each can be derived from the other using a finite number of elementary row operations.
 ]
 
+#theorem[
+	If the augmented matrices of two linear systems are row equivalent, then the two systems have the same solution set.
+]
+
+== Echelon forms
+
+#see[#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/math257/CompleteLectureNotes--Filled.pdf#Navigation18")[MATH 257 [Lecture 3, 4]], Trimm [#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/trimm/unit-1/1.4%20Row%20Echelon%20Matrices.pdf")[1.4]]]
+
 #definition(title: [Row echelon form (REF)])[
-	A matrix is in REF if it satisfies:
-	+ All nonzero rows are above all rows of all zeros.
-	+ Each leading entry of a row is in a column to the right of the leading entry of the row above it.
-	+ All entries in a column below a leading entry are zeros.
+	A matrix is in REF iff it satisfies:
+	1. All nonzero rows are above all rows of all zeros.
+	2. Each leading entry of a row is in a column to the right of the leading entry of the row above it.
+	3. All entries in a column below a leading entry are zeros.
 ]
 
 #definition(title: [Reduced row echelon form (RREF)])[
-	A matrix is in RREF if it is in REF and additionally satisfies:
-	- 4. The leading entry in each nonzero row is 1.
-	- 5. Each leading 1 is the only nonzero entry in its column
+	A matrix is in RREF iff it is in REF and additionally satisfies:
+	4. The leading entry in each nonzero row is 1.
+	5. Each leading 1 is the only nonzero entry in its column
+]
+
+#definition[
+	$RREF(A)$ is the unique matrix which is in RREF and is row-equivalent to $A$.
 ]
 
 #definition(title: [Pivot position])[
-	A location $A_(i j)$ where $op("RREF")(A)_(i j)$ is a leading 1.
+	A location $A_(i j)$ where $RREF(A)_(i j)$ is a leading 1.
 ]
 
 #definition(title: [Pivot column])[
@@ -212,22 +242,31 @@ Let $F = Reals$ or $F = Complex$.
 	A nonzero number at a pivot position.
 ]
 
-#procedure(title: [Gauss-Jordan elimination])[
-	#procedure(title: [Gaussian elimination])[
-		Iterate through the pivot columns of $A$ from left to right. For each pivot column, use elementary row operations to ensure that the pivot position is nonzero and that all entries in the column below the pivot position are zero. This produces $op("REF")(A)$.
-	]
-
-	#procedure(title: [Jordan elimination])[
-		Iterate through the pivot columns of $op("REF")(A)$ from right to left. For each pivot column, use elementary row operations to ensure that all other entries in the column other than the pivot are zero and that the pivot is equal to 1. This produces $op("RREF")(A)$.
-	]
-]
-
-#definition(title: [Leading variable, determined variable, basic variable])[
+#definition(title: [Leading variable, determined variable, basic variable, pivot variable])[
 	A variable in a pivot column.
 ]
 
 #definition(title: [Free variable])[
 	A variable not in a pivot column.
+]
+
+
+#procedure(title: [Gauss-Jordan elimination])[
+	#procedure(title: [Gaussian elimination])[
+		Iterate through the pivot columns of $A$ from left to right. 
+		
+		For each pivot column, use elementary row operations to ensure that:
+		- the pivot position is nonzero
+		- all entries in the column below the pivot position are zero
+		This produces $op("REF")(A)$.
+	]
+
+	#procedure(title: [Jordan elimination])[
+		Iterate through the pivot columns of $op("REF")(A)$ from right to left. For each pivot column, use elementary row operations to ensure that:
+		- all other entries in the column other than the pivot are zero
+		- the pivot is equal to 1.
+		This produces $RREF(A)$.
+	]
 ]
 
 == Homogeneous linear systems
@@ -244,7 +283,7 @@ Let $F = Reals$ or $F = Complex$.
 	- (a) If there are less equations than there are variables ($m < n$), then $A X = 0$ has an infinite number of solutions.
 	- (b) If there are an equal number of equations and variables, then $A$ is row-equivalent to the $n times n$ identity iff $A X = 0$ has only the trivial solution.
 	- (c) If there are more equations than there are variables ($m > n$), then
-		$ op("RREF")(A) = mat(
+		$ RREF(A) = mat(
 			1, 0, dots.c, 0;
 			0, 1, dots.c, 0;
 			dots.v, dots.v, dots.down, dots.v;
@@ -257,16 +296,245 @@ Let $F = Reals$ or $F = Complex$.
 ]
 
 #procedure(title: [Solution])[
-	To solve a homogeneous system, perform Gauss-Jordan elimination on $A$ so that $R = op("RREF")(A)$. Then solve $R X = 0$. The variables which are not in pivot columns are free variables and may be set to any value, typically denoted $u_1, u_2, dots$.
+	To solve a homogeneous system, perform Gauss-Jordan elimination on $A$ so that $R = RREF(A)$. Then solve $R X = 0$. The variables which are not in pivot columns are free variables and may be set to any value, typically denoted $u_1, u_2, dots$.
 ]
 
 == Inhomogeneous linear systems
 
 #procedure(title: [Solution])[
-	To solve an inhomogeneous system, perform Gauss-Jordan elimination on $A' = [A|Y]$ so that $R' = [R|Z] = op("RREF")(A')$. Then solve $R X = Z$. Note that not all inhomogeneous systems are solvable (consistent).
+	To solve an inhomogeneous system, perform Gauss-Jordan elimination on $A' = [A|Y]$ so that $R' = [R|Z] = RREF(A')$. Then solve $R X = Z$. Note that not all inhomogeneous systems are solvable (consistent).
 ]
 
-#colbreak()
+
+== Linear combinations
+
+#see[#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/math257/CompleteLectureNotes--Filled.pdf#Navigation29")[MATH 257 [Module 5, Module 6]], #link("file:///home/ethan/Downloads/f26-math257--Lecture3.pdf")[Chuang [Lecture 3]]]
+
+#definition[
+	Consider $m times n$-matrices
+	$ A = mat(
+			a_11, a_12, dots.h, a_(1n);
+			a_21, a_22, dots.h, a_(2n);
+			dots.v, dots.v, dots.down, dots.v;
+			a_(m 1), a_(m 2), dots.h, a_(m n);
+		), quad "and" quad B = mat(
+			b_11, b_12, dots.h, b_(1n);
+			b_21, b_22, dots.h, b_(2n);
+			dots.v, dots.v, dots.down, dots.v;
+			b_(m 1), b_(m 2), dots.h, b_(m n);
+		). $
+	- We define their sum $A + B$ to be
+		$ A + B := mat(
+			a_11 + b_11, a_12 + b_12, dots.h, a_(1n) + b_(1n);
+			a_21 + b_21, a_22 + b_22, dots.h, a_(2n) + b_(2n);
+			dots.v, dots.v, dots.down, dots.v;
+			a_(m 1) + b_(m 1), a_(m 2) + b_(m 2), dots.h, a_(m n) + b_(m n);
+		). $
+		Addition is only defined if $A$ has the same number of columns and rows as $B$.
+
+	- If $c in Reals$ is a scalar, we define the scalar product $c A$ to be
+		$ c A := mat(
+			c a_11, c a_12, dots.h, c a_(1n);
+			c a_21, c a_22, dots.h, c a_(2n);
+			dots.v, dots.v, dots.down, dots.v;
+			c a_(m 1), c a_(m 2), dots.h, c a_(m n);
+		). $
+]
+
+#definition(title: [Column, row vector])[
+	A column vector is an $m times 1$-matrix. A row vector is a $1 times n$-matrix.
+]
+
+#definition(title: [Transpose of a matrix])[
+	If $A$ is an $m times n$ matrix, then its transpose $A^transpose$ is the $n times m$ matrix obtained by interchanging the rows and columns of $A$:
+	$ [A^transpose_(i j)] = [A_(j i)] $
+] <def:matrix-transpose>
+
+#remark[
+	The transpose of a column vector is a row vector and vice versa.
+]
+
+#definition(title: [Linear combination of matrices])[
+	The linear combination of $m times n$-matrices $A_1, A_2, dots, A_p$ with coefficients $c_1, c_2, dots, c_p$ is defined as:
+	$ c_1 A_1 + c_2 A_2 + dots.c + c_p A_p. $
+]
+
+#definition[
+	Given $m times n$ matrices $A_1, dots, A_p$, we define their span, $span(A_1, dots, A_p)$, to be the set of all linear combinations of $A_1, dots, A_p$. That is,
+	$ span(A_1, dots, A_p) := { c_1 A_1 + c_2 A_2 + dots.c + c_p A_p : c_1, dots, c_p in Field }. $
+]
+
+#remark[
+	Solving linear systems is the same as finding linear combinations!
+]
+
+#theorem[
+	Let $a_1, dots, a_n, b in Reals^m$. A vector equation
+	$ x_1 a_1 + x_2 a_2 + dots.c + x_n a_n = b $
+	has the same solution set as the linear system whose augmented matrix is
+	$ mat(augment: #4, a_1, a_2, dots.h, a_n, b) $
+	In particular, $b$ can be generated by a linear combination of $a_1, a_2, dots, a_n$ if and only if there is a solution to the linear system corresponding to the augmented matrix.
+]
+
+#definition(title: [Matrix-vector multiplication])[
+	Let $X$ be a vector in $Reals^n$ and $A = display(mat(a_1, dots.c, a_n))$ an $m times n$-matrix. We define the product $A X$ by
+	$ A X = x_1 a_1 + x_2 a_2 + dots.c + x_n a_n. $
+
+	- $A X$ is a linear combination of the columns of $A$ using the entries in $X$ as coefficients.
+	- $A X$ is only defined if the number of entries of $X$ is equal to the number of columns of $A$.
+]
+
+#theorem[
+  Let $A = display(mat(vn(a)_1, dots.c, vn(a)_n))$ be an $m times n$ matrix and $vn(b) in Reals^m$. For any $(X_1, dots, X_n) in Reals^n$, the following are equivalent:
+  - $(X_1, dots, X_n)$ is a solution of the vector equation $X_1 vn(a)_1 + dots.c + X_n vn(a)_n = vn(b)$
+  - $display(vec(X_1, dots.v, X_n))$ is a solution of the matrix equation $A X = vn(b)$
+  - $(X_1, dots, X_n)$ is a solution of the linear system with augmented matrix $[A | vn(b)]$
+]
+
+#corollary[
+  The equation $A X = vn(b)$ has a solution if and only if $vn(b) in span{vn(a)_1, dots, vn(a)_n}$.
+]
+
+#remark[
+	We will write $A X = b$ for the system of equations with augmented matrix $[A | b]$.
+]
+
+== Matrix multiplication
+
+#definition[
+	Let $A$ be an $m times n$-matrix and let $B = display(mat(b_1, dots.c, b_p))$ be an $n times p$-matrix. We define
+	$ A B := mat(A b_1, A b_2, dots.h, A b_p) $
+]
+
+#theorem[
+	Let $A$ be an $m times n$ matrix and $B$ be an $n times p$ matrix. Then for every $x in Reals^p$
+	$ A(B x) = (A B) x. $
+]
+
+*Note.* Other ways to compute $A B$.
+
+#remark(title: [Row-Column Rule])[
+	Let $A$ be $m times n$ and $B$ be $n times p$ such that
+	$ A = mat(R_1; dots.v; R_m), quad "and" quad B = mat(C_1, dots.c, C_p). $
+	Then
+	$ A B = mat(
+		R_1 C_1, dots.h, R_1 C_p;
+		R_2 C_1, dots.h, R_2 C_p;
+		dots.v, dots.down, dots.v;
+		R_m C_1, dots.h, R_m C_p;
+	) $
+	and $(A B)_(i j) = R_i C_j = a_(i 1) b_(1 j) + a_(i 2) b_(2 j) + dots.c + a_(i n) b_(n j)$.
+]
+
+#remark(title: [Outer Product Rule])[
+	Let $A$ be $m times n$ and $B$ be $n times p$ such that
+	$ A = mat(C_1, dots.c, C_n), quad "and" quad B = mat(R_1; dots.v; R_n). $
+	Then
+	$ A B = C_1 R_1 + dots.c + C_n R_n $
+]
+
+== Properties of matrix multiplication
+
+#definition[
+	The identity matrix $I_n$ of size $n$ is defined as
+	$ I_n = mat(
+		1, 0, dots.h, 0;
+		0, 1, dots.h, 0;
+		dots.v, dots.v, dots.down, dots.v;
+		0, 0, dots.h, 1;
+	). $
+]
+
+#theorem[
+	Let $A$ be an $m times n$ matrix and let $B$ and $C$ be matrices for which the indicated sums and products are defined.
+	+ $A(B C) = (A B) C$ (associative law of multiplication)
+	+ $A(B + C) = A B + A C$, $(B + C) A = B A + C A$ (distributive laws)
+	+ $r(A B) = (r A) B = A(r B)$ for every scalar $r$,
+	+ $A(r B + s C) = r A B + s A C$ for every scalars $r, s$ (linearity of matrix multiplication)
+	+ $I_m A = A = A I_n$ (identity for matrix multiplication)
+]
+
+#remark[
+	Properties above are analogous to properties of real numbers. But NOT ALL properties of real numbers also hold for matrices. In particular, $A B$ need not equal $B A$.
+]
+
+#theorem[
+	The transpose of a product is the product of transposes in opposite order:
+	$ (A B)^transpose = B^transpose A^transpose $
+]
+
+#definition[
+	Let $A$ be a square matrix. We write $A^k$ for $A dots.c A$, $k$-times; that is $A^k$ is obtained by multiplying $A$ $k$-times with itself.
+]
+
+== Elementary Matrices
+
+#definition[
+	An elementary matrix is one that is obtained by performing a single elementary row operation on an identity matrix.
+
+	A permutation matrix is one that is obtained by performing row exchanges on an identity matrix.
+]
+
+#theorem[
+	If an elementary row operation is performed on an $m times n$-matrix $A$, the resulting matrix can be written as $E A$, where the $m times m$-matrix $E$ is created by performing the same row operation on $I_m$.
+]
+
+#theorem[
+	Let $A, B$ be two $m times n$-matrices and row-equivalent. Then there is a sequence of $m times m$-elementary matrices $E_1, dots, E_ell$ such that
+	$ E_ell dots.c E_1 A = B. $
+]
+
+== Inverse of a Matrix
+
+#remark[
+	The inverse of a real number $a$ is denoted by $a^(-1)$. For example, $7^(-1) = 1\/7$ and $7 dot 7^(-1) = 7^(-1) dot 7 = 1$. Note that not all real numbers have an inverse. Namely, $0^(-1)$ is not defined as there is no real number $b$ such that $0 dot b = 1$.
+]
+
+#definition[
+	An $n times n$ matrix $A$ is said to be invertible if there is an $n times n$ matrix $C$ satisfying
+	$ C A = A C = I_n $
+	where $I_n$ is the $n times n$ identity matrix. We call $C$ the inverse of $A$.
+]
+
+#theorem[
+	Let $A$ be an invertible matrix, then its inverse $C$ is unique.
+]
+
+#theorem[
+	Suppose $A$ and $B$ are invertible. Then:
+	+ $A^(-1)$ is invertible and $(A^(-1))^(-1) = A$ (i.e. $A$ is the inverse of $A^(-1)$).
+	+ $A B$ is invertible and $(A B)^(-1) = B^(-1) A^(-1)$.
+	+ $A^T$ is invertible and $(A^T)^(-1) = (A^(-1))^T$.
+]
+
+#theorem[
+	Let $A$ be an invertible $n times n$ matrix. Then for each $b$ in $Reals^n$, the equation $A x = b$ has the unique solution $x = A^(-1) b$.
+]
+
+== Computing the Inverse
+
+#theorem[
+	Let $A = mat(a, b; c, d)$. If $a d - b c != 0$, then $A$ is invertible and
+	$ A^(-1) = 1/(a d - b c) mat(d, -b; -c, a). $
+	If $a d - b c = 0$, then $A$ is not invertible.
+]
+
+#theorem[
+	Let $A$ be an $n times n$-matrix. The following are equivalent:
+	- $A$ is invertible.
+	- the reduced echelon form of $A$ is $I_n$.
+]
+
+#theorem[
+	Suppose $A$ is invertible. Then every sequence of elementary row operations that reduces $A$ to $I_n$ will also transform $I_n$ to $A^(-1)$.
+]
+
+#algorithm[
+	- Place $A$ and $I$ side-by-side to form an augmented matrix $mat(augment: #1, A, I)$. This is an $n times 2n$ matrix (Big Augmented Matrix), instead of $n times (n+1)$.
+	- Perform row operations on this matrix (which will produce identical operations on $A$ and $I$).
+	- By Theorem: $mat(augment: #1, A, I)$ will row reduce to $mat(augment: #1, I, A^(-1))$ or $A$ is not invertible.
+]
+
 
 = Fields
 
@@ -276,32 +544,32 @@ Let $F = Reals$ or $F = Complex$.
 	The following properties:
 
 	#theorem(title: [Properties of addition])[
-		For all $x, y, z in F$:
+		For all $x, y, z in Field$:
 		- (A1) Commutativity: $x + y = y + x$
 		- (A2) Associativity: $(x + y) + z = x + (y + z)$
 		- (A3) Identity: $exists 0 in Reals$ s.t. $0 + x = x$
-		- (A4) Additive inverse: For $x in F$, $exists -x in F$ s.t. $x + (-x) = 0$
+		- (A4) Additive inverse: For $x in Field$, $exists -x in Field$ s.t. $x + (-x) = 0$
 	]
 
 	#theorem(title: [Properties of multiplication])[
-		For all $x, y, z in F$:
+		For all $x, y, z in Field$:
 		- (M1) Commutativity: $x y = y x$
 		- (M2) Associativity: $(x y) z = x (y z)$
 		- (M3) Identity: $exists 1 in Reals$ s.t. $1 x = x$ and $1 != 0$
-		- (M4) Additive inverse: For $x in F setminus {0}$, $exists x^(-1) in F$ s.t. $x x^(-1) = 1$
+		- (M4) Additive inverse: For $x in Field setminus {0}$, $exists x^(-1) in Field$ s.t. $x x^(-1) = 1$
 	]
 
 	#theorem(title: [Distributive property])[
-		- (D) $x(y + z) = x y + x z$ for all $x, y, z in F$.
+		- (D) $x(y + z) = x y + x z$ for all $x, y, z in Field$.
 	]
 ]
 
 == Fields
 
 #definition(title: [Field])[
-	A set $F$ which defines the following two operations:
-	- Addition: an operation that maps $x, y in F to c in F$ and satisfies the properties of addition
-	- Multiplication: an operation that maps $x, y in F to c in F$ and satisfies the properties of multiplication
+	A set $Field$ which defines the following two operations:
+	- Addition: an operation that maps $x, y in Field to c in Field$ and satisfies the properties of addition
+	- Multiplication: an operation that maps $x, y in Field to c in Field$ and satisfies the properties of multiplication
 
 	for which the distributive property also holds.
 ]
@@ -320,31 +588,31 @@ Let $F = Reals$ or $F = Complex$.
 	- $z w = (a c - b d) + (b c + a d) i$
 ]
 
-#definition(title: [$F^n$])[
-	For a field $F$, $F^n$ is the set of all ordered $n$-tuples of elements of $F$:
-	$ F^n := { (x_1, dots, x_n) : x_1, dots, x_n in F } $
+#definition(title: [$Field^n$])[
+	For a field $Field$, $Field^n$ is the set of all ordered $n$-tuples of elements of $Field$:
+	$ Field^n := { (x_1, dots, x_n) : x_1, dots, x_n in Field } $
 ]
 
-#definition(title: [Addition in $F^n$])[
-	If $a, b in F^n$:
+#definition(title: [Addition in $Field^n$])[
+	If $a, b in Field^n$:
 	$ a + b = (a_1 + b_1, dots, a_n + b_n) $
 
 	Addition follows the properties of addition (A1-A4).
 ]
 
-#definition(title: [Product of element of $F$ and element of $F^n$])[
-	If $alpha in F$ and $x in F^n$, then
+#definition(title: [Product of element of $Field$ and element of $Field^n$])[
+	If $alpha in Field$ and $x in Field^n$, then
 	$ alpha x = (alpha x_1, dots, alpha x_n) $
 ]
 
 = Vector spaces
 
-== 2.3 Vector spaces
+== Vector spaces
 
 #definition(title: [Vector space])[
-	A vector space over $F$ is a set $V$ with the following operations:
+	A vector space over $Field$ is a set $V$ with the following operations:
 	- *Vector addition*: $u in V, v in V mapsto (u + v) in V$, which satisfies the properties of addition
-	- *Scalar multiplication*: $alpha in F, v in V mapsto alpha v in V$, which satisfies the properties of scalar multiplication
+	- *Scalar multiplication*: $alpha in Field, v in V mapsto alpha v in V$, which satisfies the properties of scalar multiplication
 ]
 
 #definition(title: [Properties of addition])[
@@ -352,11 +620,11 @@ Let $F = Reals$ or $F = Complex$.
 	- (A1) Commutativity: $u + v = v + u$
 	- (A2) Associativity: $(u + v) + w = u + (v + w)$
 	- (A3) Identity: $exists 0 in Reals$ s.t. $0 + u = u$
-	- (A4) Additive inverse: For $u in F$, $exists -u in F$ s.t. $u + (-u) = 0$
+	- (A4) Additive inverse: For $u in Field$, $exists -u in Field$ s.t. $u + (-u) = 0$
 ]
 
 #definition(title: [Properties of scalar multiplication])[
-	For all $alpha, beta in F$, $v, w in V$:
+	For all $alpha, beta in Field$, $v, w in V$:
 	- (S1) Associativity: $(alpha beta) v = alpha (beta v)$
 	- (S2) Distributivity over scalar addition: $(alpha + beta) v = alpha v + beta v$
 	- (S3) Distributivity over vector addition: $alpha (v + w) = alpha v + alpha w$
@@ -364,23 +632,23 @@ Let $F = Reals$ or $F = Complex$.
 ]
 
 #theorem[
-	$F^n$ is a vector space.
+	$Field^n$ is a vector space.
 ]
 
 #theorem[
 	All inverses and identities are unique in a vector space.
 ]
 
-#definition(title: [$F^omega$])[
-	The set of all sequences of elements of $F$:
-	$ F^omega := { (x_1, x_2, dots) : x_k in F "for" k in Naturals } $
-	where addition and scalar multiplication are defined similarly to $F^n$:
+#definition(title: [$Field^omega$])[
+	The set of all sequences of elements of $Field$:
+	$ Field^omega := { (x_1, x_2, dots) : x_k in Field "for" k in Naturals } $
+	where addition and scalar multiplication are defined similarly to $Field^n$:
 	$ a + b &:= (a_1 + b_1, dots, a_n + b_n) \
 		alpha x &:= (alpha x_1, dots, alpha x_n) $
 ]
 
-#definition(title: [$F^(m,n)$])[
-	The set of all $m times n$ matrices with entries in $F$, where addition and scalar multiplication are defined as:
+#definition(title: [$Field^(m,n)$])[
+	The set of all $m times n$ matrices with entries in $Field$, where addition and scalar multiplication are defined as:
 	$ (A + B)_(i j) &:= A_(i j) + B_(i j) \
 		(alpha A)_(i j) &:= alpha A_(i j) $
 ]
@@ -388,18 +656,18 @@ Let $F = Reals$ or $F = Complex$.
 #definition(title: [Vector space of functions])[
 	Let $V$ be a vector space, $S$ be a set, and
 	$ V^S = { f : S to V } $
-	(the set of all functions that map members of $S$ to members of $V$). Then $V^S$ is a vector space, if we define for all $p, q in V^S$, $s in F$,
+	(the set of all functions that map members of $S$ to members of $V$). Then $V^S$ is a vector space, if we define for all $p, q in V^S$, $s in Field$,
 
 	$ (f + g)(s) = f(s) + g(s) quad (alpha f)(s) = alpha (f(s)) $
 ]
 
 #definition(title: [Polynomial])[
-	A function $p : F to F$ is a polynomial of degree $n$ iff there exist $c_0, dots c_n in F$ such that
+	A function $p : Field to Field$ is a polynomial of degree $n$ iff there exist $c_0, dots c_n in Field$ such that
 	$ p(x) = c_0 + c_1 x + c_2 x^2 + dots.c c_n x^n = sum_(k=0)^n c_k x^k $
 
-	$cal(P)(F)$ is the set of all polynomials of any degree with coefficients in $F$. $cal(P)_n (F)$ is the set of all polynomials of degree $n$ with coefficients in $F$.
+	$cal(P)(Field)$ is the set of all polynomials of any degree with coefficients in $Field$. $cal(P)_n (Field)$ is the set of all polynomials of degree $n$ with coefficients in $Field$.
 
-	$cal(P)(F)$ and $cal(P)_n (F)$ are vector spaces if we define for all $p, q in cal(P)_n (F)$, $s in F$,
+	$cal(P)(Field)$ and $cal(P)_n (Field)$ are vector spaces if we define for all $p, q in cal(P)_n (Field)$, $s in Field$,
 
 	$ (p + q)(s) = p(s) + q(s) quad (alpha p)(s) = alpha (p(s)) $
 ]
@@ -421,12 +689,12 @@ Let $F = Reals$ or $F = Complex$.
 #theorem[
 	A subset $W$ of a vector space $V$ is a subspace iff
 	- (i) $W$ is nonempty
-	- (ii) $alpha in F$ and $w_1, w_2 in W$ implies $alpha w_1 + w_2 in W$
+	- (ii) $alpha in Field$ and $w_1, w_2 in W$ implies $alpha w_1 + w_2 in W$
 
 	Typically, we prove (i) by proving that $0 in W$.
 ]
 
-== Subspaces of $F^n$
+== Subspaces of $Field^n$
 
 #theorem(title: [Subspaces of $Reals^n$])[
 	$Reals^n$ contains the following subspaces:
@@ -481,12 +749,12 @@ Let $F = Reals$ or $F = Complex$.
 #definition(title: [Linear combination])[
 	A linear combination of a collection $v_1, dots, v_n$ of vectors in vector space $V$ is a vector of the form
 	$ alpha_1 v_1 + dots.c + alpha_n v_n $
-	where each $alpha_k in F$.
+	where each $alpha_k in Field$.
 ]
 
 #definition(title: [Span])[
 	Given $W subset.eq V$ where $V$ is a vector field, the set of all linear combinations of vectors in $W$ is called the span of $W$.
-	$ op("span")(W) := { sum_(i=1)^n alpha_i w_i : alpha_i in F, w_i in W } $
+	$ op("span")(W) := { sum_(i=1)^n alpha_i w_i : alpha_i in Field, w_i in W } $
 
 	Additionally, we define
 	$ op("span")(nothing) = { 0 } $
@@ -532,13 +800,13 @@ Let $F = Reals$ or $F = Complex$.
 	A basis of $V$ is a subset of $V$ which is linearly independent and spans $V$.
 ]
 
-#definition(title: [Standard basis of $F^n$])[
+#definition(title: [Standard basis of $Field^n$])[
 	$ { vec(1, 0, dots.v, 0), vec(0, 1, dots.v, 0), vec(0, 0, dots.v, 1) } $
 ]
 
-#definition(title: [$P_m(F)$])[]
+#definition(title: [$P_m(Field)$])[]
 
-#definition(title: [Standard basis of $P_m(F)$])[]
+#definition(title: [Standard basis of $P_m(Field)$])[]
 
 == Dimension
 
@@ -563,7 +831,7 @@ Let $F = Reals$ or $F = Complex$.
 == Linear map
 
 #definition(title: [Linear map])[
-	Let $V$ and $W$ be vector spaces over $F$. A *linear map* (also called *linear function* or *linear transformation*) from $V$ to $W$ is a function $T : V to W$ with the two properties
+	Let $V$ and $W$ be vector spaces over $Field$. A *linear map* (also called *linear function* or *linear transformation*) from $V$ to $W$ is a function $T : V to W$ with the two properties
 	$ T(v_1 + v_2) &= T v_1 + T v_2 && "(additivity)" \
 		T(alpha v) &= alpha T v && "(homogeneity)" $
 	Equivalently, it is a function with the property that
@@ -572,7 +840,7 @@ Let $F = Reals$ or $F = Complex$.
 	$ T(alpha_1 v_1 + alpha_2 v_2) = alpha_1 T v_1 + alpha_2 T v_2 $
 ]
 
-*Note:* Not all elementary linear functions $y = m x + b$ are linear maps! All linear maps in $F^1$ are of the form $y = m x$.
+*Note:* Not all elementary linear functions $y = m x + b$ are linear maps! All linear maps in $Field^1$ are of the form $y = m x$.
 
 #definition(title: [Linear operator])[
 	A function $T : V to V$ which is a linear map.
@@ -602,16 +870,16 @@ Let $F = Reals$ or $F = Complex$.
 	If we define
 	$ (S + T)(v) &:= S + T \
 		(alpha T)(v) &:= alpha T(v) $
-	for $S, T in cal(L)(V,W)$, $alpha in F$, then $cal(L)(V,W)$ is a vector space and is a subspace of $V^W$.
+	for $S, T in cal(L)(V,W)$, $alpha in Field$, then $cal(L)(V,W)$ is a vector space and is a subspace of $V^W$.
 ]
 
 #definition(title: [Product of linear maps])[
 	If $T in cal(L)(U, V)$ and $S in cal(L)(V, W)$, then we define the product $S T in cal(L)(V, W)$ by $S T := S compose T$.
 ]
 
-#theorem(title: [$cal(L)(V)$ is a unital associative F-algebra])[
+#theorem(title: [$cal(L)(V)$ is a unital associative Field-algebra])[
 	The product of linear maps on $V$ has the following properties:
-	- *Bilinearity*: For all $S, T_1, T_2 in cal(L)(V)$, $alpha in F$,
+	- *Bilinearity*: For all $S, T_1, T_2 in cal(L)(V)$, $alpha in Field$,
 		- $S(T_1 + T_2) = S T_1 + S T_2$
 		- $(S_1 + S_2) T = S_1 T + S_2 T$
 		- $(alpha S) T = alpha(S T) = S(alpha T)$
@@ -673,9 +941,9 @@ Let $F = Reals$ or $F = Complex$.
 == Systems of linear equations as linear maps
 
 #definition(title: [Systems of linear equations as linear maps])[
-	For a linear equation mapping vectors in $F^n$ to $F^m$
+	For a linear equation mapping vectors in $Field^n$ to $Field^m$
 	$ A x = y $
-	we can interpret this as a linear map $T_A : M^(n times 1)(F) to M^(m times 1)(F)$ where $T(x) = A x$.
+	we can interpret this as a linear map $T_A : M^(n times 1)(Field) to M^(m times 1)(Field)$ where $T(x) = A x$.
 ]
 
 #theorem[
@@ -695,7 +963,7 @@ Let $F = Reals$ or $F = Complex$.
 ]
 
 #definition(title: [Isomorphism])[
-	Let $V$ and $W$ be vector spaces over $F$. An *isomorphism from $V$ to $W$* is a bijective linear map $T : V to W$. Iff there exists an isomorphism from $V$ to $W$, $V$ and $W$ are *isomorphic*, which is denoted by $V tilde.equiv W$.
+	Let $V$ and $W$ be vector spaces over $Field$. An *isomorphism from $V$ to $W$* is a bijective linear map $T : V to W$. Iff there exists an isomorphism from $V$ to $W$, $V$ and $W$ are *isomorphic*, which is denoted by $V tilde.equiv W$.
 ]
 
 #definition(title: [Identity map])[
@@ -708,7 +976,7 @@ Let $F = Reals$ or $F = Complex$.
 	- *Symmetric*: If $T : V to W$ is an isomorphism, then $T^(-1) : W to V$ is also an isomorphism. Thus, $V tilde.equiv W$ implies $W tilde.equiv V$.
 	- *Transitive*: If $T_1 : U to V$ and $T_2 : V to W$ are isomorphisms, then $T_2 T_1 : U to W$ is an isomorphism. Thus, $U tilde.equiv V$ and $V tilde.equiv W$ implies $U tilde.equiv W$
 
-	Therefore, isomorphism is an equivalence relation on the collection of all vector spaces over $F$.
+	Therefore, isomorphism is an equivalence relation on the collection of all vector spaces over $Field$.
 ]
 
 #definition(title: [Isomorphism class])[
@@ -720,9 +988,9 @@ Let $F = Reals$ or $F = Complex$.
 ]
 
 #theorem[
-	Two finite-dimensional vector spaces over $F$ are isomorphic iff they have the same dimension.
+	Two finite-dimensional vector spaces over $Field$ are isomorphic iff they have the same dimension.
 
-	Equivalently, any finite-dimensional vector space $V$ over $F$ is isomorphic to $F^(dim V)$.
+	Equivalently, any finite-dimensional vector space $V$ over $Field$ is isomorphic to $Field^(dim V)$.
 ]
 
 #theorem[
@@ -730,26 +998,26 @@ Let $F = Reals$ or $F = Complex$.
 ]
 
 #lemma[
-	$cal(P)_n (F) tilde.equiv F^(n+1)$.
+	$cal(P)_n (Field) tilde.equiv Field^(n+1)$.
 ]
 
 == Coordinates
 
-For the following definitions, let $B := { v_1, dots, v_n }$ be a basis of $V$, where $V$ is an $n$-dimensional vector space over $F$.
+For the following definitions, let $B := { v_1, dots, v_n }$ be a basis of $V$, where $V$ is an $n$-dimensional vector space over $Field$.
 
 #definition(title: [Linear combination map (basis isomorphism)])[
-	The *linear combination map* or *basis isomorphism* is the isomorphism $L_B : F^n to V$ defined by
+	The *linear combination map* or *basis isomorphism* is the isomorphism $L_B : Field^n to V$ defined by
 	$ L_B (arrow(x)) = x_1 v_1 + dots.c + x_n v_n $
 ]
 
 #definition(title: [Coordinate isomorphism])[
-	The *coordinate isomorphism* is the isomorphism $L_B^(-1) : V to F^n$.
+	The *coordinate isomorphism* is the isomorphism $L_B^(-1) : V to Field^n$.
 
-	This means that for any vector space, its vectors can be expressed as vectors in $F^n$.
+	This means that for any vector space, its vectors can be expressed as vectors in $Field^n$.
 ]
 
 #definition(title: [Coordinate vector])[
-	Let $v$ be a vector in $V$. Then the coordinate vector $[v]_B in F^n$ of $v$ is defined as
+	Let $v$ be a vector in $V$. Then the coordinate vector $[v]_B in Field^n$ of $v$ is defined as
 	$ [v]_B := L_B^(-1)(v) $
 
 	Equivalently, it is the vector such that
@@ -781,7 +1049,7 @@ For the following definitions, let $B := { v_1, dots, v_n }$ be a basis of $V$, 
 ]
 
 #definition(title: [Standard matrix])[
-	The matrix of a linear map $T : F^n to F^m$ with respect to the standard bases of $F^n$ and $F^m$.
+	The matrix of a linear map $T : Field^n to Field^m$ with respect to the standard bases of $Field^n$ and $Field^m$.
 ]
 
 #lemma[
@@ -799,7 +1067,7 @@ For the following definitions, let $B := { v_1, dots, v_n }$ be a basis of $V$, 
 ]
 
 #theorem(title: [Properties of matrix multiplication])[
-	Let $A$, $B$, $C$ be matrices and $r$ and $s$ be scalars in $F$. Then
+	Let $A$, $B$, $C$ be matrices and $r$ and $s$ be scalars in $Field$. Then
 	$ A(r B + s C) &= r(A B) + s(A C) \
 		(B + C) A &= B A + C A \
 		A(B C) &= (A B) C $
@@ -809,11 +1077,11 @@ For the following definitions, let $B := { v_1, dots, v_n }$ be a basis of $V$, 
 
 == Fundamental matrix spaces
 
-Given a matrix $A in F^(m,n)$, define $T_A := x mapsto A x$. Then $T_A : F^n to F^m$.
+Given a matrix $A in Field^(m,n)$, define $T_A := x mapsto A x$. Then $T_A : Field^n to Field^m$.
 
 #definition(title: [Null space, nullity])[
 	The *null space* of $A$ is the kernel of $T_A$:
-	$ op("Nul") A := ker T_A = {x in F^n : A x = 0} $
+	$ op("Nul") A := ker T_A = {x in Field^n : A x = 0} $
 
 	which is the solution set of the homogeneous linear system $A x = 0$.
 
@@ -823,9 +1091,9 @@ Given a matrix $A in F^(m,n)$, define $T_A := x mapsto A x$. Then $T_A : F^n to 
 #definition(title: [Column space, rank])[
 	The *column space* of $A$ is the image of $T_A$:
 	$ op("Col") A := im T_A
-		&= {T_A x : x in F^n} \
-		&= {A x : x in F^n} \
-		&= { sum_(i=1)^n x_i A_(* i) : x_i in F } \
+		&= {T_A x : x in Field^n} \
+		&= {A x : x in Field^n} \
+		&= { sum_(i=1)^n x_i A_(* i) : x_i in Field } \
 		&= op("span") { A_(* 1), dots, A_(* n) } $
 
 	which is the span of the column vectors of the matrix $A$.
@@ -843,14 +1111,11 @@ Given a matrix $A in F^(m,n)$, define $T_A := x mapsto A x$. Then $T_A : F^n to 
 
 #procedure(title: [Finding bases of $op("Nul") A$, $op("Col") A$, $op("Row") A$])[
 	+ The pivot columns of $A$ are a basis of $op("Col") A$.
-	+ The pivot rows of $op("RREF")(A)$ are a basis of $op("Row") A$. (row space is preserved under row operations)
+	+ The pivot rows of $RREF(A)$ are a basis of $op("Row") A$. (row space is preserved under row operations)
 	+ The vectors spanning $A x = 0$ are a basis of $op("Nul") A$.
 ]
 
-#definition(title: [Transpose of a matrix])[
-	If $A$ is an $m times n$ matrix, then its transpose $A^T$ is the $n times m$ matrix obtained by interchanging the rows and columns of $A$:
-	$ [A^T_(i j)] = [A_(j i)] $
-]
+#theorion-restate(filter: <def:matrix-transpose>)
 
 #definition(title: [Row space])[
 	The row space of $A$ is the span of the row vectors of $A$:
@@ -866,9 +1131,9 @@ Given a matrix $A in F^(m,n)$, define $T_A := x mapsto A x$. Then $T_A : F^n to 
 ]
 
 #procedure(title: [Finding the left null space without column operations])[
-	To find the left null space of the $n times m$ matrix $A$, make a column vector $b = (b_1, dots, b_m)^T$ and calculate $op("RREF")([A | b])$. Then the basis of the left null space is given by the rows of $op("RREF")([A | b])$ for which the left side is all zero (where $b_1, dots, b_m$ are the basis in which $A$ is expressed in (the basis $B$ for which $A = [T]_B$, which is usually the standard basis)).
+	To find the left null space of the $n times m$ matrix $A$, make a column vector $b = (b_1, dots, b_m)^T$ and calculate $RREF([A | b])$. Then the basis of the left null space is given by the rows of $RREF([A | b])$ for which the left side is all zero (where $b_1, dots, b_m$ are the basis in which $A$ is expressed in (the basis $B$ for which $A = [T]_B$, which is usually the standard basis)).
 
-	Alternately, calculate $op("RREF")([A | I])$, then the basis of the left null space is given by the rows of $op("RREF")([A | I])$ for which the left side is all zero.
+	Alternately, calculate $RREF([A | I])$, then the basis of the left null space is given by the rows of $RREF([A | I])$ for which the left side is all zero.
 ]
 
 == Invertible matrices
@@ -897,7 +1162,7 @@ Given a matrix $A in F^(m,n)$, define $T_A := x mapsto A x$. Then $T_A : F^n to 
 ]
 
 #theorem[
-	If $e : F^(n,n) to F^(n,n)$ is an elementary row operation and $A in F^(n,n)$, then
+	If $e : Field^(n,n) to Field^(n,n)$ is an elementary row operation and $A in Field^(n,n)$, then
 	$ e(A) = e(I) A $
 ]
 
@@ -917,7 +1182,7 @@ Given a matrix $A in F^(m,n)$, define $T_A := x mapsto A x$. Then $T_A : F^n to 
 ]
 
 #procedure(title: [Computation of $A^(-1)$])[
-	Row-reduce the augmented matrix $[A | I]$. If $A$ is row-equivalent to $I$, then $op("RREF")([A | I]) = [I | A^(-1)]$. Otherwise, $A$ doesn't have an inverse.
+	Row-reduce the augmented matrix $[A | I]$. If $A$ is row-equivalent to $I$, then $RREF([A | I]) = [I | A^(-1)]$. Otherwise, $A$ doesn't have an inverse.
 ]
 
 #lemma[
@@ -932,7 +1197,7 @@ Given a matrix $A in F^(m,n)$, define $T_A := x mapsto A x$. Then $T_A : F^n to 
 ]
 
 #procedure(title: [Finding the transition matrix])[
-	Given bases $B$ and $B'$, row-reduce the augmented matrix $[[w_i] | [v_i]]$, whose first $n$ columns are the coordinate vectors $[w_i]$ of the vectors of $B'$ and whose last $n$ columns are the coordinate vectors $[v_i]$ of the vectors of $B$. Then the transition matrix from $B$ to $B'$ is the right-hand side of $op("RREF")([[w_i] | [v_i]])$.
+	Given bases $B$ and $B'$, row-reduce the augmented matrix $[[w_i] | [v_i]]$, whose first $n$ columns are the coordinate vectors $[w_i]$ of the vectors of $B'$ and whose last $n$ columns are the coordinate vectors $[v_i]$ of the vectors of $B$. Then the transition matrix from $B$ to $B'$ is the right-hand side of $RREF([[w_i] | [v_i]])$.
 ]
 
 #lemma(title: [Inverting a transition matrix])[
@@ -962,7 +1227,7 @@ Given a matrix $A in F^(m,n)$, define $T_A := x mapsto A x$. Then $T_A : F^n to 
 #definition(title: [Similar matrices])[
 	Two $n times n$ matrices $A$ and $B$ are similar if there exists an invertible matrix $C$ s.t. $B = C^(-1) A C$.
 
-	Similarity is an equivalence relation on $F^(n,n)$.
+	Similarity is an equivalence relation on $Field^(n,n)$.
 ]
 
 #definition(title: [Similarity invariant])[
@@ -979,11 +1244,11 @@ Given a matrix $A in F^(m,n)$, define $T_A := x mapsto A x$. Then $T_A : F^n to 
 == Linear functionals
 
 #definition(title: [Linear functional])[
-	Let $V$ be a vector space over $F$. Then a linear map $T : V to F$ is a *linear functional* on $V$.
+	Let $V$ be a vector space over $Field$. Then a linear map $T : V to Field$ is a *linear functional* on $V$.
 ]
 
 #definition(title: [Dual space])[
-	Let $V$ be a vector space over $F$. Then the dual space of $V$ is the vector space of linear functionals on $V$, $V^* := cal(L)(V, F)$.
+	Let $V$ be a vector space over $Field$. Then the dual space of $V$ is the vector space of linear functionals on $V$, $V^* := cal(L)(V, Field)$.
 ]
 
 #definition(title: [Kronecker delta])[
@@ -1008,7 +1273,7 @@ Given a matrix $A in F^(m,n)$, define $T_A := x mapsto A x$. Then $T_A : F^n to 
 	$ B^* := {f_1, dots, f_n} $
 	is a basis of $V^*$, and is called the *dual basis* of the basis $B$ of $V$.
 
-	Any linear functional $f : V to F$ can be written uniquely as
+	Any linear functional $f : V to Field$ can be written uniquely as
 	$ f = sum_(i=1)^n f(v_i) f_i $
 
 	and $f(v)$ can be written as
@@ -1021,7 +1286,7 @@ Given a matrix $A in F^(m,n)$, define $T_A := x mapsto A x$. Then $T_A : F^n to 
 	The trace of an $n times n$ matrix $A$ is the sum of the diagonal elements of $A$:
 	$ tr(A) := sum_(i=1)^n A_(i i) $
 
-	$tr : F^(n,n) to F$ is a linear functional.
+	$tr : Field^(n,n) to Field$ is a linear functional.
 ]
 
 #theorem(title: [Properties of the trace])[
@@ -1036,7 +1301,7 @@ Given a matrix $A in F^(m,n)$, define $T_A := x mapsto A x$. Then $T_A : F^n to 
 == Transpose
 
 #definition(title: [Transpose of linear map])[
-	Let $V$ and $W$ be vector spaces over $F$, and let $T in cal(L)(V, W)$. The *transpose of $T$* or *dual map of $T$* is the linear map $T^* = T^T in cal(L)(W^*, V^*)$ defined for each $f in W^*$ by
+	Let $V$ and $W$ be vector spaces over $Field$, and let $T in cal(L)(V, W)$. The *transpose of $T$* or *dual map of $T$* is the linear map $T^* = T^T in cal(L)(W^*, V^*)$ defined for each $f in W^*$ by
 	$ T^*(f) = T^T (f) := f compose T $
 
 	That is, for each linear functional $f in W^*$, $T^T (f)$ is the linear functional in $V^*$ defined by (for each $v in V$)
@@ -1044,7 +1309,7 @@ Given a matrix $A in F^(m,n)$, define $T_A := x mapsto A x$. Then $T_A : F^n to 
 ]
 
 #theorem(title: [Properties of the transpose])[
-	For all linear maps $T_1$, $T_2$, $T$ and $alpha in F$,
+	For all linear maps $T_1$, $T_2$, $T$ and $alpha in Field$,
 	- $(T_1 + T_2)^T = alpha T_1^T + T_2^T$ (the map $T mapsto T^T$ is linear)
 	- $(T_1 compose T_2)^T = T_2^T + T_1^T$
 ]
@@ -1055,7 +1320,7 @@ Given a matrix $A in F^(m,n)$, define $T_A := x mapsto A x$. Then $T_A : F^n to 
 ]
 
 #lemma[
-	Let $V$ and $W$ be finite-dimensional vector spaces, $T in cal(L)(V, W)$ and $g in W^*$. Choose ordered bases $B_V = (v_1, dots, v_n)$ and $B_W = (w_1, dots, w_m)$ for $V$ and $W$, respectively, and let $B_V^* = (f_1, dots, f_n)$ and $B_W^* = (g_1, dots, g_m)$ be the corresponding dual bases of $V^*$ and $W^*$. Let $S = (1)$ be the standard ordered basis of $F$. Then
+	Let $V$ and $W$ be finite-dimensional vector spaces, $T in cal(L)(V, W)$ and $g in W^*$. Choose ordered bases $B_V = (v_1, dots, v_n)$ and $B_W = (w_1, dots, w_m)$ for $V$ and $W$, respectively, and let $B_V^* = (f_1, dots, f_n)$ and $B_W^* = (g_1, dots, g_m)$ be the corresponding dual bases of $V^*$ and $W^*$. Let $S = (1)$ be the standard ordered basis of $Field$. Then
 	$ [T^T g]_(B_V^*, S) = [g]_(B_W^*, S) [T]_(V, W) $
 ]
 
@@ -1071,14 +1336,14 @@ Given a matrix $A in F^(m,n)$, define $T_A := x mapsto A x$. Then $T_A : F^n to 
 == Bilinear forms
 
 #definition(title: [Bilinear form])[
-	Let $V$ be a vector space over $F$. A *bilinear form* on $V$ is a function $B : V times V to F$ which is linear in each variable separately when the other variable is held constant. That is, for all $v_1, v_2, v in V$ and $alpha B(v, v_1) + B(v, v_2)$,
+	Let $V$ be a vector space over $Field$. A *bilinear form* on $V$ is a function $B : V times V to Field$ which is linear in each variable separately when the other variable is held constant. That is, for all $v_1, v_2, v in V$ and $alpha B(v, v_1) + B(v, v_2)$,
 	$ B(alpha v_1 + v_2, v) = alpha B(v_1, v) + B(v_2, v) $
 	and
 	$ B(v, alpha v_1 + v_2) = alpha B(v, v_1) + B(v, v_2) $
 ]
 
 #lemma[
-	If $V$ is a vector space over $F$ and $f, g in cal(L)(V, F)$, then $B(u, v) := f(u) g(v)$ is a bilinear form on $V$.
+	If $V$ is a vector space over $Field$ and $f, g in cal(L)(V, Field)$, then $B(u, v) := f(u) g(v)$ is a bilinear form on $V$.
 ]
 
 #definition[
@@ -1086,7 +1351,7 @@ Given a matrix $A in F^(m,n)$, define $T_A := x mapsto A x$. Then $T_A : F^n to 
 ]
 
 #lemma[
-	$V^((2))$ is a subspace of $V times V to F$.
+	$V^((2))$ is a subspace of $V times V to Field$.
 ]
 
 #definition(title: [Matrix of a bilinear form])[
@@ -1095,7 +1360,7 @@ Given a matrix $A in F^(m,n)$, define $T_A := x mapsto A x$. Then $T_A : F^n to 
 ]
 
 #theorem[
-	If $B$ is a bilinear form on $V$, $[B]$ is its matrix with respect to the ordered basis $arrow(e)$, $v, w in F$, and $[v]$ and $[w]$ are the coordinate vectors of $v$ and $w$ with respect to the ordered basis $arrow(e)$, then
+	If $B$ is a bilinear form on $V$, $[B]$ is its matrix with respect to the ordered basis $arrow(e)$, $v, w in Field$, and $[v]$ and $[w]$ are the coordinate vectors of $v$ and $w$ with respect to the ordered basis $arrow(e)$, then
 	$ B(v, w) = [v]^T [B] [w] $
 ]
 
@@ -1269,11 +1534,11 @@ Given a matrix $A in F^(m,n)$, define $T_A := x mapsto A x$. Then $T_A : F^n to 
 ]
 
 #definition(title: [Determinant of a square matrix])[
-	Let $n$ be a positive integer, $A$ be an $n times n$ matrix with entries in $F$, and $T in cal(L)(F^n)$ be the operator whose matrix with respect to the standard basis of $F^n$ is $A$. Then the determinant of $A$ is $det A := det T$.
+	Let $n$ be a positive integer, $A$ be an $n times n$ matrix with entries in $Field$, and $T in cal(L)(Field^n)$ be the operator whose matrix with respect to the standard basis of $Field^n$ is $A$. Then the determinant of $A$ is $det A := det T$.
 ]
 
 #lemma[
-	Let $(v_1, dots, v_n)$ be an ordered $n$-tuple of column vectors. Then the map $(v_1, dots, v_n) mapsto |v_1 dots.c v_n|$ is an alternating $n$-linear form on $F^n$.
+	Let $(v_1, dots, v_n)$ be an ordered $n$-tuple of column vectors. Then the map $(v_1, dots, v_n) mapsto |v_1 dots.c v_n|$ is an alternating $n$-linear form on $Field^n$.
 ]
 
 #lemma(title: [$O(n!)$ method for calculating determinant])[
@@ -1470,7 +1735,7 @@ Given a matrix $A in F^(m,n)$, define $T_A := x mapsto A x$. Then $T_A : F^n to 
 ]
 
 #definition(title: [Multiplicity of a root of a polynomial])[
-	Let $p(x)$ be a polynomial. Then an element $a in F$ is a root of multiplicity $k$ iff there exists a polynomial $s(x)$ such that $s(a) != 0$ and $p(x) = (x - a)^k s(x)$.
+	Let $p(x)$ be a polynomial. Then an element $a in Field$ is a root of multiplicity $k$ iff there exists a polynomial $s(x)$ such that $s(a) != 0$ and $p(x) = (x - a)^k s(x)$.
 ]
 
 #definition(title: [Algebraic multiplicity])[
@@ -1545,12 +1810,14 @@ Given a matrix $A in F^(m,n)$, define $T_A := x mapsto A x$. Then $T_A : F^n to 
 
 = Inner product spaces
 
+For any discussion of inner product spaces, let $Field$ be $Reals$ or $Complex$.
+
 == Inner product
 
 #see[Trimm 7.1]
 
 #definition(title: [Positive definite])[
-	A map $f : V times V to F$ is positive definite iff for any $v in V$ where $v != 0$,
+	A map $f : V times V to Field$ is positive definite iff for any $v in V$ where $v != 0$,
 	$ f(v, v) > 0 $
 	and $f(0, 0) = 0$.
 ]
