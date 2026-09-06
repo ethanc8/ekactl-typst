@@ -98,6 +98,70 @@ Let $Field$ be a field.
 
 = Linear systems and matrices
 
+== Matrices
+
+#definition[
+	An $m times n$ matrix is a rectangular array of numbers with $m$ rows and $n$ columns.
+	$ A = mat(
+		a_11, a_12, dots.h, a_(1n);
+		a_21, a_22, dots.h, a_(2n);
+		dots.v, dots.v, dots.down, dots.v;
+		a_(m 1), a_(m 2), dots.h, a_(m n);
+	) $
+	$a_(i j)$ is in the $i$th row and $j$th column of $A$.
+]
+
+== Coordinates
+
+For the following definitions, let $B := { v_1, dots, v_n }$ be a basis of $V$, where $V$ is an $n$-dimensional vector space over $Field$.
+
+#definition(title: [Linear combination map (basis isomorphism)])[
+	The *linear combination map* or *basis isomorphism* is the isomorphism $L_B : Field^n to V$ defined by
+	$ L_B (arrow(x)) = x_1 v_1 + dots.c + x_n v_n $
+]
+
+#definition(title: [Coordinate isomorphism])[
+	The *coordinate isomorphism* is the isomorphism $L_B^(-1) : V to Field^n$.
+
+	This means that for any vector space, its vectors can be expressed as vectors in $Field^n$.
+]
+
+#definition(title: [Coordinate vector])[
+	Let $v$ be a vector in $V$. Then the coordinate vector $[v]_B in Field^n$ of $v$ is defined as
+	$ [v]_B := L_B^(-1)(v) $
+
+	Equivalently, it is the vector such that
+	$ L_B ([v]_B) = v $
+]
+
+#definition(title: [Ordered basis])[
+	An ordered basis of a $n$-dimensional vector space $V$ is an $n$-tuple which is an ordering of a basis of $V$.
+]
+
+== Matrix of a linear map
+
+#definition(title: [Matrix of a linear map])[
+	Let $B_V = (v_1, dots, v_n)$ be a basis of $V$ and $B_W = (w_1, dots, w_m)$ be a basis of $W$. Let $T : V to W$ be a linear map.
+
+	Then the matrix of $T$ with respect to $B_V$ and $B_W$ is denoted as
+	$ [T]_(B_W B_V) $
+
+	It is the $m times n$ matrix defined such that its $j$th column is the coordinate vector of $T v_j$ with respect to $B_W$:
+	$ ([T]_(B_W B_V))_(* j) = [T v_j]_(B_W) $
+
+	Equivalently, it is the $m times n$ matrix that satisfies
+	$ T v_j = sum_(i=1)^m ([T]_(B_W B_V))_(i j) w_i $
+]
+
+#lemma[
+	Applying a linear map $T$ to a vector $v$ is equivalent to multiplying the coordinate vector of $v$ by the matrix of $T$:
+	$ [T v] = [T][v] $
+]
+
+#definition(title: [Standard matrix])[
+	The matrix of a linear map $T : Field^n to Field^m$ with respect to the standard bases of $Field^n$ and $Field^m$.
+]
+
 == Linear systems
 
 #see[#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/math257/CompleteLectureNotes--Filled.pdf#Navigation7")[MATH 257 [Module 1]], Trimm [#link("https://github.com/ethanc8/ekactl-references/raw/trunk/linalg/trimm/unit-1/1.1%20Linear%20Equations.pdf")[1.1], #link("https://github.com/ethanc8/ekactl-references/raw/trunk/linalg/trimm/unit-1/1.2%20Elimination.pdf")[1.2], #link("https://github.com/ethanc8/ekactl-references/raw/trunk/linalg/trimm/unit-1/1.3%20Elementary%20Row%20Operations.pdf")[1.3]]]
@@ -115,78 +179,31 @@ Let $Field$ be a field.
 #definition(title: [Linear system])[
 	A set of linear equations.
 
-	Let $m$ be the number of linear equations in the system. Let $n$ be the number of variables in the system. Then the $j$th equation can be written as
-	$ sum_(k=1)^n A_(j k) x_k = y_j $
-
-	Let:
+	Let $m$ be the number of linear equations in the system and $n$ be the number of variables. Then the $j$th equation can be written as
+	$ sum_(k=1)^n A_(j k) X_k = Y_j $
+	Collecting these coefficients into an $m times n$ matrix $A$, and the variables and right-hand sides into column vectors,
 	$ A = mat(A_11, dots.c, A_(1 n); dots.v, dots.down, dots.v; A_(m 1), dots.c, A_(m n))
 		quad
-		X = vec(x_1, dots.v, x_n)
+		X = vec(X_1, dots.v, X_n)
 		quad
-		Y = vec(y_1, dots.v, y_m) $
-
-	Then the system can be written as $A X = Y$.
-]
+		Y = vec(Y_1, dots.v, Y_m), $
+	we write the system compactly as $A X = Y$. (Matrix-vector multiplication, which makes precise sense of $A X$, is defined in @def:matrix-vector-mult.)
+] <def:linear-system>
 
 #definition(title: [Consistent linear system])[
 	A system that has at least one solution.
 ]
 
-#definition(title: [Linear combination])[
-	The linear combination of the equations of a linear system is the sum of each equation of the system, multiplied by a coefficient $c_j$ (which may be different for each equation):
-
-	$ sum_(j=1)^m sum_(k=1)^n c_j A_(j k) x_k = sum_(j=1)^m c_j y_j $
-]
-
-#theorem[
-	All solutions of a linear system are solutions to the linear combination of the equations of the system.
-]
-
 #definition(title: [Equivalent linear systems])[
-	Two systems are equivalent if they have the same set of solutions.
+	Two systems are equivalent iff they have the same set of solutions.
 ]
 
-#theorem[
-	Two systems are equivalent if each equation in each system is a linear combination of the equations in the other system.
-]
-
-== Matrices and rows
+== Matrix of a linear system, row operations
 
 #see[#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/math257/CompleteLectureNotes--Filled.pdf#Navigation13")[MATH 257 [Lecture 2]], Trimm [#link("https://github.com/ethanc8/ekactl-references/raw/trunk/linalg/trimm/unit-1/1.3%20Elementary%20Row%20Operations.pdf")[1.3]]]
 
-#definition[
-	An $m times n$ matrix is a rectangular array of numbers with $m$ rows and $n$ columns.
-	$ A = mat(
-		a_11, a_12, dots.h, a_(1n);
-		a_21, a_22, dots.h, a_(2n);
-		dots.v, dots.v, dots.down, dots.v;
-		a_(m 1), a_(m 2), dots.h, a_(m n);
-	) $
-	$a_(i j)$ is in the $i$th row and $j$th column of $A$.
-]
-
 #definition(title: [Coefficient and augmented matrix])[
-	Given a linear system $A X = Y$, its #defname[coefficient] matrix is $A$, and its #defname[augmented] matrix is $[ A | Y ]$.
-
-	Given a linear system,
-	$ a_11 x_1 + a_12 x_2 + dots.c + a_(1n) x_n = b_1 \
-		a_21 x_1 + a_22 x_2 + dots.c + a_(2n) x_n = b_2 \
-		dots.v \
-		a_(m 1) x_1 + a_(m 2) x_2 + dots.c + a_(m n) x_n = b_m $
-	we define its coefficient and augmented matrices to be
-	$ mat(
-		a_11, a_12, dots.h, a_(1n);
-		a_21, a_22, dots.h, a_(2n);
-		dots.v, dots.v, dots.down, dots.v;
-		a_(m 1), a_(m 2), dots.h, a_(m n);
-	) quad "and" quad mat(
-		augment: #4,
-		a_11, a_12, dots.h, a_(1n), b_1;
-		a_21, a_22, dots.h, a_(2n), b_2;
-		dots.v, dots.v, dots.down, dots.v, dots.v;
-		a_(m 1), a_(m 2), dots.h, a_(m n), b_m;
-	), $
-	respectively.
+	Given a linear system $A X = Y$, its #defname[coefficient] matrix is $A$, and its #defname[augmented] matrix is $[A | Y]$.
 ]
 
 #definition(title: [Elementary row operations])[
@@ -205,8 +222,46 @@ Let $Field$ be a field.
 	Two matrices are row-equivalent iff each can be derived from the other using a finite number of elementary row operations.
 ]
 
+#remark[
+	Each elementary row operation replaces an equation of the system by a linear combination of itself with (or a scalar multiple of, or a swap with) another equation — this is why row-equivalent augmented matrices give equivalent systems.
+]
+
 #theorem[
-	If the augmented matrices of two linear systems are row equivalent, then the two systems have the same solution set.
+	If the augmented matrices of two linear systems are row equivalent, then the two systems are equivalent.
+]
+
+== Matrix arithmetic
+
+#definition(title: [Matrix sum and scalar product])[
+	Given $m times n$-matrices $A$ and $B$, their sum $A + B$ is
+	$ A + B := mat(
+		a_11 + b_11, a_12 + b_12, dots.h, a_(1n) + b_(1n);
+		a_21 + b_21, a_22 + b_22, dots.h, a_(2n) + b_(2n);
+		dots.v, dots.v, dots.down, dots.v;
+		a_(m 1) + b_(m 1), a_(m 2) + b_(m 2), dots.h, a_(m n) + b_(m n);
+	). $
+	Addition is only defined if $A$ and $B$ have the same number of rows and columns.
+
+	If $c in Field$, the scalar product $c A$ is
+	$ c A := mat(
+		c a_11, c a_12, dots.h, c a_(1n);
+		c a_21, c a_22, dots.h, c a_(2n);
+		dots.v, dots.v, dots.down, dots.v;
+		c a_(m 1), c a_(m 2), dots.h, c a_(m n);
+	). $
+]
+
+#definition(title: [Column, row vector])[
+	A column vector is an $m times 1$-matrix. A row vector is a $1 times n$-matrix.
+]
+
+#definition(title: [Transpose of a matrix])[
+	If $A$ is an $m times n$ matrix, then its transpose $A^transpose$ is the $n times m$ matrix obtained by interchanging the rows and columns of $A$:
+	$ [A^transpose_(i j)] = [A_(j i)] $
+] <def:matrix-transpose>
+
+#remark[
+	The transpose of a column vector is a row vector and vice versa.
 ]
 
 == Echelon forms
@@ -250,11 +305,10 @@ Let $Field$ be a field.
 	A variable not in a pivot column.
 ]
 
-
 #procedure(title: [Gauss-Jordan elimination])[
 	#procedure(title: [Gaussian elimination])[
-		Iterate through the pivot columns of $A$ from left to right. 
-		
+		Iterate through the pivot columns of $A$ from left to right.
+
 		For each pivot column, use elementary row operations to ensure that:
 		- the pivot position is nonzero
 		- all entries in the column below the pivot position are zero
@@ -269,6 +323,24 @@ Let $Field$ be a field.
 	]
 ]
 
+== Systems of linear equations as linear maps
+
+#definition(title: [Systems of linear equations as linear maps])[
+	For a linear equation mapping vectors in $Field^n$ to $Field^m$
+	$ A x = y $
+	we can interpret this as a linear map $T_A : M^(n times 1)(Field) to M^(m times 1)(Field)$ where $T(x) = A x$.
+]
+
+#theorem[
+	$ker T_A$ is the solution set of the homogeneous system $A x = 0$.
+]
+
+#theorem[
+	A homogeneous system of linear equations with more variables than equations has nonzero solutions.
+
+	A system of linear equations with more equations than variables has no solution for some choice of constant terms.
+]
+
 == Homogeneous linear systems
 
 #definition(title: [Homogeneous linear system])[
@@ -280,9 +352,9 @@ Let $Field$ be a field.
 ]
 
 #theorem[
-	- (a) If there are less equations than there are variables ($m < n$), then $A X = 0$ has an infinite number of solutions.
-	- (b) If there are an equal number of equations and variables, then $A$ is row-equivalent to the $n times n$ identity iff $A X = 0$ has only the trivial solution.
-	- (c) If there are more equations than there are variables ($m > n$), then
+	- If there are less equations than there are variables ($m < n$), then $A X = 0$ has an infinite number of solutions.
+	- If there are an equal number of equations and variables, then $A$ is row-equivalent to the $n times n$ identity iff $A X = 0$ has only the trivial solution.
+	- If there are more equations than there are variables ($m > n$), then
 		$ RREF(A) = mat(
 			1, 0, dots.c, 0;
 			0, 1, dots.c, 0;
@@ -305,115 +377,63 @@ Let $Field$ be a field.
 	To solve an inhomogeneous system, perform Gauss-Jordan elimination on $A' = [A|Y]$ so that $R' = [R|Z] = RREF(A')$. Then solve $R X = Z$. Note that not all inhomogeneous systems are solvable (consistent).
 ]
 
-
-== Linear combinations
+== Linear combinations and span
 
 #see[#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/math257/CompleteLectureNotes--Filled.pdf#Navigation29")[MATH 257 [Module 5, Module 6]], #link("file:///home/ethan/Downloads/f26-math257--Lecture3.pdf")[Chuang [Lecture 3]]]
 
-#definition[
-	Consider $m times n$-matrices
-	$ A = mat(
-			a_11, a_12, dots.h, a_(1n);
-			a_21, a_22, dots.h, a_(2n);
-			dots.v, dots.v, dots.down, dots.v;
-			a_(m 1), a_(m 2), dots.h, a_(m n);
-		), quad "and" quad B = mat(
-			b_11, b_12, dots.h, b_(1n);
-			b_21, b_22, dots.h, b_(2n);
-			dots.v, dots.v, dots.down, dots.v;
-			b_(m 1), b_(m 2), dots.h, b_(m n);
-		). $
-	- We define their sum $A + B$ to be
-		$ A + B := mat(
-			a_11 + b_11, a_12 + b_12, dots.h, a_(1n) + b_(1n);
-			a_21 + b_21, a_22 + b_22, dots.h, a_(2n) + b_(2n);
-			dots.v, dots.v, dots.down, dots.v;
-			a_(m 1) + b_(m 1), a_(m 2) + b_(m 2), dots.h, a_(m n) + b_(m n);
-		). $
-		Addition is only defined if $A$ has the same number of columns and rows as $B$.
-
-	- If $c in Reals$ is a scalar, we define the scalar product $c A$ to be
-		$ c A := mat(
-			c a_11, c a_12, dots.h, c a_(1n);
-			c a_21, c a_22, dots.h, c a_(2n);
-			dots.v, dots.v, dots.down, dots.v;
-			c a_(m 1), c a_(m 2), dots.h, c a_(m n);
-		). $
-]
-
-#definition(title: [Column, row vector])[
-	A column vector is an $m times 1$-matrix. A row vector is a $1 times n$-matrix.
-]
-
-#definition(title: [Transpose of a matrix])[
-	If $A$ is an $m times n$ matrix, then its transpose $A^transpose$ is the $n times m$ matrix obtained by interchanging the rows and columns of $A$:
-	$ [A^transpose_(i j)] = [A_(j i)] $
-] <def:matrix-transpose>
-
-#remark[
-	The transpose of a column vector is a row vector and vice versa.
-]
-
 #definition(title: [Linear combination of matrices])[
-	The linear combination of $m times n$-matrices $A_1, A_2, dots, A_p$ with coefficients $c_1, c_2, dots, c_p$ is defined as:
+	The linear combination of $m times n$-matrices $A_1, A_2, dots, A_p$ with coefficients $c_1, c_2, dots, c_p in Field$ is
 	$ c_1 A_1 + c_2 A_2 + dots.c + c_p A_p. $
 ]
 
 #definition[
-	Given $m times n$ matrices $A_1, dots, A_p$, we define their span, $span(A_1, dots, A_p)$, to be the set of all linear combinations of $A_1, dots, A_p$. That is,
+	Given $m times n$ matrices $A_1, dots, A_p$, we define their span, $span(A_1, dots, A_p)$, to be the set of all linear combinations of $A_1, dots, A_p$:
 	$ span(A_1, dots, A_p) := { c_1 A_1 + c_2 A_2 + dots.c + c_p A_p : c_1, dots, c_p in Field }. $
 ]
 
-#remark[
-	Solving linear systems is the same as finding linear combinations!
-]
-
-#theorem[
-	Let $a_1, dots, a_n, b in Reals^m$. A vector equation
-	$ x_1 a_1 + x_2 a_2 + dots.c + x_n a_n = b $
-	has the same solution set as the linear system whose augmented matrix is
-	$ mat(augment: #4, a_1, a_2, dots.h, a_n, b) $
-	In particular, $b$ can be generated by a linear combination of $a_1, a_2, dots, a_n$ if and only if there is a solution to the linear system corresponding to the augmented matrix.
-]
-
 #definition(title: [Matrix-vector multiplication])[
-	Let $X$ be a vector in $Reals^n$ and $A = display(mat(a_1, dots.c, a_n))$ an $m times n$-matrix. We define the product $A X$ by
-	$ A X = x_1 a_1 + x_2 a_2 + dots.c + x_n a_n. $
+	Let $X in Field^n$ and $A = mat(a_1, dots.c, a_n)$ be an $m times n$-matrix. We define the product $A X$ by
+	$ A X := X_1 a_1 + X_2 a_2 + dots.c + X_n a_n. $
 
 	- $A X$ is a linear combination of the columns of $A$ using the entries in $X$ as coefficients.
 	- $A X$ is only defined if the number of entries of $X$ is equal to the number of columns of $A$.
+] <def:matrix-vector-mult>
+
+#remark[
+	Solving linear systems is the same as finding linear combinations: solving $A X = Y$ means finding coefficients expressing $Y$ as a linear combination of $A$'s columns.
 ]
 
 #theorem[
-  Let $A = display(mat(vn(a)_1, dots.c, vn(a)_n))$ be an $m times n$ matrix and $vn(b) in Reals^m$. For any $(X_1, dots, X_n) in Reals^n$, the following are equivalent:
-  - $(X_1, dots, X_n)$ is a solution of the vector equation $X_1 vn(a)_1 + dots.c + X_n vn(a)_n = vn(b)$
-  - $display(vec(X_1, dots.v, X_n))$ is a solution of the matrix equation $A X = vn(b)$
-  - $(X_1, dots, X_n)$ is a solution of the linear system with augmented matrix $[A | vn(b)]$
+	Let $A = mat(vn(a)_1, dots.c, vn(a)_n)$ be an $m times n$ matrix and $vn(b) in Field^m$. For any $(X_1, dots, X_n) in Field^n$, the following are equivalent:
+	- $(X_1, dots, X_n)$ is a solution of the vector equation $X_1 vn(a)_1 + dots.c + X_n vn(a)_n = vn(b)$
+	- $vec(X_1, dots.v, X_n)$ is a solution of the matrix equation $A X = vn(b)$
+	- $(X_1, dots, X_n)$ is a solution of the linear system with augmented matrix $[A | vn(b)]$
 ]
 
 #corollary[
-  The equation $A X = vn(b)$ has a solution if and only if $vn(b) in span{vn(a)_1, dots, vn(a)_n}$.
-]
-
-#remark[
-	We will write $A X = b$ for the system of equations with augmented matrix $[A | b]$.
+	The equation $A X = vn(b)$ has a solution iff $vn(b) in span{vn(a)_1, dots, vn(a)_n}$.
 ]
 
 == Matrix multiplication
 
+#lemma[
+	Composing two linear maps $T_1$ and $T_2$ is equivalent to multiplying the matrices of the two linear maps:
+	$ T_1 compose T_2 = [T_1][T_2] $
+]
+
 #definition[
 	Let $A$ be an $m times n$-matrix and let $B = display(mat(b_1, dots.c, b_p))$ be an $n times p$-matrix. We define
 	$ A B := mat(A b_1, A b_2, dots.h, A b_p) $
-]
+] <def:matrix-mult>
 
 #theorem[
-	Let $A$ be an $m times n$ matrix and $B$ be an $n times p$ matrix. Then for every $x in Reals^p$
+	Let $A$ be an $m times n$ matrix and $B$ be an $n times p$ matrix. Then for every $x in Field^p$
 	$ A(B x) = (A B) x. $
 ]
 
 *Note.* Other ways to compute $A B$.
 
-#remark(title: [Row-Column Rule])[
+#procedure(title: [Row-Column Rule])[
 	Let $A$ be $m times n$ and $B$ be $n times p$ such that
 	$ A = mat(R_1; dots.v; R_m), quad "and" quad B = mat(C_1, dots.c, C_p). $
 	Then
@@ -426,14 +446,12 @@ Let $Field$ be a field.
 	and $(A B)_(i j) = R_i C_j = a_(i 1) b_(1 j) + a_(i 2) b_(2 j) + dots.c + a_(i n) b_(n j)$.
 ]
 
-#remark(title: [Outer Product Rule])[
+#procedure(title: [Outer Product Rule])[
 	Let $A$ be $m times n$ and $B$ be $n times p$ such that
 	$ A = mat(C_1, dots.c, C_n), quad "and" quad B = mat(R_1; dots.v; R_n). $
 	Then
 	$ A B = C_1 R_1 + dots.c + C_n R_n $
 ]
-
-== Properties of matrix multiplication
 
 #definition[
 	The identity matrix $I_n$ of size $n$ is defined as
@@ -452,7 +470,7 @@ Let $Field$ be a field.
 	+ $r(A B) = (r A) B = A(r B)$ for every scalar $r$,
 	+ $A(r B + s C) = r A B + s A C$ for every scalars $r, s$ (linearity of matrix multiplication)
 	+ $I_m A = A = A I_n$ (identity for matrix multiplication)
-]
+] <thm:matrix-mult-properties>
 
 #remark[
 	Properties above are analogous to properties of real numbers. But NOT ALL properties of real numbers also hold for matrices. In particular, $A B$ need not equal $B A$.
@@ -467,21 +485,17 @@ Let $Field$ be a field.
 	Let $A$ be a square matrix. We write $A^k$ for $A dots.c A$, $k$-times; that is $A^k$ is obtained by multiplying $A$ $k$-times with itself.
 ]
 
-== Elementary Matrices
+== Elementary matrices
 
 #definition[
 	An elementary matrix is one that is obtained by performing a single elementary row operation on an identity matrix.
 
 	A permutation matrix is one that is obtained by performing row exchanges on an identity matrix.
-]
+] <def:elementary-matrix>
 
 #theorem[
-	If an elementary row operation is performed on an $m times n$-matrix $A$, the resulting matrix can be written as $E A$, where the $m times m$-matrix $E$ is created by performing the same row operation on $I_m$.
-]
-
-#theorem[
-	Let $A, B$ be two $m times n$-matrices and row-equivalent. Then there is a sequence of $m times m$-elementary matrices $E_1, dots, E_ell$ such that
-	$ E_ell dots.c E_1 A = B. $
+	If $e : Field^(n,n) to Field^(n,n)$ is an elementary row operation and $A in Field^(n,n)$, then
+	$ e(A) = e(I) A $
 ]
 
 == Inverse of a Matrix
@@ -490,28 +504,26 @@ Let $Field$ be a field.
 	The inverse of a real number $a$ is denoted by $a^(-1)$. For example, $7^(-1) = 1\/7$ and $7 dot 7^(-1) = 7^(-1) dot 7 = 1$. Note that not all real numbers have an inverse. Namely, $0^(-1)$ is not defined as there is no real number $b$ such that $0 dot b = 1$.
 ]
 
-#definition[
-	An $n times n$ matrix $A$ is said to be invertible if there is an $n times n$ matrix $C$ satisfying
-	$ C A = A C = I_n $
-	where $I_n$ is the $n times n$ identity matrix. We call $C$ the inverse of $A$.
-]
+#definition(title: [Invertible matrix])[
+	An $n times n$ matrix $A$ is said to be invertible if there is an $n times n$ matrix $B$ satisfying
+	$ B A = A B = I_n $
+	where $I_n$ is the $n times n$ identity matrix. There is a unique such $B$, which is called the inverse of $A$, $A^(-1) := B$.
+] <def:invertible-matrix>
 
-#theorem[
-	Let $A$ be an invertible matrix, then its inverse $C$ is unique.
+#lemma[
+	The matrix of an isomorphism of finite-dimensional vector spaces is invertible.
 ]
 
 #theorem[
 	Suppose $A$ and $B$ are invertible. Then:
-	+ $A^(-1)$ is invertible and $(A^(-1))^(-1) = A$ (i.e. $A$ is the inverse of $A^(-1)$).
-	+ $A B$ is invertible and $(A B)^(-1) = B^(-1) A^(-1)$.
-	+ $A^T$ is invertible and $(A^T)^(-1) = (A^(-1))^T$.
+	+ $A^(-1)$ is invertible and $(A^(-1))^(-1) = A$.
+	+ $A B$ is invertible and $(A B)^(-1) = B^(-1) A^(-1)$. More generally, any finite product $A_1 dots.c A_k$ of invertible $n times n$ matrices is invertible, with $(A_1 dots.c A_k)^(-1) = A_k^(-1) dots.c A_1^(-1)$.
+	+ $A^transpose$ is invertible and $(A^transpose)^(-1) = (A^(-1))^transpose$.
 ]
 
 #theorem[
-	Let $A$ be an invertible $n times n$ matrix. Then for each $b$ in $Reals^n$, the equation $A x = b$ has the unique solution $x = A^(-1) b$.
-]
-
-== Computing the Inverse
+	Let $A$ be an $n times n$ matrix. Then $A X = Y$ has a unique solution for every $Y in Field^n$ iff $A$ is invertible, in which case the unique solution is $X = A^(-1) Y$.
+] <thm:unique-solution-iff-invertible>
 
 #theorem[
 	Let $A = mat(a, b; c, d)$. If $a d - b c != 0$, then $A$ is invertible and
@@ -519,20 +531,19 @@ Let $Field$ be a field.
 	If $a d - b c = 0$, then $A$ is not invertible.
 ]
 
-#theorem[
-	Let $A$ be an $n times n$-matrix. The following are equivalent:
+#theorem(title: [Invertible Matrix Theorem])[
+	If $A$ is an $n times n$ matrix, the following conditions are equivalent:
 	- $A$ is invertible.
-	- the reduced echelon form of $A$ is $I_n$.
-]
+	- $A$ is row-equivalent to the $n times n$ identity matrix.
+	- $A$ is a product of elementary matrices.
+] <thm:invertible-matrix-theorem>
 
 #theorem[
-	Suppose $A$ is invertible. Then every sequence of elementary row operations that reduces $A$ to $I_n$ will also transform $I_n$ to $A^(-1)$.
+	Suppose $A$ is invertible. Then every sequence of elementary row operations that reduces $A$ to $I_n$ also transforms $I_n$ to $A^(-1)$. Equivalently, $[A | I]$ is row-equivalent to $[I | A^(-1)]$.
 ]
 
-#algorithm[
-	- Place $A$ and $I$ side-by-side to form an augmented matrix $mat(augment: #1, A, I)$. This is an $n times 2n$ matrix (Big Augmented Matrix), instead of $n times (n+1)$.
-	- Perform row operations on this matrix (which will produce identical operations on $A$ and $I$).
-	- By Theorem: $mat(augment: #1, A, I)$ will row reduce to $mat(augment: #1, I, A^(-1))$ or $A$ is not invertible.
+#algorithm(title: [Computation of $A^(-1)$])[
+	Row-reduce the augmented matrix $[A | I]$. If $A$ is row-equivalent to $I$, then $RREF([A | I]) = [I | A^(-1)]$. Otherwise, $A$ doesn't have an inverse.
 ]
 
 
@@ -938,24 +949,6 @@ Let $Field$ be a field.
 	- If $dim V < dim W$, then $T$ is not surjective.
 ]
 
-== Systems of linear equations as linear maps
-
-#definition(title: [Systems of linear equations as linear maps])[
-	For a linear equation mapping vectors in $Field^n$ to $Field^m$
-	$ A x = y $
-	we can interpret this as a linear map $T_A : M^(n times 1)(Field) to M^(m times 1)(Field)$ where $T(x) = A x$.
-]
-
-#theorem[
-	$ker T_A$ is the solution set of the homogeneous system $A x = 0$.
-]
-
-#theorem[
-	A homogeneous system of linear equations with more variables than equations has nonzero solutions.
-
-	A system of linear equations with more equations than variables has no solution for some choice of constant terms.
-]
-
 == Isomorphisms
 
 #definition(title: [Bijective])[
@@ -1001,79 +994,7 @@ Let $Field$ be a field.
 	$cal(P)_n (Field) tilde.equiv Field^(n+1)$.
 ]
 
-== Coordinates
-
-For the following definitions, let $B := { v_1, dots, v_n }$ be a basis of $V$, where $V$ is an $n$-dimensional vector space over $Field$.
-
-#definition(title: [Linear combination map (basis isomorphism)])[
-	The *linear combination map* or *basis isomorphism* is the isomorphism $L_B : Field^n to V$ defined by
-	$ L_B (arrow(x)) = x_1 v_1 + dots.c + x_n v_n $
-]
-
-#definition(title: [Coordinate isomorphism])[
-	The *coordinate isomorphism* is the isomorphism $L_B^(-1) : V to Field^n$.
-
-	This means that for any vector space, its vectors can be expressed as vectors in $Field^n$.
-]
-
-#definition(title: [Coordinate vector])[
-	Let $v$ be a vector in $V$. Then the coordinate vector $[v]_B in Field^n$ of $v$ is defined as
-	$ [v]_B := L_B^(-1)(v) $
-
-	Equivalently, it is the vector such that
-	$ L_B ([v]_B) = v $
-]
-
-#definition(title: [Ordered basis])[
-	An ordered basis of a $n$-dimensional vector space $V$ is an $n$-tuple which is an ordering of a basis of $V$.
-]
-
-== Matrix of a linear map
-
-#definition(title: [Matrix of a linear map])[
-	Let $B_V = (v_1, dots, v_n)$ be a basis of $V$ and $B_W = (w_1, dots, w_m)$ be a basis of $W$. Let $T : V to W$ be a linear map.
-
-	Then the matrix of $T$ with respect to $B_V$ and $B_W$ is denoted as
-	$ [T]_(B_W B_V) $
-
-	It is the $m times n$ matrix defined such that its $j$th column is the coordinate vector of $T v_j$ with respect to $B_W$:
-	$ ([T]_(B_W B_V))_(* j) = [T v_j]_(B_W) $
-
-	Equivalently, it is the $m times n$ matrix that satisfies
-	$ T v_j = sum_(i=1)^m ([T]_(B_W B_V))_(i j) w_i $
-]
-
-#lemma[
-	Applying a linear map $T$ to a vector $v$ is equivalent to multiplying the coordinate vector of $v$ by the matrix of $T$:
-	$ [T v] = [T][v] $
-]
-
-#definition(title: [Standard matrix])[
-	The matrix of a linear map $T : Field^n to Field^m$ with respect to the standard bases of $Field^n$ and $Field^m$.
-]
-
-#lemma[
-	$ dim cal(L)(V, W) = (dim V)(dim W) $
-]
-
-#lemma[
-	Composing two linear maps $T_1$ and $T_2$ is equivalent to multiplying the matrices of the two linear maps:
-	$ T_1 compose T_2 = [T_1][T_2] $
-]
-
-#definition(title: [Matrix multiplication])[
-	The matrix multiplication of the $m times n$ matrix $A$ and the $n times p$ matrix $B$ is made by dot-producting the rows of the first by the columns of the second:
-	$ [A B_(i j)] = [A_(i *) dot B_(* j)] = [sum_(k=1)^n A_(i k) B_(k j)] $
-]
-
-#theorem(title: [Properties of matrix multiplication])[
-	Let $A$, $B$, $C$ be matrices and $r$ and $s$ be scalars in $Field$. Then
-	$ A(r B + s C) &= r(A B) + s(A C) \
-		(B + C) A &= B A + C A \
-		A(B C) &= (A B) C $
-
-	Effectively, matrix multiplication is distributive and associative. It is not always commutative.
-]
+== Uncategorized linear maps/systems/matrices
 
 == Fundamental matrix spaces
 
