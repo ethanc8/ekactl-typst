@@ -94,462 +94,13 @@
 #let RREF = math.op("RREF")
 #let span = math.op("span")
 
-Let $Field$ be a field.
+#let dirsum = math.limits(sym.plus.circle)
 
-= Linear systems and matrices
+#let linmaps = $cal(L)$
 
-== Matrices
-
-#definition[
-	An $m times n$ matrix is a rectangular array of numbers with $m$ rows and $n$ columns.
-	$ A = mat(
-		a_11, a_12, dots.h, a_(1n);
-		a_21, a_22, dots.h, a_(2n);
-		dots.v, dots.v, dots.down, dots.v;
-		a_(m 1), a_(m 2), dots.h, a_(m n);
-	) $
-	$a_(i j)$ is in the $i$th row and $j$th column of $A$.
-]
-
-== Coordinates
-
-For the following definitions, let $B := { v_1, dots, v_n }$ be a basis of $V$, where $V$ is an $n$-dimensional vector space over $Field$.
-
-#definition(title: [Linear combination map (basis isomorphism)])[
-	The *linear combination map* or *basis isomorphism* is the isomorphism $L_B : Field^n to V$ defined by
-	$ L_B (arrow(x)) = x_1 v_1 + dots.c + x_n v_n $
-]
-
-#definition(title: [Coordinate isomorphism])[
-	The *coordinate isomorphism* is the isomorphism $L_B^(-1) : V to Field^n$.
-
-	This means that for any vector space, its vectors can be expressed as vectors in $Field^n$.
-]
-
-#definition(title: [Coordinate vector])[
-	Let $v$ be a vector in $V$. Then the coordinate vector $[v]_B in Field^n$ of $v$ is defined as
-	$ [v]_B := L_B^(-1)(v) $
-
-	Equivalently, it is the vector such that
-	$ L_B ([v]_B) = v $
-]
-
-#definition(title: [Ordered basis])[
-	An ordered basis of a $n$-dimensional vector space $V$ is an $n$-tuple which is an ordering of a basis of $V$.
-]
-
-== Matrix of a linear map
-
-#definition(title: [Matrix of a linear map])[
-	Let $B_V = (v_1, dots, v_n)$ be a basis of $V$ and $B_W = (w_1, dots, w_m)$ be a basis of $W$. Let $T : V to W$ be a linear map.
-
-	Then the matrix of $T$ with respect to $B_V$ and $B_W$ is denoted as
-	$ [T]_(B_W B_V) $
-
-	It is the $m times n$ matrix defined such that its $j$th column is the coordinate vector of $T v_j$ with respect to $B_W$:
-	$ ([T]_(B_W B_V))_(* j) = [T v_j]_(B_W) $
-
-	Equivalently, it is the $m times n$ matrix that satisfies
-	$ T v_j = sum_(i=1)^m ([T]_(B_W B_V))_(i j) w_i $
-]
-
-#lemma[
-	Applying a linear map $T$ to a vector $v$ is equivalent to multiplying the coordinate vector of $v$ by the matrix of $T$:
-	$ [T v] = [T][v] $
-]
-
-#definition(title: [Standard matrix])[
-	The matrix of a linear map $T : Field^n to Field^m$ with respect to the standard bases of $Field^n$ and $Field^m$.
-]
-
-== Linear systems
-
-#see[#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/math257/CompleteLectureNotes--Filled.pdf#Navigation7")[MATH 257 [Module 1]], Trimm [#link("https://github.com/ethanc8/ekactl-references/raw/trunk/linalg/trimm/unit-1/1.1%20Linear%20Equations.pdf")[1.1], #link("https://github.com/ethanc8/ekactl-references/raw/trunk/linalg/trimm/unit-1/1.2%20Elimination.pdf")[1.2], #link("https://github.com/ethanc8/ekactl-references/raw/trunk/linalg/trimm/unit-1/1.3%20Elementary%20Row%20Operations.pdf")[1.3]]]
-
-#definition(title: [Linear equation])[
-	An equation that can be written in the form
-	$ sum_k a_k x_k = y $
-	where all $a_k in Field$ and $y in Field$.
-]
-
-#definition(title: [Solution to a linear equation])[
-	The solution to a linear equation is a set ${ s_k }$ such that $sum_k a_k s_k = y$, i.e. substituting $x_k = s_k$ results in the equation being true.
-]
-
-#definition(title: [Linear system])[
-	A set of linear equations.
-
-	Let $m$ be the number of linear equations in the system and $n$ be the number of variables. Then the $j$th equation can be written as
-	$ sum_(k=1)^n A_(j k) X_k = Y_j $
-	Collecting these coefficients into an $m times n$ matrix $A$, and the variables and right-hand sides into column vectors,
-	$ A = mat(A_11, dots.c, A_(1 n); dots.v, dots.down, dots.v; A_(m 1), dots.c, A_(m n))
-		quad
-		X = vec(X_1, dots.v, X_n)
-		quad
-		Y = vec(Y_1, dots.v, Y_m), $
-	we write the system compactly as $A X = Y$. (Matrix-vector multiplication, which makes precise sense of $A X$, is defined in @def:matrix-vector-mult.)
-] <def:linear-system>
-
-#definition(title: [Consistent linear system])[
-	A system that has at least one solution.
-]
-
-#definition(title: [Equivalent linear systems])[
-	Two systems are equivalent iff they have the same set of solutions.
-]
-
-== Matrix of a linear system, row operations
-
-#see[#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/math257/CompleteLectureNotes--Filled.pdf#Navigation13")[MATH 257 [Lecture 2]], Trimm [#link("https://github.com/ethanc8/ekactl-references/raw/trunk/linalg/trimm/unit-1/1.3%20Elementary%20Row%20Operations.pdf")[1.3]]]
-
-#definition(title: [Coefficient and augmented matrix])[
-	Given a linear system $A X = Y$, its #defname[coefficient] matrix is $A$, and its #defname[augmented] matrix is $[A | Y]$.
-]
-
-#definition(title: [Elementary row operations])[
-	The elementary row operations are:
-
-	- *Scaling:* $R_i mapsto c R_i$ where $c$ is a nonzero scalar.
-	- *Replacement:* $R_i mapsto R_i + c R_j$ where $c$ is a scalar.
-	- *Interchange:* Swap $R_i$ and $R_j$.
-]
-
-#theorem(title: [Elementary row operations are invertible])[
-	For any elementary row operation $e$, there exists an elementary row operation $e^(-1)$ such that $e^(-1)(e(A)) = A$ for any matrix $A$.
-]
-
-#definition(title: [Row equivalence])[
-	Two matrices are row-equivalent iff each can be derived from the other using a finite number of elementary row operations.
-]
-
-#remark[
-	Each elementary row operation replaces an equation of the system by a linear combination of itself with (or a scalar multiple of, or a swap with) another equation — this is why row-equivalent augmented matrices give equivalent systems.
-]
-
-#theorem[
-	If the augmented matrices of two linear systems are row equivalent, then the two systems are equivalent.
-]
-
-== Matrix arithmetic
-
-#definition(title: [Matrix sum and scalar product])[
-	Given $m times n$-matrices $A$ and $B$, their sum $A + B$ is
-	$ A + B := mat(
-		a_11 + b_11, a_12 + b_12, dots.h, a_(1n) + b_(1n);
-		a_21 + b_21, a_22 + b_22, dots.h, a_(2n) + b_(2n);
-		dots.v, dots.v, dots.down, dots.v;
-		a_(m 1) + b_(m 1), a_(m 2) + b_(m 2), dots.h, a_(m n) + b_(m n);
-	). $
-	Addition is only defined if $A$ and $B$ have the same number of rows and columns.
-
-	If $c in Field$, the scalar product $c A$ is
-	$ c A := mat(
-		c a_11, c a_12, dots.h, c a_(1n);
-		c a_21, c a_22, dots.h, c a_(2n);
-		dots.v, dots.v, dots.down, dots.v;
-		c a_(m 1), c a_(m 2), dots.h, c a_(m n);
-	). $
-]
-
-#definition(title: [Column, row vector])[
-	A column vector is an $m times 1$-matrix. A row vector is a $1 times n$-matrix.
-]
-
-#definition(title: [Transpose of a matrix])[
-	If $A$ is an $m times n$ matrix, then its transpose $A^transpose$ is the $n times m$ matrix obtained by interchanging the rows and columns of $A$:
-	$ [A^transpose_(i j)] = [A_(j i)] $
-] <def:matrix-transpose>
-
-#remark[
-	The transpose of a column vector is a row vector and vice versa.
-]
-
-== Echelon forms
-
-#see[#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/math257/CompleteLectureNotes--Filled.pdf#Navigation18")[MATH 257 [Lecture 3, 4]], Trimm [#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/trimm/unit-1/1.4%20Row%20Echelon%20Matrices.pdf")[1.4]]]
-
-#definition(title: [Row echelon form (REF)])[
-	A matrix is in REF iff it satisfies:
-	1. All nonzero rows are above all rows of all zeros.
-	2. Each leading entry of a row is in a column to the right of the leading entry of the row above it.
-	3. All entries in a column below a leading entry are zeros.
-]
-
-#definition(title: [Reduced row echelon form (RREF)])[
-	A matrix is in RREF iff it is in REF and additionally satisfies:
-	4. The leading entry in each nonzero row is 1.
-	5. Each leading 1 is the only nonzero entry in its column
-]
-
-#definition[
-	$RREF(A)$ is the unique matrix which is in RREF and is row-equivalent to $A$.
-]
-
-#definition(title: [Pivot position])[
-	A location $A_(i j)$ where $RREF(A)_(i j)$ is a leading 1.
-]
-
-#definition(title: [Pivot column])[
-	A column which contains a pivot position.
-]
-
-#definition(title: [Pivot])[
-	A nonzero number at a pivot position.
-]
-
-#definition(title: [Leading variable, determined variable, basic variable, pivot variable])[
-	A variable in a pivot column.
-]
-
-#definition(title: [Free variable])[
-	A variable not in a pivot column.
-]
-
-#procedure(title: [Gauss-Jordan elimination])[
-	#procedure(title: [Gaussian elimination])[
-		Iterate through the pivot columns of $A$ from left to right.
-
-		For each pivot column, use elementary row operations to ensure that:
-		- the pivot position is nonzero
-		- all entries in the column below the pivot position are zero
-		This produces $op("REF")(A)$.
-	]
-
-	#procedure(title: [Jordan elimination])[
-		Iterate through the pivot columns of $op("REF")(A)$ from right to left. For each pivot column, use elementary row operations to ensure that:
-		- all other entries in the column other than the pivot are zero
-		- the pivot is equal to 1.
-		This produces $RREF(A)$.
-	]
-]
-
-== Systems of linear equations as linear maps
-
-#definition(title: [Systems of linear equations as linear maps])[
-	For a linear equation mapping vectors in $Field^n$ to $Field^m$
-	$ A x = y $
-	we can interpret this as a linear map $T_A : M^(n times 1)(Field) to M^(m times 1)(Field)$ where $T(x) = A x$.
-]
-
-#theorem[
-	$ker T_A$ is the solution set of the homogeneous system $A x = 0$.
-]
-
-#theorem[
-	A homogeneous system of linear equations with more variables than equations has nonzero solutions.
-
-	A system of linear equations with more equations than variables has no solution for some choice of constant terms.
-]
-
-== Homogeneous linear systems
-
-#definition(title: [Homogeneous linear system])[
-	A system where $y_0 = y_1 = dots.c = y_m = 0$. It can be written as $A X = 0$.
-]
-
-#theorem(title: [Trivial solution])[
-	For any homogeneous system, $x_0 = x_1 = dots.c = x_n = 0$ is a solution to the system. Therefore, all homogeneous systems are consistent.
-]
-
-#theorem[
-	- If there are less equations than there are variables ($m < n$), then $A X = 0$ has an infinite number of solutions.
-	- If there are an equal number of equations and variables, then $A$ is row-equivalent to the $n times n$ identity iff $A X = 0$ has only the trivial solution.
-	- If there are more equations than there are variables ($m > n$), then
-		$ RREF(A) = mat(
-			1, 0, dots.c, 0;
-			0, 1, dots.c, 0;
-			dots.v, dots.v, dots.down, dots.v;
-			0, 0, dots.c, 1;
-			0, 0, 0, 0;
-			dots.v, dots.v, dots.v, dots.v;
-			0, 0, 0, 0;
-		) $
-		iff $A X = 0$ has only the trivial solution.
-]
-
-#procedure(title: [Solution])[
-	To solve a homogeneous system, perform Gauss-Jordan elimination on $A$ so that $R = RREF(A)$. Then solve $R X = 0$. The variables which are not in pivot columns are free variables and may be set to any value, typically denoted $u_1, u_2, dots$.
-]
-
-== Inhomogeneous linear systems
-
-#procedure(title: [Solution])[
-	To solve an inhomogeneous system, perform Gauss-Jordan elimination on $A' = [A|Y]$ so that $R' = [R|Z] = RREF(A')$. Then solve $R X = Z$. Note that not all inhomogeneous systems are solvable (consistent).
-]
-
-== Linear combinations and span
-
-#see[#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/math257/CompleteLectureNotes--Filled.pdf#Navigation29")[MATH 257 [Module 5, Module 6]], #link("file:///home/ethan/Downloads/f26-math257--Lecture3.pdf")[Chuang [Lecture 3]]]
-
-#definition(title: [Linear combination of matrices])[
-	The linear combination of $m times n$-matrices $A_1, A_2, dots, A_p$ with coefficients $c_1, c_2, dots, c_p in Field$ is
-	$ c_1 A_1 + c_2 A_2 + dots.c + c_p A_p. $
-]
-
-#definition[
-	Given $m times n$ matrices $A_1, dots, A_p$, we define their span, $span(A_1, dots, A_p)$, to be the set of all linear combinations of $A_1, dots, A_p$:
-	$ span(A_1, dots, A_p) := { c_1 A_1 + c_2 A_2 + dots.c + c_p A_p : c_1, dots, c_p in Field }. $
-]
-
-#definition(title: [Matrix-vector multiplication])[
-	Let $X in Field^n$ and $A = mat(a_1, dots.c, a_n)$ be an $m times n$-matrix. We define the product $A X$ by
-	$ A X := X_1 a_1 + X_2 a_2 + dots.c + X_n a_n. $
-
-	- $A X$ is a linear combination of the columns of $A$ using the entries in $X$ as coefficients.
-	- $A X$ is only defined if the number of entries of $X$ is equal to the number of columns of $A$.
-] <def:matrix-vector-mult>
-
-#remark[
-	Solving linear systems is the same as finding linear combinations: solving $A X = Y$ means finding coefficients expressing $Y$ as a linear combination of $A$'s columns.
-]
-
-#theorem[
-	Let $A = mat(vn(a)_1, dots.c, vn(a)_n)$ be an $m times n$ matrix and $vn(b) in Field^m$. For any $(X_1, dots, X_n) in Field^n$, the following are equivalent:
-	- $(X_1, dots, X_n)$ is a solution of the vector equation $X_1 vn(a)_1 + dots.c + X_n vn(a)_n = vn(b)$
-	- $vec(X_1, dots.v, X_n)$ is a solution of the matrix equation $A X = vn(b)$
-	- $(X_1, dots, X_n)$ is a solution of the linear system with augmented matrix $[A | vn(b)]$
-]
-
-#corollary[
-	The equation $A X = vn(b)$ has a solution iff $vn(b) in span{vn(a)_1, dots, vn(a)_n}$.
-]
-
-== Matrix multiplication
-
-#lemma[
-	Composing two linear maps $T_1$ and $T_2$ is equivalent to multiplying the matrices of the two linear maps:
-	$ T_1 compose T_2 = [T_1][T_2] $
-]
-
-#definition[
-	Let $A$ be an $m times n$-matrix and let $B = display(mat(b_1, dots.c, b_p))$ be an $n times p$-matrix. We define
-	$ A B := mat(A b_1, A b_2, dots.h, A b_p) $
-] <def:matrix-mult>
-
-#theorem[
-	Let $A$ be an $m times n$ matrix and $B$ be an $n times p$ matrix. Then for every $x in Field^p$
-	$ A(B x) = (A B) x. $
-]
-
-*Note.* Other ways to compute $A B$.
-
-#procedure(title: [Row-Column Rule])[
-	Let $A$ be $m times n$ and $B$ be $n times p$ such that
-	$ A = mat(R_1; dots.v; R_m), quad "and" quad B = mat(C_1, dots.c, C_p). $
-	Then
-	$ A B = mat(
-		R_1 C_1, dots.h, R_1 C_p;
-		R_2 C_1, dots.h, R_2 C_p;
-		dots.v, dots.down, dots.v;
-		R_m C_1, dots.h, R_m C_p;
-	) $
-	and $(A B)_(i j) = R_i C_j = a_(i 1) b_(1 j) + a_(i 2) b_(2 j) + dots.c + a_(i n) b_(n j)$.
-]
-
-#procedure(title: [Outer Product Rule])[
-	Let $A$ be $m times n$ and $B$ be $n times p$ such that
-	$ A = mat(C_1, dots.c, C_n), quad "and" quad B = mat(R_1; dots.v; R_n). $
-	Then
-	$ A B = C_1 R_1 + dots.c + C_n R_n $
-]
-
-#definition[
-	The identity matrix $I_n$ of size $n$ is defined as
-	$ I_n = mat(
-		1, 0, dots.h, 0;
-		0, 1, dots.h, 0;
-		dots.v, dots.v, dots.down, dots.v;
-		0, 0, dots.h, 1;
-	). $
-]
-
-#theorem[
-	Let $A$ be an $m times n$ matrix and let $B$ and $C$ be matrices for which the indicated sums and products are defined.
-	+ $A(B C) = (A B) C$ (associative law of multiplication)
-	+ $A(B + C) = A B + A C$, $(B + C) A = B A + C A$ (distributive laws)
-	+ $r(A B) = (r A) B = A(r B)$ for every scalar $r$,
-	+ $A(r B + s C) = r A B + s A C$ for every scalars $r, s$ (linearity of matrix multiplication)
-	+ $I_m A = A = A I_n$ (identity for matrix multiplication)
-] <thm:matrix-mult-properties>
-
-#remark[
-	Properties above are analogous to properties of real numbers. But NOT ALL properties of real numbers also hold for matrices. In particular, $A B$ need not equal $B A$.
-]
-
-#theorem[
-	The transpose of a product is the product of transposes in opposite order:
-	$ (A B)^transpose = B^transpose A^transpose $
-]
-
-#definition[
-	Let $A$ be a square matrix. We write $A^k$ for $A dots.c A$, $k$-times; that is $A^k$ is obtained by multiplying $A$ $k$-times with itself.
-]
-
-== Elementary matrices
-
-#definition[
-	An elementary matrix is one that is obtained by performing a single elementary row operation on an identity matrix.
-
-	A permutation matrix is one that is obtained by performing row exchanges on an identity matrix.
-] <def:elementary-matrix>
-
-#theorem[
-	If $e : Field^(n,n) to Field^(n,n)$ is an elementary row operation and $A in Field^(n,n)$, then
-	$ e(A) = e(I) A $
-]
-
-== Inverse of a Matrix
-
-#remark[
-	The inverse of a real number $a$ is denoted by $a^(-1)$. For example, $7^(-1) = 1\/7$ and $7 dot 7^(-1) = 7^(-1) dot 7 = 1$. Note that not all real numbers have an inverse. Namely, $0^(-1)$ is not defined as there is no real number $b$ such that $0 dot b = 1$.
-]
-
-#definition(title: [Invertible matrix])[
-	An $n times n$ matrix $A$ is said to be invertible if there is an $n times n$ matrix $B$ satisfying
-	$ B A = A B = I_n $
-	where $I_n$ is the $n times n$ identity matrix. There is a unique such $B$, which is called the inverse of $A$, $A^(-1) := B$.
-] <def:invertible-matrix>
-
-#lemma[
-	The matrix of an isomorphism of finite-dimensional vector spaces is invertible.
-]
-
-#theorem[
-	Suppose $A$ and $B$ are invertible. Then:
-	+ $A^(-1)$ is invertible and $(A^(-1))^(-1) = A$.
-	+ $A B$ is invertible and $(A B)^(-1) = B^(-1) A^(-1)$. More generally, any finite product $A_1 dots.c A_k$ of invertible $n times n$ matrices is invertible, with $(A_1 dots.c A_k)^(-1) = A_k^(-1) dots.c A_1^(-1)$.
-	+ $A^transpose$ is invertible and $(A^transpose)^(-1) = (A^(-1))^transpose$.
-]
-
-#theorem[
-	Let $A$ be an $n times n$ matrix. Then $A X = Y$ has a unique solution for every $Y in Field^n$ iff $A$ is invertible, in which case the unique solution is $X = A^(-1) Y$.
-] <thm:unique-solution-iff-invertible>
-
-#theorem[
-	Let $A = mat(a, b; c, d)$. If $a d - b c != 0$, then $A$ is invertible and
-	$ A^(-1) = 1/(a d - b c) mat(d, -b; -c, a). $
-	If $a d - b c = 0$, then $A$ is not invertible.
-]
-
-#theorem(title: [Invertible Matrix Theorem])[
-	If $A$ is an $n times n$ matrix, the following conditions are equivalent:
-	- $A$ is invertible.
-	- $A$ is row-equivalent to the $n times n$ identity matrix.
-	- $A$ is a product of elementary matrices.
-] <thm:invertible-matrix-theorem>
-
-#theorem[
-	Suppose $A$ is invertible. Then every sequence of elementary row operations that reduces $A$ to $I_n$ also transforms $I_n$ to $A^(-1)$. Equivalently, $[A | I]$ is row-equivalent to $[I | A^(-1)]$.
-]
-
-#algorithm(title: [Computation of $A^(-1)$])[
-	Row-reduce the augmented matrix $[A | I]$. If $A$ is row-equivalent to $I$, then $RREF([A | I]) = [I | A^(-1)]$. Otherwise, $A$ doesn't have an inverse.
-]
-
+Let $Field$ be a field. It's possible that some things in here require $Field = Reals$ or $Field = Complex$; if it does and it's not marked it should be considered a bug.
 
 = Fields
-
-== Real and complex numbers
 
 #definition(title: [Field properties])[
 	The following properties:
@@ -574,8 +125,6 @@ For the following definitions, let $B := { v_1, dots, v_n }$ be a basis of $V$, 
 		- (D) $x(y + z) = x y + x z$ for all $x, y, z in Field$.
 	]
 ]
-
-== Fields
 
 #definition(title: [Field])[
 	A set $Field$ which defines the following two operations:
@@ -744,7 +293,7 @@ For the following definitions, let $B := { v_1, dots, v_n }$ be a basis of $V$, 
 ]
 
 #definition(title: [Direct sum])[
-	If $V_1, dots, V_n$ are subspaces of $V$ such that each element of $limits(plus.circle)_(k=1)^n V_k = V_1 + dots.c + V_n$ can be written uniquely as $sum_(k=1)^n v_k = v_1 + dots.c + v_n$ where $v_k in V_k$, then $limits(plus.circle)_(k=1)^n V_k$ is a *direct sum* and can be written as $limits(plus.circle)_(k=1)^n V_k = V_1 plus.circle dots.c plus.circle V_n$.
+	If $V_1, dots, V_n$ are subspaces of $V$ such that each element of $limits(+)_(k=1)^n V_k = V_1 + dots.c + V_n$ can be written uniquely as $sum_(k=1)^n v_k = v_1 + dots.c + v_n$ where $v_k in V_k$, then $limits(+)_(k=1)^n V_k$ is a *direct sum* and can be written as $dirsum_(k=1)^n V_k = V_1 dirsum dots.c dirsum V_n$.
 ]
 
 #theorem[
@@ -857,12 +406,12 @@ For the following definitions, let $B := { v_1, dots, v_n }$ be a basis of $V$, 
 	A function $T : V to V$ which is a linear map.
 ]
 
-#definition(title: [$cal(L)$])[
-	For any vector spaces $V$ and $W$, $cal(L)(V,W)$ is the set of all linear maps from $V$ to $W$.
+#definition(title: [$linmaps$])[
+	For any vector spaces $V$ and $W$, $linmaps(V,W)$ is the set of all linear maps from $V$ to $W$.
 
-	$cal(L)(V) := cal(L)(V,V)$.
+	$linmaps(V) := linmaps(V,V)$.
 
-	$cal(L)(V,W)$ is also called $"Hom"(V,W)$.
+	$linmaps(V,W)$ is also called $"Hom"(V,W)$.
 ]
 
 #lemma(title: [Linear Map Lemma])[
@@ -877,25 +426,25 @@ For the following definitions, let $B := { v_1, dots, v_n }$ be a basis of $V$, 
 	If $T : V to W$ is a linear map, then $T(0) = 0$.
 ]
 
-#theorem(title: [$cal(L)(V,W)$ is a vector space])[
+#theorem(title: [$linmaps(V,W)$ is a vector space])[
 	If we define
 	$ (S + T)(v) &:= S + T \
 		(alpha T)(v) &:= alpha T(v) $
-	for $S, T in cal(L)(V,W)$, $alpha in Field$, then $cal(L)(V,W)$ is a vector space and is a subspace of $V^W$.
+	for $S, T in linmaps(V,W)$, $alpha in Field$, then $linmaps(V,W)$ is a vector space and is a subspace of $V^W$.
 ]
 
 #definition(title: [Product of linear maps])[
-	If $T in cal(L)(U, V)$ and $S in cal(L)(V, W)$, then we define the product $S T in cal(L)(V, W)$ by $S T := S compose T$.
+	If $T in linmaps(U, V)$ and $S in linmaps(V, W)$, then we define the product $S T in linmaps(V, W)$ by $S T := S compose T$.
 ]
 
-#theorem(title: [$cal(L)(V)$ is a unital associative Field-algebra])[
+#theorem(title: [$linmaps(V)$ is a unital associative F-algebra])[
 	The product of linear maps on $V$ has the following properties:
-	- *Bilinearity*: For all $S, T_1, T_2 in cal(L)(V)$, $alpha in Field$,
+	- *Bilinearity*: For all $S, T_1, T_2 in linmaps(V)$, $alpha in Field$,
 		- $S(T_1 + T_2) = S T_1 + S T_2$
 		- $(S_1 + S_2) T = S_1 T + S_2 T$
 		- $(alpha S) T = alpha(S T) = S(alpha T)$
-	- *Associativity*: $(R S) T = R(S T)$ for all $R, S, T in cal(L)(V)$
-	- *Identity* (_unital_): $I T = T I = T$ for all $T in cal(L)(V)$, where $I$ is the identity map $x mapsto x$.
+	- *Associativity*: $(R S) T = R(S T)$ for all $R, S, T in linmaps(V)$
+	- *Identity* (_unital_): $I T = T I = T$ for all $T in linmaps(V)$, where $I$ is the identity map $x mapsto x$.
 
 	It is an _F-algebra_ because it is a vector space over a field equipped with bilinear multiplication.
 ]
@@ -949,6 +498,10 @@ For the following definitions, let $B := { v_1, dots, v_n }$ be a basis of $V$, 
 	- If $dim V < dim W$, then $T$ is not surjective.
 ]
 
+== Invertible linear maps
+
+// TODO, see Axler 3D
+
 == Isomorphisms
 
 #definition(title: [Bijective])[
@@ -994,7 +547,485 @@ For the following definitions, let $B := { v_1, dots, v_n }$ be a basis of $V$, 
 	$cal(P)_n (Field) tilde.equiv Field^(n+1)$.
 ]
 
-== Uncategorized linear maps/systems/matrices
+= Linear systems and matrix arithmetic
+
+Having developed linear maps abstractly, we now fix bases and see how they correspond exactly to matrices, then specialize to $Field^n$, where the central object of study is a system $A X = Y$.
+
+== Matrices
+
+#see[#link("https://linear.axler.net/LADR4e.pdf#page=85")[Axler [3C]]]
+
+#definition[
+	An $m times n$ matrix is a rectangular array of numbers with $m$ rows and $n$ columns.
+	$ A = mat(
+		a_11, a_12, dots.h, a_(1n);
+		a_21, a_22, dots.h, a_(2n);
+		dots.v, dots.v, dots.down, dots.v;
+		a_(m 1), a_(m 2), dots.h, a_(m n);
+	) $
+	$a_(i j)$ is in the $i$th row and $j$th column of $A$.
+]
+
+#definition(title: [Matrix sum and scalar product])[
+	Given $m times n$-matrices $A$ and $B$, their sum $A + B$ is
+	$ A + B := mat(
+		a_11 + b_11, a_12 + b_12, dots.h, a_(1n) + b_(1n);
+		a_21 + b_21, a_22 + b_22, dots.h, a_(2n) + b_(2n);
+		dots.v, dots.v, dots.down, dots.v;
+		a_(m 1) + b_(m 1), a_(m 2) + b_(m 2), dots.h, a_(m n) + b_(m n);
+	). $
+	Addition is only defined if $A$ and $B$ have the same number of rows and columns.
+
+	If $c in Field$, the scalar product $c A$ is
+	$ c A := mat(
+		c a_11, c a_12, dots.h, c a_(1n);
+		c a_21, c a_22, dots.h, c a_(2n);
+		dots.v, dots.v, dots.down, dots.v;
+		c a_(m 1), c a_(m 2), dots.h, c a_(m n);
+	). $
+]
+
+#definition(title: [Column, row vector])[
+	A column vector is an $m times 1$-matrix. A row vector is a $1 times n$-matrix.
+]
+
+#definition(title: [Transpose of a matrix])[
+	If $A$ is an $m times n$ matrix, then its transpose $A^transpose$ is the $n times m$ matrix obtained by interchanging the rows and columns of $A$:
+	$ [A^transpose_(i j)] = [A_(j i)] $
+] <def:matrix-transpose>
+
+#remark[
+	The transpose of a column vector is a row vector and vice versa.
+]
+
+#definition(title: [$Field^(m times n)$])[
+	If $m$ and $n$ are positive integers, then $Field^(m times n)$ is the set of all $m times n$ matrices with entires in $Field$.
+
+	$Field^(m times n)$ is a vector space of dimension $m n$.
+
+	$Field^(m times n)$ is also denoted $M_(m times n)(Field)$, $op("Mat")(m, n; F)$, or similar notations.
+]
+
+== Coordinates
+
+#see[#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/trimm/unit-4/4.5%20Matrix%20of%20a%20Linear%20Map.pdf")[Trimm [4.5]], #link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/karthik/4_5.pdf")[Karthik [4.5]]]
+
+#definition(title: [Ordered basis])[
+	An ordered basis of a $n$-dimensional vector space $V$ is an $n$-tuple which is an ordering of a basis of $V$.
+]
+
+For the following definitions, let $B := ( v_1, dots, v_n )$ be an ordered basis of $V$, where $V$ is an $n$-dimensional vector space over $Field$.
+
+#definition(title: [Linear combination map (basis isomorphism)])[
+	The *linear combination map* or *basis isomorphism* is the isomorphism $L_B : Field^n to V$ defined by
+	$ L_B (arrow(x)) = x_1 v_1 + dots.c + x_n v_n $
+]
+
+#definition(title: [Coordinate isomorphism])[
+	The *coordinate isomorphism* is the isomorphism $L_B^(-1) : V to Field^n$.
+
+	This means that for any vector space, its vectors can be expressed as vectors in $Field^n$.
+]
+
+#definition(title: [Coordinate vector])[
+	Let $v$ be a vector in $V$. Then the coordinate vector $[v]_B in Field^n$ of $v$ is defined as
+	$ [v]_B := L_B^(-1)(v) $
+
+	Equivalently, it is the vector such that
+	$ L_B ([v]_B) = v $
+]
+
+== Matrix of a linear map
+
+#see[#link("https://linear.axler.net/LADR4e.pdf#page=83")[Axler [3C]], #link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/trimm/unit-4/4.5%20Matrix%20of%20a%20Linear%20Map.pdf")[Trimm [4.5]], #link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/karthik/4_5.pdf")[Karthik [4.5]]]
+
+#definition(title: [Matrix of a linear map])[
+	Let $B_V = (v_1, dots, v_n)$ be a basis of $V$ and $B_W = (w_1, dots, w_m)$ be a basis of $W$. Let $T : V to W$ be a linear map.
+
+	Then the matrix of $T$ with respect to $B_V$ and $B_W$ is denoted as
+	$ [T]_(B_W B_V) $
+
+	It is the $m times n$ matrix defined such that its $j$th column is the coordinate vector of $T v_j$ with respect to $B_W$:
+	$ ([T]_(B_W B_V))_(* j) = [T v_j]_(B_W) $
+
+	Equivalently, it is the $m times n$ matrix that satisfies
+	$ T v_j = sum_(i=1)^m ([T]_(B_W B_V))_(i j) w_i $
+]
+
+#lemma[
+	Applying a linear map $T$ to a vector $v$ is equivalent to multiplying the coordinate vector of $v$ by the matrix of $T$:
+	$ [T v] = [T][v] $
+]
+
+#definition(title: [Standard matrix])[
+	The matrix of a linear map $T : Field^n to Field^m$ with respect to the standard bases of $Field^n$ and $Field^m$.
+] <def:standard-matrix>
+
+#theorem[
+	Suppose $S, T in linmaps(V, W)$. Then $[S + T] = [S] + [T]$.
+
+	Suppose $lambda in Field$ and $T in linmaps(V, W)$. Then, $[lambda T] = lambda [T]$.
+]
+
+#remark[
+	Every $m times n$ matrix $A$ is the standard matrix of the linear map $T_A : Field^n to Field^m$, $T_A (X) := A X$ (matrix-vector multiplication is defined precisely in @def:matrix-vector-mult below). This is the correspondence that lets us study the abstract map $T_A$ purely as concrete array arithmetic on $A$, and it's the reason $ker T_A$ (equivalently, the null space $op("Nul") A$) is exactly the solution set of the homogeneous system $A X = 0$.
+]
+
+== Linear systems
+
+#see[#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/math257/CompleteLectureNotes--Filled.pdf#Navigation7")[MATH 257 [Module 1]], Trimm [#link("https://github.com/ethanc8/ekactl-references/raw/trunk/linalg/trimm/unit-1/1.1%20Linear%20Equations.pdf")[1.1], #link("https://github.com/ethanc8/ekactl-references/raw/trunk/linalg/trimm/unit-1/1.2%20Elimination.pdf")[1.2], #link("https://github.com/ethanc8/ekactl-references/raw/trunk/linalg/trimm/unit-1/1.3%20Elementary%20Row%20Operations.pdf")[1.3]]]
+
+#definition(title: [Linear equation])[
+	Let $V$ and $W$ be vector spaces over $Field$, let $T : V to W$ be a linear map, and let $y in W$. A #defname[linear equation] in the unknown $v in V$ is an equation of the form
+	$ T v = y. $
+
+	When $V = Field^n$ and $W = Field$ (so $T$ is a linear functional on $Field^n$), writing the standard matrix of $T$ (@def:standard-matrix) as the row $[a_1 quad dots.c quad a_n]$ and $v = (x_1, dots, x_n)$, this recovers the familiar scalar form
+	$ sum_k a_k x_k = y. $
+
+	A #defname[solution] to $T v = y$ is an element $s in V$ such that $T s = y$.
+]
+
+#definition(title: [Linear system])[
+	A #defname[linear system] is a finite collection of linear equations
+	$ T_1 v = y_1, quad dots, quad T_m v = y_m $
+	sharing the same unknown $v in V$, where each $T_j : V to W_j$ is a linear map and each $y_j in W_j$.
+
+	A #defname[solution] to the system is an $s in V$ that solves every equation simultaneously, i.e. $T_j s = y_j$ for all $j$.
+]
+
+#theorem(title: [Combining linear maps into one])[
+	Let $T_k : V to W_k$ be linear maps for $k = 1, dots, m$. Then
+	$ T : V to W_1 times dots.c times W_m, quad T v := (T_1 v, dots, T_m v) $
+	is linear, and for any $Y = (y_1, dots, y_m) in W_1 times dots.c times W_m$,
+	$ T v = Y quad "iff" quad T_k v = y_k "for every" k. $
+] <thm:combine-linear-maps>
+
+#corollary(title: [A linear system is a single linear equation])[
+	A linear system $T_1 v = y_1, dots, T_m v = y_m$ has the same solution set as the single linear equation
+	$ T v = Y $
+	where $T : V to W_1 times dots.c times W_m$ is defined by $T v := (T_1 v, dots, T_m v)$ and $Y := (y_1, dots, y_m) in W_1 times dots.c times W_m$.
+]
+
+#remark[
+	When $V = Field^n$ and all $W_k = Field$, this is exactly how a linear system becomes the matrix equation $A X = Y$ --- the standard matrix of $T$ is the $m times n$ matrix $A$ whose $j$th row is the standard matrix of $T_j$ --- i.e. gluing the equations' coefficient rows together. Concretely, if $m$ is the number of equations and $n$ the number of variables, the $j$th equation
+	$ sum_(k=1)^n A_(j k) X_k = Y_j $
+	glues into
+	$ A = mat(A_11, dots.c, A_(1 n); dots.v, dots.down, dots.v; A_(m 1), dots.c, A_(m n))
+		quad
+		X = vec(X_1, dots.v, X_n)
+		quad
+		Y = vec(Y_1, dots.v, Y_m), $
+	giving the compact form $A X = Y$. (Matrix-vector multiplication, which makes precise sense of $A X$, is defined in @def:matrix-vector-mult below.)
+]
+
+#remark[
+	This is the "row" side of the same picture whose "column" side is @def:matrix-vector-mult: gluing $m$ scalar equations $T_j v = y_j$ *row-by-row* into $A$ builds the map $T = (T_1, dots, T_m) : V to Field^m$ above, while --- as the next section shows --- reading $A$'s *columns* as vectors and taking $A X$ to mean the linear combination $X_1 a_1 + dots.c + X_n a_n$ recovers the same equation $A X = Y$ from the span perspective. One matrix, two equivalent readings.
+]
+
+#definition(title: [Coefficient and augmented matrix])[
+	Given a linear system with combined equation $T X = Y$ (equivalently $A X = Y$) and $V = Field^n$, its #defname[coefficient] matrix is the standard matrix $A$ of $T$, and its #defname[augmented] matrix is $[A | Y]$.
+]
+
+#definition(title: [Consistent linear system])[
+	A system that has at least one solution.
+]
+
+#definition(title: [Equivalent linear systems])[
+	Two systems are equivalent iff they have the same set of solutions.
+]
+
+== Matrix-vector multiplication
+
+#see[#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/math257/CompleteLectureNotes--Filled.pdf#Navigation29")[MATH 257 [Module 5, Module 6]], #link("file:///home/ethan/Downloads/f26-math257--Lecture3.pdf")[Chuang [Lecture 3]]]
+
+#definition(title: [Matrix-vector multiplication])[
+	Let $X in Field^n$ and $A = display(mat(a_1, dots.c, a_n))$ be an $m times n$-matrix. We define the product $A X$ by
+	$ A X := X_1 a_1 + X_2 a_2 + dots.c + X_n a_n. $
+
+	- $A X$ is a linear combination of the columns of $A$ using the entries in $X$ as coefficients.
+	- $A X$ is only defined if the number of entries of $X$ is equal to the number of columns of $A$.
+] <def:matrix-vector-mult>
+
+#remark[
+	Solving linear systems is the same as finding linear combinations: solving $A X = Y$ means finding coefficients expressing $Y$ as a linear combination of $A$'s columns, i.e. finding $Y in span{a_1, dots, a_n}$ (span: see [Vector spaces]).
+]
+
+#theorem[
+	Let $A = display(mat(vn(a)_1, dots.c, vn(a)_n))$ be an $m times n$ matrix and $vn(b) in Field^m$. For any $(x_1, dots, x_n) in Field^n$, the following are equivalent:
+	- $(x_1, dots, x_n)$ is a solution of the vector equation $x_1 vn(a)_1 + dots.c + x_n vn(a)_n = vn(b)$
+	- $vec(x_1, dots.v, x_n)$ is a solution of the matrix equation $A X = vn(b)$
+	- $(x_1, dots, x_n)$ is a solution of the linear system with augmented matrix $[A | vn(b)]$
+]
+
+#corollary[
+	The equation $A X = vn(b)$ has a solution iff $vn(b) in span{vn(a)_1, dots, vn(a)_n}$.
+]
+
+== Row operations
+
+#see[#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/math257/CompleteLectureNotes--Filled.pdf#Navigation13")[MATH 257 [Lecture 2]], Trimm [#link("https://github.com/ethanc8/ekactl-references/raw/trunk/linalg/trimm/unit-1/1.3%20Elementary%20Row%20Operations.pdf")[1.3]]]
+
+#definition(title: [Elementary row operations])[
+	The elementary row operations are:
+
+	- *Scaling:* $R_i mapsto c R_i$ where $c$ is a nonzero scalar.
+	- *Replacement:* $R_i mapsto R_i + c R_j$ where $c$ is a scalar.
+	- *Interchange:* Swap $R_i$ and $R_j$.
+]
+
+#theorem(title: [Elementary row operations are invertible])[
+	For any elementary row operation $e$, there exists an elementary row operation $e^(-1)$ such that $e^(-1)(e(A)) = A$ for any matrix $A$.
+]
+
+#definition(title: [Row equivalence])[
+	Two matrices are row-equivalent iff each can be derived from the other using a finite number of elementary row operations.
+]
+
+#remark[
+	Each elementary row operation replaces an equation of the system by a linear combination of itself with (or a scalar multiple of, or a swap with) another equation — this is why row-equivalent augmented matrices give equivalent systems.
+]
+
+#theorem[
+	If the augmented matrices of two linear systems are row equivalent, then the two systems are equivalent.
+]
+
+== Echelon forms
+
+#see[#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/math257/CompleteLectureNotes--Filled.pdf#Navigation18")[MATH 257 [Lecture 3, 4]], Trimm [#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/trimm/unit-1/1.4%20Row%20Echelon%20Matrices.pdf")[1.4]]]
+
+#definition(title: [Row echelon form (REF)])[
+	A matrix is in REF iff it satisfies:
+	1. All nonzero rows are above all rows of all zeros.
+	2. Each leading entry of a row is in a column to the right of the leading entry of the row above it.
+	3. All entries in a column below a leading entry are zeros.
+]
+
+#definition(title: [Reduced row echelon form (RREF)])[
+	A matrix is in RREF iff it is in REF and additionally satisfies:
+	4. The leading entry in each nonzero row is 1.
+	5. Each leading 1 is the only nonzero entry in its column
+]
+
+#definition[
+	$RREF(A)$ is the unique matrix which is in RREF and is row-equivalent to $A$.
+]
+
+#definition(title: [Pivot position])[
+	A location $A_(i j)$ where $RREF(A)_(i j)$ is a leading 1.
+]
+
+#definition(title: [Pivot column])[
+	A column which contains a pivot position.
+]
+
+#definition(title: [Pivot])[
+	A nonzero number at a pivot position.
+]
+
+#definition(title: [Leading variable, determined variable, basic variable, pivot variable])[
+	A variable in a pivot column.
+]
+
+#definition(title: [Free variable])[
+	A variable not in a pivot column.
+]
+
+#procedure(title: [Gauss-Jordan elimination])[
+	#procedure(title: [Gaussian elimination])[
+		Iterate through the pivot columns of $A$ from left to right.
+
+		For each pivot column, use elementary row operations to ensure that:
+		- the pivot position is nonzero
+		- all entries in the column below the pivot position are zero
+		This produces $op("REF")(A)$.
+	]
+
+	#procedure(title: [Jordan elimination])[
+		Iterate through the pivot columns of $op("REF")(A)$ from right to left. For each pivot column, use elementary row operations to ensure that:
+		- all other entries in the column other than the pivot are zero
+		- the pivot is equal to 1.
+		This produces $RREF(A)$.
+	]
+]
+
+== Homogeneous linear systems
+
+#definition(title: [Homogeneous linear system])[
+	A system where $y_0 = y_1 = dots.c = y_m = 0$. It can be written as $A X = 0$.
+]
+
+#theorem(title: [Trivial solution])[
+	For any homogeneous system, $x_0 = x_1 = dots.c = x_n = 0$ is a solution to the system. Therefore, all homogeneous systems are consistent.
+]
+
+#theorem[
+	- If there are less equations than there are variables ($m < n$), then $A X = 0$ has an infinite number of solutions.
+	- If there are an equal number of equations and variables, then $A$ is row-equivalent to the $n times n$ identity iff $A X = 0$ has only the trivial solution.
+	- If there are more equations than there are variables ($m > n$), then
+		$ RREF(A) = mat(
+			1, 0, dots.c, 0;
+			0, 1, dots.c, 0;
+			dots.v, dots.v, dots.down, dots.v;
+			0, 0, dots.c, 1;
+			0, 0, 0, 0;
+			dots.v, dots.v, dots.v, dots.v;
+			0, 0, 0, 0;
+		) $
+		iff $A X = 0$ has only the trivial solution.
+]
+
+#procedure(title: [Solution])[
+	To solve a homogeneous system, perform Gauss-Jordan elimination on $A$ so that $R = RREF(A)$. Then solve $R X = 0$. The variables which are not in pivot columns are free variables and may be set to any value, typically denoted $u_1, u_2, dots$.
+]
+
+== Inhomogeneous linear systems
+
+#procedure(title: [Solution])[
+	To solve an inhomogeneous system, perform Gauss-Jordan elimination on $A' = [A | Y]$ so that $R' = [R | Z] = RREF(A')$. Then solve $R X = Z$. Note that not all inhomogeneous systems are solvable (consistent).
+]
+
+#theorem[
+	If $A$ is $m times n$ with more equations than variables ($m > n$), then there exists $Y in Field^m$ such that $A X = Y$ is inconsistent.
+]
+
+== Matrix multiplication
+
+#see[#link("https://linear.axler.net/LADR4e.pdf#page=83")[Axler [3C]], #link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/math257/CompleteLectureNotes--Filled.pdf#Navigation43")[MATH 257 [Module 7, 8]]]
+
+#definition(title: [Matrix multiplication])[
+	The matrix multiplication of the $m times n$ matrix $A$ and the $n times p$ matrix $B$ is made by dot-producting the rows of the first by the columns of the second:
+	$ [A B_(i j)] = [A_(i *) dot B_(* j)] = [sum_(k=1)^n A_(i k) B_(k j)] $
+] <def:matrix-mult>
+
+#theorem[
+	Let $A$ be an $m times n$ matrix and $B$ be an $n times p$ matrix. Then for every $x in Field^p$
+	$ A(B x) = (A B) x. $
+]
+
+#lemma[
+	Composing two linear maps $T_1$ and $T_2$ is equivalent to multiplying the matrices of the two linear maps:
+	$ T_1 compose T_2 = [T_1][T_2] $
+]
+
+*Note.* Other ways to compute $A B$.
+
+#procedure(title: [Row-Column Rule])[
+	Let $A$ be $m times n$ and $B$ be $n times p$ such that
+	$ A = mat(R_1; dots.v; R_m), quad "and" quad B = mat(C_1, dots.c, C_p). $
+	Then
+	$ A B = mat(
+		R_1 C_1, dots.h, R_1 C_p;
+		R_2 C_1, dots.h, R_2 C_p;
+		dots.v, dots.down, dots.v;
+		R_m C_1, dots.h, R_m C_p;
+	) $
+	and $(A B)_(i j) = R_i C_j = a_(i 1) b_(1 j) + a_(i 2) b_(2 j) + dots.c + a_(i n) b_(n j)$.
+]
+
+#procedure(title: [Outer Product Rule])[
+	Let $A$ be $m times n$ and $B$ be $n times p$ such that
+	$ A = mat(C_1, dots.c, C_n), quad "and" quad B = mat(R_1; dots.v; R_n). $
+	Then
+	$ A B = C_1 R_1 + dots.c + C_n R_n $
+]
+
+#definition[
+	The identity matrix $I_n$ of size $n$ is defined as
+	$ I_n = mat(
+		1, 0, dots.h, 0;
+		0, 1, dots.h, 0;
+		dots.v, dots.v, dots.down, dots.v;
+		0, 0, dots.h, 1;
+	). $
+]
+
+#theorem[
+	Let $A$ be an $m times n$ matrix and let $B$ and $C$ be matrices for which the indicated sums and products are defined.
+	- *Associative:* $A(B C) = (A B) C$
+	- *Distributive over matrices:* $A(B + C) = A B + A C$, $(B + C) A = B A + C A$
+	- *Distributive over scalars:* $r(A B) = (r A) B = A(r B)$ for every scalar $r$,
+	- *Linear:* $A(r B + s C) = r A B + s A C$ for every scalars $r, s$
+	- *Identity:* $I_m A = A = A I_n$
+] <thm:matrix-mult-properties>
+
+#theorem[
+	The transpose of a product is the product of transposes in opposite order:
+	$ (A B)^transpose = B^transpose A^transpose $
+]
+
+#definition[
+	Let $A$ be a square matrix. We write $A^k$ for $A dots.c A$, $k$-times; that is $A^k$ is obtained by multiplying $A$ $k$-times with itself.
+]
+
+= Matrices as linear maps
+
+== Elementary matrices
+
+#see[#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/trimm/unit-4/4.7%20Invertible%20Matrices.pdf")[Trimm [4.7]], #link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/karthik/4_7.pdf")[Karthik [4.7]], #link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/math257/CompleteLectureNotes--Filled.pdf#Navigation55")[MATH 257 [Module 9]]]
+
+
+#definition[
+	An elementary matrix is one that is obtained by performing a single elementary row operation on an identity matrix.
+
+	A permutation matrix is one that is obtained by performing row exchanges on an identity matrix.
+] <def:elementary-matrix>
+
+#theorem[
+	If $e : Field^(n,n) to Field^(n,n)$ is an elementary row operation and $A in Field^(n,n)$, then
+	$ e(A) = e(I) A. $
+]
+
+== Invertible matrices
+
+#see[#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/trimm/unit-4/4.7%20Invertible%20Matrices.pdf")[Trimm [4.7]], #link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/karthik/4_7.pdf")[Karthik [4.7]], #link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/math257/CompleteLectureNotes--Filled.pdf#Navigation60")[MATH 257 [Module 10, 11]]]
+
+#remark[
+	The inverse of a real number $a$ is denoted by $a^(-1)$. For example, $7^(-1) = 1\/7$ and $7 dot 7^(-1) = 7^(-1) dot 7 = 1$. Note that not all real numbers have an inverse. Namely, $0^(-1)$ is not defined as there is no real number $b$ such that $0 dot b = 1$.
+]
+
+#definition(title: [Invertible matrix])[
+	An $n times n$ matrix $A$ is #defname[invertible] iff there is an $n times n$ matrix $B$ satisfying
+	$ B A = A B = I_n $
+	where $I_n$ is the $n times n$ identity matrix. There is a unique such $B$, called the inverse of $A$, $A^(-1) := B$.
+
+	A matrix that is not invertible is #defname[singular].
+] <def:invertible-matrix>
+
+#lemma[
+	The matrix of an isomorphism of finite-dimensional vector spaces is invertible.
+]
+
+#theorem[
+	Suppose $A$ and $B$ are invertible. Then:
+	+ $A^(-1)$ is invertible and $(A^(-1))^(-1) = A$.
+	+ $A B$ is invertible and $(A B)^(-1) = B^(-1) A^(-1)$. More generally, any finite product $A_1 dots.c A_k$ of invertible $n times n$ matrices is invertible, with $(A_1 dots.c A_k)^(-1) = A_k^(-1) dots.c A_1^(-1)$.
+	+ $A^transpose$ is invertible and $(A^transpose)^(-1) = (A^(-1))^transpose$.
+]
+
+#theorem[
+	Let $A$ be an $n times n$ matrix. Then $A X = Y$ has a unique solution for every $Y in Field^n$ iff $A$ is invertible, in which case the unique solution is $X = A^(-1) Y$.
+] <thm:unique-solution-iff-invertible>
+
+#theorem[
+	Let $A = mat(a, b; c, d)$. If $a d - b c != 0$, then $A$ is invertible and
+	$ A^(-1) = 1/(a d - b c) mat(d, -b; -c, a). $
+	If $a d - b c = 0$, then $A$ is not invertible.
+]
+
+#theorem(title: [Invertible Matrix Theorem])[
+	If $A$ is an $n times n$ matrix, the following conditions are equivalent:
+	- $A$ is invertible.
+	- $A$ is row-equivalent to the $n times n$ identity matrix.
+	- $A$ is a product of elementary matrices.
+] <thm:invertible-matrix-theorem>
+
+#theorem[
+	Suppose $A$ is invertible. Then every sequence of elementary row operations that reduces $A$ to $I_n$ also transforms $I_n$ to $A^(-1)$. Equivalently, $[A | I]$ is row-equivalent to $[I | A^(-1)]$.
+]
+
+#procedure(title: [Computation of $A^(-1)$])[
+	Row-reduce the augmented matrix $[A | I]$. If $A$ is row-equivalent to $I$, then $RREF([A | I]) = [I | A^(-1)]$. Otherwise, $A$ doesn't have an inverse.
+]
 
 == Fundamental matrix spaces
 
@@ -1057,59 +1088,6 @@ Given a matrix $A in Field^(m,n)$, define $T_A := x mapsto A x$. Then $T_A : Fie
 	Alternately, calculate $RREF([A | I])$, then the basis of the left null space is given by the rows of $RREF([A | I])$ for which the left side is all zero.
 ]
 
-== Invertible matrices
-
-#definition(title: [Invertible matrix])[
-	Let $A$ be an $n times n$ matrix. If there exists an $n times n$ matrix $B$ s.t. $A B = B A = I$, then $A$ is *invertible* and *non-singular* and $B$ is the *inverse* of $A$:
-	$ A^(-1) := B $
-	A matrix which is not invertible is *non-invertible* and *singular*.
-]
-
-#lemma[
-	The matrix of an isomorphism of finite-dimensional vector spaces is invertible.
-]
-
-#lemma[
-	If a matrix is invertible, it has a unique inverse.
-]
-
-#lemma[
-	Any finite product $A_1 dots.c A_k$ of invertible $n times n$ matrices is invertible with
-	$ (A_1 dots.c A_k)^(-1) = A_k^(-1) dots.c A_1^(-1) $
-]
-
-#definition(title: [Elementary matrix])[
-	An $n times n$ matrix is an *elementary matrix* if it can be obtained from the $n times n$ identity matrix by a single elementary row operation.
-]
-
-#theorem[
-	If $e : Field^(n,n) to Field^(n,n)$ is an elementary row operation and $A in Field^(n,n)$, then
-	$ e(A) = e(I) A $
-]
-
-#theorem(title: [Invertible Matrix Theorem])[
-	If $A$ is an $n times n$ matrix, then the following conditions are equivalent:
-	- $A$ is invertible.
-	- $A$ is row-equivalent to the $n times n$ identity matrix.
-	- $A$ is a product of elementary matrices.
-]
-
-#theorem[
-	If $A$ is an invertible $n times n$ matrix and $E_k dots.c E_1 A = I$ where each $E_j$ is an elementary matrix, then $E_k dots.c E_1 I = A^(-1)$.
-]
-
-#lemma[
-	If $A$ is row-equivalent to $I$, then $[A | I]$ is row-equivalent to $[I | A^(-1)]$. Otherwise, $A$ doesn't have an inverse.
-]
-
-#procedure(title: [Computation of $A^(-1)$])[
-	Row-reduce the augmented matrix $[A | I]$. If $A$ is row-equivalent to $I$, then $RREF([A | I]) = [I | A^(-1)]$. Otherwise, $A$ doesn't have an inverse.
-]
-
-#lemma[
-	The linear system $A x = y$ of $n$ equations with $n$ unknowns has a unique solution iff $A$ is invertible.
-]
-
 == Change of basis
 
 #definition(title: [Change of basis matrix])[
@@ -1133,12 +1111,12 @@ Given a matrix $A in Field^(m,n)$, define $T_A := x mapsto A x$. Then $T_A : Fie
 ]
 
 #lemma(title: [Changing the basis of a linear map by changing its matrix])[
-	If $B$ and $B'$ are bases of $V$, $T in cal(L)(V)$, and $C_(B to B')$ is the transition matrix from $B$ to $B'$, then
+	If $B$ and $B'$ are bases of $V$, $T in linmaps(V)$, and $C_(B to B')$ is the transition matrix from $B$ to $B'$, then
 	$ [T]_(B') = C_(B to B') [T]_B C_(B' to B) $
 ]
 
 #procedure(title: [Changing the basis of a linear map by applying the linear map to basis vectors])[
-	If $B$ and $B' = (w_1, dots, w_n)$ are bases of $V$, $T in cal(L)(V)$, and $C_(B to B')$ is the transition matrix from $B$ to $B'$, then
+	If $B$ and $B' = (w_1, dots, w_n)$ are bases of $V$, $T in linmaps(V)$, and $C_(B to B')$ is the transition matrix from $B$ to $B'$, then
 	$ T_(B') = mat(C_(B to B') [T]_B [w_1]_B, dots.c, C_(B to B') [T]_B [w_n]_B) $
 	(Apply $T$ to each of the basis vectors of $B'$ and then convert $T w_i$ to the basis $B'$)
 ]
@@ -1169,7 +1147,7 @@ Given a matrix $A in Field^(m,n)$, define $T_A := x mapsto A x$. Then $T_A : Fie
 ]
 
 #definition(title: [Dual space])[
-	Let $V$ be a vector space over $Field$. Then the dual space of $V$ is the vector space of linear functionals on $V$, $V^* := cal(L)(V, Field)$.
+	Let $V$ be a vector space over $Field$. Then the dual space of $V$ is the vector space of linear functionals on $V$, $V^* := linmaps(V, Field)$.
 ]
 
 #definition(title: [Kronecker delta])[
@@ -1222,7 +1200,7 @@ Given a matrix $A in Field^(m,n)$, define $T_A := x mapsto A x$. Then $T_A : Fie
 == Transpose
 
 #definition(title: [Transpose of linear map])[
-	Let $V$ and $W$ be vector spaces over $Field$, and let $T in cal(L)(V, W)$. The *transpose of $T$* or *dual map of $T$* is the linear map $T^* = T^T in cal(L)(W^*, V^*)$ defined for each $f in W^*$ by
+	Let $V$ and $W$ be vector spaces over $Field$, and let $T in linmaps(V, W)$. The *transpose of $T$* or *dual map of $T$* is the linear map $T^* = T^T in linmaps(W^*, V^*)$ defined for each $f in W^*$ by
 	$ T^*(f) = T^T (f) := f compose T $
 
 	That is, for each linear functional $f in W^*$, $T^T (f)$ is the linear functional in $V^*$ defined by (for each $v in V$)
@@ -1241,12 +1219,12 @@ Given a matrix $A in Field^(m,n)$, define $T_A := x mapsto A x$. Then $T_A : Fie
 ]
 
 #lemma[
-	Let $V$ and $W$ be finite-dimensional vector spaces, $T in cal(L)(V, W)$ and $g in W^*$. Choose ordered bases $B_V = (v_1, dots, v_n)$ and $B_W = (w_1, dots, w_m)$ for $V$ and $W$, respectively, and let $B_V^* = (f_1, dots, f_n)$ and $B_W^* = (g_1, dots, g_m)$ be the corresponding dual bases of $V^*$ and $W^*$. Let $S = (1)$ be the standard ordered basis of $Field$. Then
+	Let $V$ and $W$ be finite-dimensional vector spaces, $T in linmaps(V, W)$ and $g in W^*$. Choose ordered bases $B_V = (v_1, dots, v_n)$ and $B_W = (w_1, dots, w_m)$ for $V$ and $W$, respectively, and let $B_V^* = (f_1, dots, f_n)$ and $B_W^* = (g_1, dots, g_m)$ be the corresponding dual bases of $V^*$ and $W^*$. Let $S = (1)$ be the standard ordered basis of $Field$. Then
 	$ [T^T g]_(B_V^*, S) = [g]_(B_W^*, S) [T]_(V, W) $
 ]
 
 #lemma[
-	Let $V$ and $W$ be finite-dimensional vector spaces, $T in cal(L)(V, W)$, $T^T in cal(L)(W^*, V^*)$. Then:
+	Let $V$ and $W$ be finite-dimensional vector spaces, $T in linmaps(V, W)$, $T^T in linmaps(W^*, V^*)$. Then:
 	- $ op("rank") T^T = op("rank") T <= min {dim V, dim W} $
 	- $T$ is injective iff $T^T$ is surjective
 	- $T$ is surjective iff $T^T$ is injective
@@ -1264,7 +1242,7 @@ Given a matrix $A in Field^(m,n)$, define $T_A := x mapsto A x$. Then $T_A : Fie
 ]
 
 #lemma[
-	If $V$ is a vector space over $Field$ and $f, g in cal(L)(V, Field)$, then $B(u, v) := f(u) g(v)$ is a bilinear form on $V$.
+	If $V$ is a vector space over $Field$ and $f, g in linmaps(V, Field)$, then $B(u, v) := f(u) g(v)$ is a bilinear form on $V$.
 ]
 
 #definition[
@@ -1451,11 +1429,11 @@ Given a matrix $A in Field^(m,n)$, define $T_A := x mapsto A x$. Then $T_A : Fie
 ]
 
 #definition(title: [Determinant of a linear operator])[
-	For $T in cal(L)(V)$, the *determinant* of $T$ is the unique scalar such that $M_T := M compose T = (det T) M$ for all $M in V_("alt")^((dim V))$.
+	For $T in linmaps(V)$, the *determinant* of $T$ is the unique scalar such that $M_T := M compose T = (det T) M$ for all $M in V_("alt")^((dim V))$.
 ]
 
 #definition(title: [Determinant of a square matrix])[
-	Let $n$ be a positive integer, $A$ be an $n times n$ matrix with entries in $Field$, and $T in cal(L)(Field^n)$ be the operator whose matrix with respect to the standard basis of $Field^n$ is $A$. Then the determinant of $A$ is $det A := det T$.
+	Let $n$ be a positive integer, $A$ be an $n times n$ matrix with entries in $Field$, and $T in linmaps(Field^n)$ be the operator whose matrix with respect to the standard basis of $Field^n$ is $A$. Then the determinant of $A$ is $det A := det T$.
 ]
 
 #lemma[
@@ -1493,12 +1471,12 @@ Given a matrix $A in Field^(m,n)$, define $T_A := x mapsto A x$. Then $T_A : Fie
 == Properties of the determinant
 
 #theorem(title: [Determinant is multiplicative])[
-	- If $S, T in cal(L)(V)$, then $det(S T) = (det S)(det T)$.
+	- If $S, T in linmaps(V)$, then $det(S T) = (det S)(det T)$.
 	- If $A$ and $B$ are $n times n$ matrices, then $det(A B) = (det A)(det B)$.
 ]
 
 #theorem[
-	A linear operator $T in cal(L)(V)$ is an isomorphism iff $det T != 0$.
+	A linear operator $T in linmaps(V)$ is an isomorphism iff $det T != 0$.
 
 	If $T$ is an isomorphism, then $det(T^(-1)) = (det T)^(-1)$.
 ]
@@ -1511,16 +1489,16 @@ Given a matrix $A in Field^(m,n)$, define $T_A := x mapsto A x$. Then $T_A : Fie
 ]
 
 #theorem(title: [Determinant is similarity invariant])[
-	Let $T in cal(L)(V)$ and $S : W to V$ be an invertible linear map. Then
+	Let $T in linmaps(V)$ and $S : W to V$ be an invertible linear map. Then
 	$ det(S^(-1) T S) = det T $
 ]
 
 #theorem[
-	For all $T in cal(L)(V)$, $det T = det [T]$, where $[T]$ is the matrix of $T$ with respect to any basis of $V$.
+	For all $T in linmaps(V)$, $det T = det [T]$, where $[T]$ is the matrix of $T$ with respect to any basis of $V$.
 ]
 
 #theorem[
-	If $A$ is a square matrix, or if $A in cal(L)(V)$, then
+	If $A$ is a square matrix, or if $A in linmaps(V)$, then
 	$ det(A^T) = det(A) $
 ]
 
@@ -1569,11 +1547,11 @@ Given a matrix $A in Field^(m,n)$, define $T_A := x mapsto A x$. Then $T_A : Fie
 == Eigenvalues and eigenvectors
 
 #theorem(title: [Diagonality condition])[
-	Let $V$ be a finite-dimensional vector space, $B = (v_1, dots, v_n)$ be an ordered basis for $V$, and $T in cal(L)(V)$. Then $[T]_B$ is diagonal iff $T(v_i) = lambda_i v_i$ for all $i$, where $lambda_i$ is the $i$th element along the diagonal of $[T]_B$.
+	Let $V$ be a finite-dimensional vector space, $B = (v_1, dots, v_n)$ be an ordered basis for $V$, and $T in linmaps(V)$. Then $[T]_B$ is diagonal iff $T(v_i) = lambda_i v_i$ for all $i$, where $lambda_i$ is the $i$th element along the diagonal of $[T]_B$.
 ]
 
 #definition(title: [Eigenvalue, eigenvector of a linear operator])[
-	Let $V$ be a vector space and $T in cal(L)(V)$. An *eigenvalue* of $T$ is a scalar $lambda$ s.t. there exists a nonzero vector $v in V$ s.t.
+	Let $V$ be a vector space and $T in linmaps(V)$. An *eigenvalue* of $T$ is a scalar $lambda$ s.t. there exists a nonzero vector $v in V$ s.t.
 	$ T(v) = lambda v $
 
 	The vector $v$ is the *eigenvector* of $T$ associated with the eigenvalue $lambda$.
@@ -1594,7 +1572,7 @@ Given a matrix $A in Field^(m,n)$, define $T_A := x mapsto A x$. Then $T_A : Fie
 #lemma[
 	Similar matrices have the same eigenvalues.
 
-	Any matrix representing $T in cal(L)(V)$ has the same eigenvalues as $T$.
+	Any matrix representing $T in linmaps(V)$ has the same eigenvalues as $T$.
 ]
 
 #definition(title: [Eigenspace])[
@@ -1644,15 +1622,15 @@ Given a matrix $A in Field^(m,n)$, define $T_A := x mapsto A x$. Then $T_A : Fie
 == Diagonalizable operators
 
 #definition(title: [Diagonalizable operator])[
-	A linear operator $T in cal(L)(V)$ is said to be diagonalizable if there exists a basis consisting of eigenvectors of $T$. Such a basis is called an *eigenbasis*.
+	A linear operator $T in linmaps(V)$ is said to be diagonalizable if there exists a basis consisting of eigenvectors of $T$. Such a basis is called an *eigenbasis*.
 ]
 
 #lemma[
-	If $T in cal(L)(V)$, then every set of eigenvectors corresponding to distinct eigenvalues of $T$ is linearly independent.
+	If $T in linmaps(V)$, then every set of eigenvectors corresponding to distinct eigenvalues of $T$ is linearly independent.
 ]
 
 #lemma[
-	If $dim V = n$ and $T in cal(L)(V)$ has $n$ distinct eigenvalues, then $T$ is diagonalizable.
+	If $dim V = n$ and $T in linmaps(V)$ has $n$ distinct eigenvalues, then $T$ is diagonalizable.
 ]
 
 #definition(title: [Multiplicity of a root of a polynomial])[
@@ -1672,14 +1650,14 @@ Given a matrix $A in Field^(m,n)$, define $T_A := x mapsto A x$. Then $T_A : Fie
 // ]
 //
 // #lemma[
-//   Suppose $T in cal(L)(V)$ and $lambda_1, dots, lambda_n$ are distinct eigenvalues of $T$. Then
+//   Suppose $T in linmaps(V)$ and $lambda_1, dots, lambda_n$ are distinct eigenvalues of $T$. Then
 //   $ E_(lambda_1) plus.circle dots.c plus.circle E_(lambda_m) $
 //   (the sum of the eigenspaces is a direct sum). Furthermore, if $V$ is finite-dimensional, then
 //   $ dim E_(lambda_1) + dots.c + dim E_(lambda_m) <= dim V $
 // ]
 
 #theorem(title: [Conditions equivalent to diagonalizability])[
-	Let $V$ be a finite-dimensional vector space, $T in cal(L)(V)$, and $lambda_1, dots, lambda_n$ be the distinct eigenvalues of $T$. Then the following are equivalent:
+	Let $V$ be a finite-dimensional vector space, $T in linmaps(V)$, and $lambda_1, dots, lambda_n$ be the distinct eigenvalues of $T$. Then the following are equivalent:
 	- $V$ has a basis consisting of eigenvectors of $T$
 	- $V = E_(lambda_1) plus.circle dots.c plus.circle E_(lambda_m)$
 	- $dim V = dim E_(lambda_1) + dots.c + dim E_(lambda_m)$
@@ -1687,7 +1665,7 @@ Given a matrix $A in Field^(m,n)$, define $T_A := x mapsto A x$. Then $T_A : Fie
 ]
 
 #procedure(title: [Diagonalizing a linear operator])[
-	Let $T in cal(L)(V)$. Choose an ordering $B = (v_1, v_2, dots, v_n)$ of the eigenvectors of $T$, corresponding to the eigenvalues $lambda_1, lambda_2, dots, lambda_n$. Then $[T]_B$, the diagonalization of $T$, the matrix of $T$ with respect to $B$, is
+	Let $T in linmaps(V)$. Choose an ordering $B = (v_1, v_2, dots, v_n)$ of the eigenvectors of $T$, corresponding to the eigenvalues $lambda_1, lambda_2, dots, lambda_n$. Then $[T]_B$, the diagonalization of $T$, the matrix of $T$ with respect to $B$, is
 	$ mat(
 		lambda_1, 0, dots.c, 0;
 		0, lambda_2, dots.c, 0;
