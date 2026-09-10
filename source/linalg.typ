@@ -94,7 +94,7 @@
 #let RREF = math.op("RREF")
 #let span = math.op("span")
 
-#let dirsum = math.limits(sym.plus.circle)
+#let dirsum = math.limits(sym.plus.o)
 
 #let linmaps = $cal(L)$
 
@@ -148,23 +148,6 @@ Let $Field$ be a field. It's possible that some things in here require $Field = 
 	- $z w = (a c - b d) + (b c + a d) i$
 ]
 
-#definition(title: [$Field^n$])[
-	For a field $Field$, $Field^n$ is the set of all ordered $n$-tuples of elements of $Field$:
-	$ Field^n := { (x_1, dots, x_n) : x_1, dots, x_n in Field } $
-]
-
-#definition(title: [Addition in $Field^n$])[
-	If $a, b in Field^n$:
-	$ a + b = (a_1 + b_1, dots, a_n + b_n) $
-
-	Addition follows the properties of addition (A1-A4).
-]
-
-#definition(title: [Product of element of $Field$ and element of $Field^n$])[
-	If $alpha in Field$ and $x in Field^n$, then
-	$ alpha x = (alpha x_1, dots, alpha x_n) $
-]
-
 = Vector spaces
 
 == Vector spaces
@@ -199,39 +182,6 @@ Let $Field$ be a field. It's possible that some things in here require $Field = 
 	All inverses and identities are unique in a vector space.
 ]
 
-#definition(title: [$Field^omega$])[
-	The set of all sequences of elements of $Field$:
-	$ Field^omega := { (x_1, x_2, dots) : x_k in Field "for" k in Naturals } $
-	where addition and scalar multiplication are defined similarly to $Field^n$:
-	$ a + b &:= (a_1 + b_1, dots, a_n + b_n) \
-		alpha x &:= (alpha x_1, dots, alpha x_n) $
-]
-
-#definition(title: [$Field^(m,n)$])[
-	The set of all $m times n$ matrices with entries in $Field$, where addition and scalar multiplication are defined as:
-	$ (A + B)_(i j) &:= A_(i j) + B_(i j) \
-		(alpha A)_(i j) &:= alpha A_(i j) $
-]
-
-#definition(title: [Vector space of functions])[
-	Let $V$ be a vector space, $S$ be a set, and
-	$ V^S = { f : S to V } $
-	(the set of all functions that map members of $S$ to members of $V$). Then $V^S$ is a vector space, if we define for all $p, q in V^S$, $s in Field$,
-
-	$ (f + g)(s) = f(s) + g(s) quad (alpha f)(s) = alpha (f(s)) $
-]
-
-#definition(title: [Polynomial])[
-	A function $p : Field to Field$ is a polynomial of degree $n$ iff there exist $c_0, dots c_n in Field$ such that
-	$ p(x) = c_0 + c_1 x + c_2 x^2 + dots.c c_n x^n = sum_(k=0)^n c_k x^k $
-
-	$cal(P)(Field)$ is the set of all polynomials of any degree with coefficients in $Field$. $cal(P)_n (Field)$ is the set of all polynomials of degree $n$ with coefficients in $Field$.
-
-	$cal(P)(Field)$ and $cal(P)_n (Field)$ are vector spaces if we define for all $p, q in cal(P)_n (Field)$, $s in Field$,
-
-	$ (p + q)(s) = p(s) + q(s) quad (alpha p)(s) = alpha (p(s)) $
-]
-
 == Subspaces
 
 #definition(title: [Subspace])[
@@ -254,7 +204,7 @@ Let $Field$ be a field. It's possible that some things in here require $Field = 
 	Typically, we prove (i) by proving that $0 in W$.
 ]
 
-== Subspaces of $Field^n$
+== Subspaces of $Field^n$ <sec:vecspace:subspace-Fn>
 
 #theorem(title: [Subspaces of $Reals^n$])[
 	$Reals^n$ contains the following subspaces:
@@ -301,10 +251,10 @@ Let $Field$ be a field. It's possible that some things in here require $Field = 
 ]
 
 #theorem[
-	If $U$ and $W$ are subspaces of $V$, then $U + W$ is a direct sum iff $U sect W = {0}$. This does not generalize to higher numbers of subspaces.
+	If $U$ and $W$ are subspaces of $V$, then $U + W$ is a direct sum iff $U inter W = {0}$. This does not generalize to higher numbers of subspaces.
 ]
 
-== Spanning
+== Spanning <sec:vecspace:span>
 
 #definition(title: [Linear combination])[
 	A linear combination of a collection $v_1, dots, v_n$ of vectors in vector space $V$ is a vector of the form
@@ -354,19 +304,11 @@ Let $Field$ be a field. It's possible that some things in here require $Field = 
 	If one vector in $W$ is a linear combination of the other vectors (including if $0 in W$), then $W$ is linearly dependent.
 ]
 
-== Basis
+== Basis <sec:vecspace:basis>
 
 #definition(title: [Basis])[
 	A basis of $V$ is a subset of $V$ which is linearly independent and spans $V$.
 ]
-
-#definition(title: [Standard basis of $Field^n$])[
-	$ { vec(1, 0, dots.v, 0), vec(0, 1, dots.v, 0), vec(0, 0, dots.v, 1) } $
-]
-
-#definition(title: [$P_m(Field)$])[]
-
-#definition(title: [Standard basis of $P_m(Field)$])[]
 
 == Dimension
 
@@ -384,6 +326,64 @@ Let $Field$ be a field. It's possible that some things in here require $Field = 
 
 #theorem[
 	Let $V$ be a finite-dimensional vector space spanned by a set of $m$ vectors. Then any linearly independent set of vectors in $V$ is finite and contains no more than $m$ elements.
+]
+
+
+== Example vector spaces
+
+#definition(title: [$Field^n$])[
+	For a field $Field$, $Field^n$ is the set of all ordered $n$-tuples of elements of $Field$:
+	$ Field^n := { (x_1, dots, x_n) : x_1, dots, x_n in Field } $
+
+	where addition and scalar multiplication are defined as expected:
+	$ a + b &:= (a_1 + b_1, dots, a_n + b_n) \
+		alpha x &:= (alpha x_1, dots, alpha x_n) $
+	
+	This is an $n$-dimensional vector space over $Field$.
+
+	Its standard ordered basis is
+	$ ( vec(1, 0, dots.v, 0), vec(0, 1, dots.v, 0), dots.c, vec(0, 0, dots.v, 1) ). $
+
+	The standard basis vectors are called $hat(i)$, $hat(j)$, $hat(k)$ for $n <= 3$, and called $hat(e)_1, dots, hat(e)_n$ for any $n$.
+]
+
+#definition(title: [$Field^omega$])[
+	The set of all sequences of elements of $Field$:
+	$ Field^omega := { (x_1, x_2, dots) : x_k in Field "for" k in Naturals } $
+	where addition and scalar multiplication are defined similarly to $Field^n$:
+	$ a + b &:= (a_1 + b_1, dots, a_n + b_n) \
+		alpha x &:= (alpha x_1, dots, alpha x_n) $
+
+	This is 
+]
+
+#definition(title: [$Field^(m times n)$])[
+	The set of all $m times n$ matrices with entries in $Field$, where addition and scalar multiplication are defined as:
+	$ (A + B)_(i j) &:= A_(i j) + B_(i j) \
+		(alpha A)_(i j) &:= alpha A_(i j) $
+
+	$Field^(m times n)$ is a vector space of dimension $m n$.
+
+	$Field^(m times n)$ is also denoted $M_(m times n)(Field)$, $op("Mat")(m, n; F)$, or similar notations.
+]
+
+#definition(title: [Vector space of functions])[
+	Let $V$ be a vector space, $S$ be a set, and
+	$ V^S = { f : S to V } $
+	(the set of all functions that map members of $S$ to members of $V$). Then $V^S$ is a vector space, if we define for all $p, q in V^S$, $s in Field$,
+
+	$ (f + g)(s) = f(s) + g(s) quad (alpha f)(s) = alpha (f(s)) $
+]
+
+#definition(title: [Polynomial])[
+	A function $p : Field to Field$ is a polynomial of degree $n$ iff there exist $c_0, dots c_n in Field$ such that
+	$ p(x) = c_0 + c_1 x + c_2 x^2 + dots.c c_n x^n = sum_(k=0)^n c_k x^k $
+
+	$cal(P)(Field)$ is the set of all polynomials of any degree with coefficients in $Field$. $cal(P)_n (Field)$ is the set of all polynomials of degree $n$ with coefficients in $Field$.
+
+	$cal(P)(Field)$ and $cal(P)_n (Field)$ are vector spaces if we define for all $p, q in cal(P)_n (Field)$, $s in Field$,
+
+	$ (p + q)(s) = p(s) + q(s) quad (alpha p)(s) = alpha (p(s)) $
 ]
 
 = Linear maps
@@ -598,14 +598,6 @@ Having developed linear maps abstractly, we now fix bases and see how they corre
 	The transpose of a column vector is a row vector and vice versa.
 ]
 
-#definition(title: [$Field^(m times n)$])[
-	If $m$ and $n$ are positive integers, then $Field^(m times n)$ is the set of all $m times n$ matrices with entires in $Field$.
-
-	$Field^(m times n)$ is a vector space of dimension $m n$.
-
-	$Field^(m times n)$ is also denoted $M_(m times n)(Field)$, $op("Mat")(m, n; F)$, or similar notations.
-]
-
 == Coordinates
 
 #see[#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/trimm/unit-4/4.5%20Matrix%20of%20a%20Linear%20Map.pdf")[Trimm [4.5]], #link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/karthik/4_5.pdf")[Karthik [4.5]]]
@@ -673,7 +665,7 @@ For the following definitions, let $B := ( v_1, dots, v_n )$ be an ordered basis
 
 == Linear systems
 
-#see[#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/math257/CompleteLectureNotes--Filled.pdf#Navigation7")[MATH 257 [Module 1]], Trimm [#link("https://github.com/ethanc8/ekactl-references/raw/trunk/linalg/trimm/unit-1/1.1%20Linear%20Equations.pdf")[1.1], #link("https://github.com/ethanc8/ekactl-references/raw/trunk/linalg/trimm/unit-1/1.2%20Elimination.pdf")[1.2], #link("https://github.com/ethanc8/ekactl-references/raw/trunk/linalg/trimm/unit-1/1.3%20Elementary%20Row%20Operations.pdf")[1.3]]]
+#see[#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/math257/CompleteLectureNotes--Filled.pdf#Outline0.1")[MATH 257 [Module 1]], Trimm [#link("https://github.com/ethanc8/ekactl-references/raw/trunk/linalg/trimm/unit-1/1.1%20Linear%20Equations.pdf")[1.1], #link("https://github.com/ethanc8/ekactl-references/raw/trunk/linalg/trimm/unit-1/1.2%20Elimination.pdf")[1.2], #link("https://github.com/ethanc8/ekactl-references/raw/trunk/linalg/trimm/unit-1/1.3%20Elementary%20Row%20Operations.pdf")[1.3]]]
 
 #definition(title: [Linear equation])[
 	Let $V$ and $W$ be vector spaces over $Field$, let $T : V to W$ be a linear map, and let $y in W$. A #defname[linear equation] in the unknown $v in V$ is an equation of the form
@@ -736,7 +728,7 @@ For the following definitions, let $B := ( v_1, dots, v_n )$ be an ordered basis
 
 == Matrix-vector multiplication
 
-#see[#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/math257/CompleteLectureNotes--Filled.pdf#Navigation29")[MATH 257 [Module 5, Module 6]], #link("file:///home/ethan/Downloads/f26-math257--Lecture3.pdf")[Chuang [Lecture 3]]]
+#see[#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/math257/CompleteLectureNotes--Filled.pdf#Outline0.5")[MATH 257 [Module 5, Module 6]], #link("file:///home/ethan/Downloads/f26-math257--Lecture3.pdf")[Chuang [Lecture 3]]]
 
 #definition(title: [Matrix-vector multiplication])[
 	Let $X in Field^n$ and $A = display(mat(a_1, dots.c, a_n))$ be an $m times n$-matrix. We define the product $A X$ by
@@ -763,7 +755,7 @@ For the following definitions, let $B := ( v_1, dots, v_n )$ be an ordered basis
 
 == Row operations
 
-#see[#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/math257/CompleteLectureNotes--Filled.pdf#Navigation13")[MATH 257 [Lecture 2]], Trimm [#link("https://github.com/ethanc8/ekactl-references/raw/trunk/linalg/trimm/unit-1/1.3%20Elementary%20Row%20Operations.pdf")[1.3]]]
+#see[#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/math257/CompleteLectureNotes--Filled.pdf#Outline0.2")[MATH 257 [Module 2]], Trimm [#link("https://github.com/ethanc8/ekactl-references/raw/trunk/linalg/trimm/unit-1/1.3%20Elementary%20Row%20Operations.pdf")[1.3]]]
 
 #definition(title: [Elementary row operations])[
 	The elementary row operations are:
@@ -791,7 +783,7 @@ For the following definitions, let $B := ( v_1, dots, v_n )$ be an ordered basis
 
 == Echelon forms
 
-#see[#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/math257/CompleteLectureNotes--Filled.pdf#Navigation18")[MATH 257 [Lecture 3, 4]], Trimm [#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/trimm/unit-1/1.4%20Row%20Echelon%20Matrices.pdf")[1.4]]]
+#see[#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/math257/CompleteLectureNotes--Filled.pdf#Outline0.3")[MATH 257 [Lecture 3, 4]], Trimm [#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/trimm/unit-1/1.4%20Row%20Echelon%20Matrices.pdf")[1.4]]]
 
 #definition(title: [Row echelon form (REF)])[
 	A matrix is in REF iff it satisfies:
@@ -890,7 +882,7 @@ For the following definitions, let $B := ( v_1, dots, v_n )$ be an ordered basis
 
 == Matrix multiplication
 
-#see[#link("https://linear.axler.net/LADR4e.pdf#page=83")[Axler [3C]], #link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/math257/CompleteLectureNotes--Filled.pdf#Navigation43")[MATH 257 [Module 7, 8]]]
+#see[#link("https://linear.axler.net/LADR4e.pdf#page=83")[Axler [3C]], #link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/math257/CompleteLectureNotes--Filled.pdf#Outline0.7")[MATH 257 [Module 7, 8]]]
 
 #definition(title: [Matrix multiplication])[
 	The matrix multiplication of the $m times n$ matrix $A$ and the $n times p$ matrix $B$ is made by dot-producting the rows of the first by the columns of the second:
@@ -957,11 +949,15 @@ For the following definitions, let $B := ( v_1, dots, v_n )$ be an ordered basis
 	Let $A$ be a square matrix. We write $A^k$ for $A dots.c A$, $k$-times; that is $A^k$ is obtained by multiplying $A$ $k$-times with itself.
 ]
 
+== LU decomposition
+
+#see[#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/math257/CompleteLectureNotes--Filled.pdf#Outline0.12")[MATH 257 [Module 12]]]
+
 = Matrices as linear maps
 
 == Elementary matrices
 
-#see[#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/trimm/unit-4/4.7%20Invertible%20Matrices.pdf")[Trimm [4.7]], #link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/karthik/4_7.pdf")[Karthik [4.7]], #link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/math257/CompleteLectureNotes--Filled.pdf#Navigation55")[MATH 257 [Module 9]]]
+#see[#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/trimm/unit-4/4.7%20Invertible%20Matrices.pdf")[Trimm [4.7]], #link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/karthik/4_7.pdf")[Karthik [4.7]], #link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/math257/CompleteLectureNotes--Filled.pdf#Outline0.9")[MATH 257 [Module 9]]]
 
 
 #definition[
@@ -971,13 +967,17 @@ For the following definitions, let $B := ( v_1, dots, v_n )$ be an ordered basis
 ] <def:elementary-matrix>
 
 #theorem[
-	If $e : Field^(n,n) to Field^(n,n)$ is an elementary row operation and $A in Field^(n,n)$, then
+	If $e : Field^(n times n) to Field^(n times n)$ is an elementary row operation and $A in Field^(n times n)$, then
 	$ e(A) = e(I) A. $
+]
+
+#corollary[
+	Let $A$ and $B$ be $m times n$ matrices. Then, $B$ is row-equivalent to $A$ iff $B = e_k (I) dots.c e_1 (I) A$, where $e_1(I), dots, e_k (I)$ are elementary matrices of size $m times m$,
 ]
 
 == Invertible matrices
 
-#see[#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/trimm/unit-4/4.7%20Invertible%20Matrices.pdf")[Trimm [4.7]], #link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/karthik/4_7.pdf")[Karthik [4.7]], #link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/math257/CompleteLectureNotes--Filled.pdf#Navigation60")[MATH 257 [Module 10, 11]]]
+#see[#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/trimm/unit-4/4.7%20Invertible%20Matrices.pdf")[Trimm [4.7]], #link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/karthik/4_7.pdf")[Karthik [4.7]], #link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/math257/CompleteLectureNotes--Filled.pdf#Outline0.10")[MATH 257 [Module 10, 11]]]
 
 #remark[
 	The inverse of a real number $a$ is denoted by $a^(-1)$. For example, $7^(-1) = 1\/7$ and $7 dot 7^(-1) = 7^(-1) dot 7 = 1$. Note that not all real numbers have an inverse. Namely, $0^(-1)$ is not defined as there is no real number $b$ such that $0 dot b = 1$.
@@ -997,9 +997,9 @@ For the following definitions, let $B := ( v_1, dots, v_n )$ be an ordered basis
 
 #theorem[
 	Suppose $A$ and $B$ are invertible. Then:
-	+ $A^(-1)$ is invertible and $(A^(-1))^(-1) = A$.
-	+ $A B$ is invertible and $(A B)^(-1) = B^(-1) A^(-1)$. More generally, any finite product $A_1 dots.c A_k$ of invertible $n times n$ matrices is invertible, with $(A_1 dots.c A_k)^(-1) = A_k^(-1) dots.c A_1^(-1)$.
-	+ $A^transpose$ is invertible and $(A^transpose)^(-1) = (A^(-1))^transpose$.
+	- $A^(-1)$ is invertible and $(A^(-1))^(-1) = A$.
+	- $A B$ is invertible and $(A B)^(-1) = B^(-1) A^(-1)$. More generally, any finite product $A_1 dots.c A_k$ of invertible $n times n$ matrices is invertible, with $(A_1 dots.c A_k)^(-1) = A_k^(-1) dots.c A_1^(-1)$.
+	- $A^transpose$ is invertible and $(A^transpose)^(-1) = (A^(-1))^transpose$.
 ]
 
 #theorem[
@@ -1016,6 +1016,8 @@ For the following definitions, let $B := ( v_1, dots, v_n )$ be an ordered basis
 	If $A$ is an $n times n$ matrix, the following conditions are equivalent:
 	- $A$ is invertible.
 	- $A$ is row-equivalent to the $n times n$ identity matrix.
+	- $A$ has pivots in every row and column.
+	- $A vn(x) = vn(y)$ has a unique solution.
 	- $A$ is a product of elementary matrices.
 ] <thm:invertible-matrix-theorem>
 
@@ -1200,11 +1202,11 @@ Given a matrix $A in Field^(m,n)$, define $T_A := x mapsto A x$. Then $T_A : Fie
 == Transpose
 
 #definition(title: [Transpose of linear map])[
-	Let $V$ and $W$ be vector spaces over $Field$, and let $T in linmaps(V, W)$. The *transpose of $T$* or *dual map of $T$* is the linear map $T^* = T^T in linmaps(W^*, V^*)$ defined for each $f in W^*$ by
-	$ T^*(f) = T^T (f) := f compose T $
+	Let $V$ and $W$ be vector spaces over $Field$, and let $T in linmaps(V, W)$. The *transpose of $T$* or *dual map of $T$* is the linear map $T^* = T^transpose in linmaps(W^*, V^*)$ defined for each $f in W^*$ by
+	$ T^*(f) = T^transpose (f) := f compose T $
 
-	That is, for each linear functional $f in W^*$, $T^T (f)$ is the linear functional in $V^*$ defined by (for each $v in V$)
-	$ T^T (f)(v) = f(T v) $
+	That is, for each linear functional $f in W^*$, $T^transpose (f)$ is the linear functional in $V^*$ defined by (for each $v in V$)
+	$ T^transpose (f)(v) = f(T v) $
 ]
 
 #theorem(title: [Properties of the transpose])[
@@ -1301,7 +1303,7 @@ Given a matrix $A in Field^(m,n)$, define $T_A := x mapsto A x$. Then $T_A : Fie
 ]
 
 #lemma[
-	$V^((2)) = V^((2))_("sym") plus.circle V^((2))_("alt")$, and $V^((2))_("sym")$ and $V^((2))_("alt")$ are subspaces of $V^((2))$.
+	$V^((2)) = V^((2))_("sym") plus.o V^((2))_("alt")$, and $V^((2))_("sym")$ and $V^((2))_("alt")$ are subspaces of $V^((2))$.
 ]
 
 == Multilinear forms
@@ -1651,7 +1653,7 @@ Given a matrix $A in Field^(m,n)$, define $T_A := x mapsto A x$. Then $T_A : Fie
 //
 // #lemma[
 //   Suppose $T in linmaps(V)$ and $lambda_1, dots, lambda_n$ are distinct eigenvalues of $T$. Then
-//   $ E_(lambda_1) plus.circle dots.c plus.circle E_(lambda_m) $
+//   $ E_(lambda_1) plus.o dots.c plus.o E_(lambda_m) $
 //   (the sum of the eigenspaces is a direct sum). Furthermore, if $V$ is finite-dimensional, then
 //   $ dim E_(lambda_1) + dots.c + dim E_(lambda_m) <= dim V $
 // ]
@@ -1659,7 +1661,7 @@ Given a matrix $A in Field^(m,n)$, define $T_A := x mapsto A x$. Then $T_A : Fie
 #theorem(title: [Conditions equivalent to diagonalizability])[
 	Let $V$ be a finite-dimensional vector space, $T in linmaps(V)$, and $lambda_1, dots, lambda_n$ be the distinct eigenvalues of $T$. Then the following are equivalent:
 	- $V$ has a basis consisting of eigenvectors of $T$
-	- $V = E_(lambda_1) plus.circle dots.c plus.circle E_(lambda_m)$
+	- $V = E_(lambda_1) plus.o dots.c plus.o E_(lambda_m)$
 	- $dim V = dim E_(lambda_1) + dots.c + dim E_(lambda_m)$
 	- The geometric multiplicity of each eigenvector is equal to its algebraic multiplicity.
 ]
@@ -1809,3 +1811,55 @@ For this section, let $V$ be an inner product space.
 	- *Reverse Triangle Inequality*: $abs(|u| - |v|) <= |u - v|$
 	- *Parallelogram Law*: $|u + v|^2 + |u - v|^2 = 2(|u|^2 + |v|^2)$
 ]
+
+= Resources
+
+
+== Main resources
+
+- *Trimm* -- notes from "TrimmAlg", the linear algebra class taught by Dr. Anderson Trimm in S25
+	- *Karthik* -- a student's solutions to worksheets from TrimmAlg
+	- This class follows Axler, but presents some things from Strang in an Axler-style presentation
+- *MATH 257* -- notes from MATH 257 "Linear Algebra with Computational Applications", taught in F26
+	- *Chaung* -- notes from the 09:00 lecture given by Jer-Chin Chuang in F26
+	- This is a more numerical/applied class
+	- This class mostly follows Strang and MIT 18.06, but also introduces worked examples in NumPy code
+- *Axler* -- #link("https://linear.axler.net/LADR4e.pdf")[_Linear Algebra Done Right_, 4th edition, by Sheldon Axler]
+	- #link("https://lew98.github.io/Mathematics/LADR_Solutions/LADR_Solutions.pdf")[Solution manual by GitHub user `@lew98`]
+	- A very abstract book
+
+== Supplementary resources
+
+- *Klein* -- _Coding the Matrix: Linear Algebra through Applications to Computer Science_, by Philip N. Klein
+- *UCDavis* -- #link("https://www.math.ucdavis.edu/~linear/")[open-access textbook _Linear Algebra_, by Cherney, Denton, Thomas, and Waldron]
+	- Strang-like approach
+- *Alayont & Schlicker* -- #link("https://scholarworks.gvsu.edu/books/21/")[Linear Algebra and Applications: An Inquiry-Based Approach]
+	- Inquiry-based approach, i.e. investigation of examples
+
+=== Gilbert Strang's curriculum
+- *Strang-LAIA* -- _Linear Algebra and Its Applications_
+	- Strang's oldest textbook
+- *Strang-ILA* -- _Introduction to Linear Algebra_
+	- The book in Strang's course MIT 18.06
+- *Strang-LALD* -- _Linear Algebra and Learning from Data_
+- #link("https://web.mit.edu/18.06/www/")[MIT 18.06]
+- #link("https://ocw.mit.edu/courses/18-06sc-linear-algebra-fall-2011/")[MIT 18.06SC]
+	- Designed for self-study
+- MIT 18.065 "Matrix Methods in Data Analysis, Signal Processing, and Machine Learning"
+	- #link("https://ocw.mit.edu/courses/18-065-matrix-methods-in-data-analysis-signal-processing-and-machine-learning-spring-2018/")[MIT 18.065, Spring 2018]
+	- #link("https://github.com/mitmath/18065")[MIT 18.065, Spring 2023]
+
+== Videos
+
+=== 3Blue1Brown
+
+1. #link("https://www.youtube.com/watch?v=fNk_zzaMoSs&list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab&index=1")[Vectors]
+	- $Reals^2$ and $Reals^3$ (geometrically)
+	- Vectors as arrays and as arrows from the origin
+	- Vector addition in $Reals^2$ and $Reals^3$
+2. #link("https://www.youtube.com/watch?v=k7RM-ot2NWY&list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab&index=2")[Linear combinations, span, and basis vectors]
+	- Basis (@sec:vecspace:basis)
+	- Spanning (@sec:vecspace:span)
+	- Subspaces of $Reals^2$/$Reals^3$ (@sec:vecspace:subspace-Fn)
+3. 
+

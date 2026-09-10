@@ -455,7 +455,7 @@ Let $F = Reals$ or $F = Complex$.
 ]
 
 #definition(title: [Direct sum])[
-	If $V_1, dots, V_n$ are subspaces of $V$ such that each element of $limits(plus.circle)_(k=1)^n V_k = V_1 + dots.c + V_n$ can be written uniquely as $sum_(k=1)^n v_k = v_1 + dots.c + v_n$ where $v_k in V_k$, then $limits(plus.circle)_(k=1)^n V_k$ is a *direct sum* and can be written as $limits(plus.circle)_(k=1)^n V_k = V_1 plus.circle dots.c plus.circle V_n$.
+	If $V_1, dots, V_n$ are subspaces of $V$ such that each element of $limits(plus.o)_(k=1)^n V_k = V_1 + dots.c + V_n$ can be written uniquely as $sum_(k=1)^n v_k = v_1 + dots.c + v_n$ where $v_k in V_k$, then $limits(plus.o)_(k=1)^n V_k$ is a *direct sum* and can be written as $limits(plus.o)_(k=1)^n V_k = V_1 plus.o dots.c plus.o V_n$.
 ]
 
 #theorem[
@@ -1127,7 +1127,7 @@ Given a matrix $A in F^(m,n)$, define $T_A := x mapsto A x$. Then $T_A : F^n to 
 ]
 
 #lemma[
-	$V^((2)) = V^((2))_("sym") plus.circle V^((2))_("alt")$, and $V^((2))_("sym")$ and $V^((2))_("alt")$ are subspaces of $V^((2))$.
+	$V^((2)) = V^((2))_("sym") plus.o V^((2))_("alt")$, and $V^((2))_("sym")$ and $V^((2))_("alt")$ are subspaces of $V^((2))$.
 ]
 
 == Multilinear forms
@@ -1477,7 +1477,7 @@ Given a matrix $A in F^(m,n)$, define $T_A := x mapsto A x$. Then $T_A : F^n to 
 //
 // #lemma[
 //   Suppose $T in cal(L)(V)$ and $lambda_1, dots, lambda_n$ are distinct eigenvalues of $T$. Then
-//   $ E_(lambda_1) plus.circle dots.c plus.circle E_(lambda_m) $
+//   $ E_(lambda_1) plus.o dots.c plus.o E_(lambda_m) $
 //   (the sum of the eigenspaces is a direct sum). Furthermore, if $V$ is finite-dimensional, then
 //   $ dim E_(lambda_1) + dots.c + dim E_(lambda_m) <= dim V $
 // ]
@@ -1485,7 +1485,7 @@ Given a matrix $A in F^(m,n)$, define $T_A := x mapsto A x$. Then $T_A : F^n to 
 #theorem(title: [Conditions equivalent to diagonalizability])[
 	Let $V$ be a finite-dimensional vector space, $T in cal(L)(V)$, and $lambda_1, dots, lambda_n$ be the distinct eigenvalues of $T$. Then the following are equivalent:
 	- $V$ has a basis consisting of eigenvectors of $T$
-	- $V = E_(lambda_1) plus.circle dots.c plus.circle E_(lambda_m)$
+	- $V = E_(lambda_1) plus.o dots.c plus.o E_(lambda_m)$
 	- $dim V = dim E_(lambda_1) + dots.c + dim E_(lambda_m)$
 	- The geometric multiplicity of each eigenvector is equal to its algebraic multiplicity.
 ]

@@ -955,9 +955,9 @@ In this class, we assume the Axiom of Choice.
 
 
 #definition(title: [Topological sum])[
-  Let ${Y_alpha}$ be a collection of disjoint sets. Then, $X = dun.big Y_alpha$ is the #defname[topological sum] of the $Y_alpha$, denoted $plus.circle.big Y_alpha$.
+  Let ${Y_alpha}$ be a collection of disjoint sets. Then, $X = dun.big Y_alpha$ is the #defname[topological sum] of the $Y_alpha$, denoted $plus.o.big Y_alpha$.
 
-  The topology on $plus.circle.big Y_alpha$ is such that a set is open iff it is open in one of the $Y_alpha$, or it is a union of open sets in different $Y_alpha$.
+  The topology on $plus.o.big Y_alpha$ is such that a set is open iff it is open in one of the $Y_alpha$, or it is a union of open sets in different $Y_alpha$.
 
   Such a space is obviously disconnected.
 
