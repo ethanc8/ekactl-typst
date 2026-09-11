@@ -594,7 +594,7 @@ Having developed linear maps abstractly, we now fix bases and see how they corre
 	$ [A^transpose_(i j)] = [A_(j i)] $
 ] <def:matrix-transpose>
 
-#remark[
+#remark-block[
 	The transpose of a column vector is a row vector and vice versa.
 ]
 
@@ -659,7 +659,7 @@ For the following definitions, let $B := ( v_1, dots, v_n )$ be an ordered basis
 	Suppose $lambda in Field$ and $T in linmaps(V, W)$. Then, $[lambda T] = lambda [T]$.
 ]
 
-#remark[
+#remark-block[
 	Every $m times n$ matrix $A$ is the standard matrix of the linear map $T_A : Field^n to Field^m$, $T_A (X) := A X$ (matrix-vector multiplication is defined precisely in @def:matrix-vector-mult below). This is the correspondence that lets us study the abstract map $T_A$ purely as concrete array arithmetic on $A$, and it's the reason $ker T_A$ (equivalently, the null space $op("Nul") A$) is exactly the solution set of the homogeneous system $A X = 0$.
 ]
 
@@ -698,7 +698,7 @@ For the following definitions, let $B := ( v_1, dots, v_n )$ be an ordered basis
 	where $T : V to W_1 times dots.c times W_m$ is defined by $T v := (T_1 v, dots, T_m v)$ and $Y := (y_1, dots, y_m) in W_1 times dots.c times W_m$.
 ]
 
-#remark[
+#remark-block[
 	When $V = Field^n$ and all $W_k = Field$, this is exactly how a linear system becomes the matrix equation $A X = Y$ --- the standard matrix of $T$ is the $m times n$ matrix $A$ whose $j$th row is the standard matrix of $T_j$ --- i.e. gluing the equations' coefficient rows together. Concretely, if $m$ is the number of equations and $n$ the number of variables, the $j$th equation
 	$ sum_(k=1)^n A_(j k) X_k = Y_j $
 	glues into
@@ -710,7 +710,7 @@ For the following definitions, let $B := ( v_1, dots, v_n )$ be an ordered basis
 	giving the compact form $A X = Y$. (Matrix-vector multiplication, which makes precise sense of $A X$, is defined in @def:matrix-vector-mult below.)
 ]
 
-#remark[
+#remark-block[
 	This is the "row" side of the same picture whose "column" side is @def:matrix-vector-mult: gluing $m$ scalar equations $T_j v = y_j$ *row-by-row* into $A$ builds the map $T = (T_1, dots, T_m) : V to Field^m$ above, while --- as the next section shows --- reading $A$'s *columns* as vectors and taking $A X$ to mean the linear combination $X_1 a_1 + dots.c + X_n a_n$ recovers the same equation $A X = Y$ from the span perspective. One matrix, two equivalent readings.
 ]
 
@@ -738,7 +738,7 @@ For the following definitions, let $B := ( v_1, dots, v_n )$ be an ordered basis
 	- $A X$ is only defined if the number of entries of $X$ is equal to the number of columns of $A$.
 ] <def:matrix-vector-mult>
 
-#remark[
+#remark-block[
 	Solving linear systems is the same as finding linear combinations: solving $A X = Y$ means finding coefficients expressing $Y$ as a linear combination of $A$'s columns, i.e. finding $Y in span{a_1, dots, a_n}$ (span: see [Vector spaces]).
 ]
 
@@ -773,7 +773,7 @@ For the following definitions, let $B := ( v_1, dots, v_n )$ be an ordered basis
 	Two matrices are row-equivalent iff each can be derived from the other using a finite number of elementary row operations.
 ]
 
-#remark[
+#remark-block[
 	Each elementary row operation replaces an equation of the system by a linear combination of itself with (or a scalar multiple of, or a swap with) another equation — this is why row-equivalent augmented matrices give equivalent systems.
 ]
 
@@ -979,7 +979,7 @@ For the following definitions, let $B := ( v_1, dots, v_n )$ be an ordered basis
 
 #see[#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/trimm/unit-4/4.7%20Invertible%20Matrices.pdf")[Trimm [4.7]], #link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/karthik/4_7.pdf")[Karthik [4.7]], #link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/math257/CompleteLectureNotes--Filled.pdf#Outline0.10")[MATH 257 [Module 10, 11]]]
 
-#remark[
+#remark-block[
 	The inverse of a real number $a$ is denoted by $a^(-1)$. For example, $7^(-1) = 1\/7$ and $7 dot 7^(-1) = 7^(-1) dot 7 = 1$. Note that not all real numbers have an inverse. Namely, $0^(-1)$ is not defined as there is no real number $b$ such that $0 dot b = 1$.
 ]
 

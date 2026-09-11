@@ -162,7 +162,7 @@
 	- (Scaling) Multiply all entries in a row by a nonzero constant: $R_i to c R_i$, where $c != 0$.
 ]
 
-#remark[
+#remark-block[
 	Every row operation is reversible.
 ]
 
@@ -253,7 +253,7 @@
 		). $
 ]
 
-#remark[
+#remark-block[
 	Addition is only defined if $A$ has the same number of columns and rows as $B$.
 ]
 
@@ -265,7 +265,7 @@
 	If $A$ is $m times n$, the transpose of $A$ is the $n times m$ matrix, denoted by $A^T$, whose columns are formed from the corresponding rows of $A$. In terms of matrix elements: $(A^T)_(i j) = A_(j i)$.
 ]
 
-#remark[
+#remark-block[
 	The transpose of a column vector is a row vector and vice versa.
 ]
 
@@ -283,7 +283,7 @@
 	We denote the set of all column vectors of length $m$ by $Reals^m$.
 ]
 
-#remark[
+#remark-block[
 	Solving linear systems is the same as finding linear combinations!
 ]
 
@@ -302,7 +302,7 @@
 	$ A x = x_1 a_1 + x_2 a_2 + dots.c + x_n a_n. $
 ]
 
-#remark[
+#remark-block[
 	- $A x$ is a linear combination of the columns of $A$ using the entries in $x$ as coefficients.
 	- $A x$ is only defined if the number of entries of $x$ is equal to the number of columns of $A$.
 ]
@@ -314,7 +314,7 @@
 	- $(x_1, x_2, dots, x_n)$ is a solution of the system with augmented matrix $mat(augment: #1, A, b)$
 ]
 
-#remark[
+#remark-block[
 	We will write $A x = b$ for the system of equations with augmented matrix $mat(augment: #1, A, b)$.
 ]
 
@@ -332,7 +332,7 @@
 
 *Note.* Other ways to compute $A B$.
 
-#remark(title: [Row-Column Rule])[
+#remark-block(title: [Row-Column Rule])[
 	Let $A$ be $m times n$ and $B$ be $n times p$ such that
 	$ A = mat(R_1; dots.v; R_m), quad "and" quad B = mat(C_1, dots.c, C_p). $
 	Then
@@ -345,7 +345,7 @@
 	and $(A B)_(i j) = R_i C_j = a_(i 1) b_(1 j) + a_(i 2) b_(2 j) + dots.c + a_(i n) b_(n j)$.
 ]
 
-#remark(title: [Outer Product Rule])[
+#remark-block(title: [Outer Product Rule])[
 	Let $A$ be $m times n$ and $B$ be $n times p$ such that
 	$ A = mat(C_1, dots.c, C_n), quad "and" quad B = mat(R_1; dots.v; R_n). $
 	Then
@@ -373,7 +373,7 @@
 	+ $I_m A = A = A I_n$ (identity for matrix multiplication)
 ]
 
-#remark[
+#remark-block[
 	Properties above are analogous to properties of real numbers. But NOT ALL properties of real numbers also hold for matrices. In particular, $A B$ need not equal $B A$.
 ]
 
@@ -405,7 +405,7 @@
 
 = Inverse of a Matrix
 
-#remark[
+#remark-block[
 	The inverse of a real number $a$ is denoted by $a^(-1)$. For example, $7^(-1) = 1\/7$ and $7 dot 7^(-1) = 7^(-1) dot 7 = 1$. Note that not all real numbers have an inverse. Namely, $0^(-1)$ is not defined as there is no real number $b$ such that $0 dot b = 1$.
 ]
 
@@ -480,7 +480,7 @@
 	The product of two lower (upper) triangular matrices is lower (upper) triangular.
 ]
 
-#remark[
+#remark-block[
 	The inverse of a lower (upper) triangular matrix (if it exists) is again lower (upper) triangular.
 ]
 
@@ -492,7 +492,7 @@
 	Let $A$ be an $n times n$-matrix. If $A$ can be brought to echelon form just using row operations of the form $R_i to R_i + c R_j$ where $j < i$, then $A$ has an LU-decomposition.
 ]
 
-#remark[
+#remark-block[
 	Not every matrix has an LU decomposition. The LU decomposition of a matrix is not unique.
 ]
 
@@ -772,7 +772,7 @@ See the notes for information about this application.
 	$ W^perp := { v in Reals^n : v dot w = 0 "for all" w in W }. $
 ]
 
-#remark[
+#remark-block[
 	Observe that $(W^perp)^perp = W$.
 ]
 
@@ -780,7 +780,7 @@ See the notes for information about this application.
 	Let $A$ be an $m times n$ matrix. Then $op("Nul")(A)$ is the orthogonal complement of $op("Col")(A^T)$; that is $op("Nul")(A) = op("Col")(A^T)^perp$.
 ]
 
-#remark[
+#remark-block[
 	It follows that
 	- $op("Nul")(A)^perp = op("Col")(A^T)$.
 	- $op("Nul")(A^T) = op("Col")(A)^perp$.
@@ -818,7 +818,7 @@ See the notes for information about this application.
 	$ v = mat(b_1, dots.c, b_n) v_B. $
 ]
 
-#remark[
+#remark-block[
 	Let $B$ and $C$ be bases in $Reals^n$.
 	- To compute $I_(B, E_n)$, notice that
 		$ v = I_(E_n, B) v_B arrow.squiggly I_(E_n,B)^(-1) v = v_B arrow.squiggly I_(B, E_n) = I_(E_n,B)^(-1) $
@@ -834,7 +834,7 @@ See the notes for information about this application.
 	Let $v_1, dots, v_m in Reals^n$ be non-zero and pairwise orthogonal. Then $v_1, dots, v_m$ are linearly independent.
 ]
 
-#remark[
+#remark-block[
 	The theorem implies that a set of $n$ orthonormal vectors in $Reals^n$ is a basis of $Reals^n$.
 ]
 
@@ -842,7 +842,7 @@ See the notes for information about this application.
 	An orthogonal basis (an orthonormal basis) is an orthogonal set of vectors (an orthonormal set of vectors) that forms a basis.
 ]
 
-#remark[
+#remark-block[
 	When $B$ is orthonormal, then $b_i dot b_i = 1$ for $i = 1, dots, n$.
 ]
 
@@ -868,7 +868,7 @@ See the notes for information about this application.
 	for all $v, w in V$ and all $a, b in Reals$.
 ]
 
-#remark[
+#remark-block[
 	$T(0_V) = T(0 dot 0_V) = 0 dot T(0_V) = 0_W arrow.squiggly T(0_V) = 0_W$
 ]
 
@@ -882,7 +882,7 @@ See the notes for information about this application.
 	- $A = mat(T(e_1), T(e_2), dots.h, T(e_n))$, where $(e_1, e_2, dots, e_n)$ is the standard basis of $Reals^n$.
 ]
 
-#remark[
+#remark-block[
 	We call this $A$ the coordinate matrix of $T$ with respect to the standard bases -- we write $T_(E_m, E_n)$.
 ]
 
@@ -909,7 +909,7 @@ See the notes for information about this application.
 	- a $2 times 2$ matrix is $det mat(a,b;c,d) = a d - b c$.
 ]
 
-#remark[
+#remark-block[
 	We will write both $det mat(a,b;c,d)$ and $mat(delim: "|", a,b;c,d)$ for the determinant.
 ]
 
@@ -940,7 +940,7 @@ See the notes for information about this application.
 
 = Cofactor expansion
 
-#remark[
+#remark-block[
 	Let $A$ be an $n times n$-matrix. We denote by $A_(i j)$ the matrix obtained from matrix $A$ by deleting the $i$-th row and $j$-th column of $A$.
 ]
 
@@ -1139,7 +1139,7 @@ See the notes for information about this application.
 	$ op("dist")(v, op("proj")_w v) = min_(u in op("Span")(w)) op("dist")(v, u). $
 ]
 
-#remark[
+#remark-block[
 	Note that $v - op("proj")_w v$ (called the error term) is in $op("Span")(w)^perp$.
 	$ v = underbrace(op("proj")_w v, in op("Span")(w)) + underbrace(v - op("proj")_w v, in op("Span")(w)^perp) $
 ]
@@ -1149,7 +1149,7 @@ See the notes for information about this application.
 	$ op("proj")_w v = (1/(w dot w) w w^T) v. $
 ]
 
-#remark[
+#remark-block[
 	Note that $(1/(w dot w) w w^T)$ is an $n times n$ matrix; we call it the orthogonal projection matrix onto $op("Span")(w)$.
 ]
 
@@ -1164,7 +1164,7 @@ See the notes for information about this application.
 	We say $hat(v)$ is the orthogonal projection of $v$ onto $W$ -- written $op("proj")_W v$.
 ]
 
-#remark[
+#remark-block[
 	If $(w_1, dots, w_m)$ is an orthogonal basis of $W$, then
 	$ op("proj")_W v = ((v dot w_1)/(w_1 dot w_1)) w_1 + dots.c + ((v dot w_m)/(w_m dot w_m)) w_m. $
 ]
@@ -1217,7 +1217,7 @@ There are no definitions or theorems in this module, see the lecture notes for e
 	$ dots.c $
 ]
 
-#remark[
+#remark-block[
 	Notice that:
 	- $op("Span")(q_1, dots, q_i) = op("Span")(a_1, dots, a_i)$ for $i = 1, dots, m$, and
 	- $q_j in.not op("Span")(a_1, dots, a_i)$ for all $j > i$.
@@ -1246,12 +1246,12 @@ There are no definitions or theorems in this module, see the lecture notes for e
 	- $V$ is an $n times n$ matrix with orthonormal columns.
 ]
 
-#remark[
+#remark-block[
 	The diagonal entries $sigma_i = Sigma_(i i)$ which are positive are called the singular values of $A$. We usually arrange them in decreasing order, that is
 	$ sigma_1 >= sigma_2 >= dots.c $
 ]
 
-#remark[
+#remark-block[
 	Let $A$ be an $m times n$ matrix with rank $r$. Recall that
 	- $op("Nul")(A^T A) = op("Nul")(A)$ and $op("Nul")(A A^T) = op("Nul")(A^T)$.
 	- $A^T A$ is symmetric and has rank $r$.
@@ -1321,7 +1321,7 @@ There are no definitions or theorems in this module, see the lecture notes for e
 	Let $v in op("Col")(A^T)$ and $w in op("Col")(A)$. Then $A^+ A v = v$ and $A A^+ w = w$.
 ]
 
-#remark[
+#remark-block[
 	If $A$ is $n times n$ and invertible, then $op("Col")(A) = Reals^n$. Thus $A^(-1) = A^+$.
 ]
 
@@ -1329,7 +1329,7 @@ There are no definitions or theorems in this module, see the lecture notes for e
 	Let $A$ be an $m times n$ matrix and let $b in Reals^m$. Then $A^+ b$ is the LSQ solution of $A x = b$ (with minimum length).
 ]
 
-#remark[
+#remark-block[
 	This is particularly useful, when solving many different LSQ problems of the form $A x = b$, where $A$ stays the same, but $b$ varies.
 ]
 
@@ -1354,7 +1354,7 @@ There are no definitions or theorems in this module, see the lecture notes for e
 	$ op("cov")(X) = lambda_1 v_1 v_1^T + dots.c + lambda_n v_n v_n^T. $
 - Each principal component $v_i$ explains part of the variance of the data. The larger $lambda_i$, the more of the variance is explained by $v_i$.
 
-#remark(title: [PCA using SVD])[
+#remark-block(title: [PCA using SVD])[
 	- Let $X$ be a centered data matrix. Observe that $X^T X = (m-1) op("cov")(X)$.
 	- To find an orthonormal eigenbasis of $op("cov")(X)$, it is enough to find an orthonormal eigenbasis of $X^T X$.
 	- Compute the SVD of $X$ $arrow.squiggly X = U Sigma V^T$.
@@ -1374,7 +1374,7 @@ There are no definitions or theorems in this module, see the lecture notes for e
 		$ |z| = sqrt(x^2 + y^2). $
 ]
 
-#remark[
+#remark-block[
 	Any point in $Reals^2$ can be viewed as a complex number: $vec(x, y) arrow.l.r x + i y$.
 ]
 
@@ -1400,7 +1400,7 @@ There are no definitions or theorems in this module, see the lecture notes for e
 	The (complex) vector space $Complex^n$ is the set of all complex column vectors $z = vec(z_1, z_2, dots.v, z_n)$, where $z_1, z_2, dots, z_n$ are complex numbers.
 ]
 
-#remark[
+#remark-block[
 	- Now multiplication by a complex scalar makes sense.
 	- We can define subspaces, Span, independence, basis, dimension for $Complex^n$ in the usual way.
 	- We can multiply complex vectors by complex matrices. Column space and Null space still make sense.

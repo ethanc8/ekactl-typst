@@ -2043,7 +2043,7 @@ We only care about the fields $F = Reals$ and $F = Complex$, with their standard
 
 3. For a closed set $A subset X$, prove that $(overline(A degree)) degree = A degree$.
 
-#note-box[We have seen that the interior of a set can be found by closures and complements: $A degree = X setminus overline((X setminus A))$. (Similarly, closures can be found in terms of interiors and complements.) _Kuratowski's Closure-Complement Theorem_ asserts that starting with a set $A$, there are at most 14 different sets that can be obtained by repeatedly taking closures and complements in some order. Challenge: prove this, and find a set of real numbers that achieves the bound of 14 sets.]
+#note-block[We have seen that the interior of a set can be found by closures and complements: $A degree = X setminus overline((X setminus A))$. (Similarly, closures can be found in terms of interiors and complements.) _Kuratowski's Closure-Complement Theorem_ asserts that starting with a set $A$, there are at most 14 different sets that can be obtained by repeatedly taking closures and complements in some order. Challenge: prove this, and find a set of real numbers that achieves the bound of 14 sets.]
 
 4. If $U$ is an open subset of $A$ such that $(A - U) degree = emptyset$, does it follow that $U = A degree$? Proof or counterexample.
 
@@ -2069,7 +2069,7 @@ There is a counterexample.
 
 5. Prove that the Sorgenfrey line is separable.
 
-#note-box[
+#note-block[
   The Sorgenfrey line thus provides an example of a space that is separable and first countable,
 but still not second countable.
 ]
