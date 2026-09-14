@@ -98,6 +98,8 @@
 
 #let linmaps = $cal(L)$
 
+#show link: set text(blue)
+
 Let $Field$ be a field. It's possible that some things in here require $Field = Reals$ or $Field = Complex$; if it does and it's not marked it should be considered a bug.
 
 = Fields
@@ -388,7 +390,7 @@ Let $Field$ be a field. It's possible that some things in here require $Field = 
 
 = Linear maps
 
-== Linear map
+== Linear map <sec:linmap:linmap>
 
 #definition(title: [Linear map])[
 	Let $V$ and $W$ be vector spaces over $Field$. A *linear map* (also called *linear function* or *linear transformation*) from $V$ to $W$ is a function $T : V to W$ with the two properties
@@ -627,7 +629,7 @@ For the following definitions, let $B := ( v_1, dots, v_n )$ be an ordered basis
 	$ L_B ([v]_B) = v $
 ]
 
-== Matrix of a linear map
+== Matrix of a linear map <sec:matsys:matmap>
 
 #see[#link("https://linear.axler.net/LADR4e.pdf#page=83")[Axler [3C]], #link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/trimm/unit-4/4.5%20Matrix%20of%20a%20Linear%20Map.pdf")[Trimm [4.5]], #link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/karthik/4_5.pdf")[Karthik [4.5]]]
 
@@ -635,13 +637,15 @@ For the following definitions, let $B := ( v_1, dots, v_n )$ be an ordered basis
 	Let $B_V = (v_1, dots, v_n)$ be a basis of $V$ and $B_W = (w_1, dots, w_m)$ be a basis of $W$. Let $T : V to W$ be a linear map.
 
 	Then the matrix of $T$ with respect to $B_V$ and $B_W$ is denoted as
-	$ [T]_(B_W B_V) $
+	$ [T]_(B_W B_V). $
 
 	It is the $m times n$ matrix defined such that its $j$th column is the coordinate vector of $T v_j$ with respect to $B_W$:
-	$ ([T]_(B_W B_V))_(* j) = [T v_j]_(B_W) $
+	$ ([T]_(B_W B_V))_(* j) = [T v_j]_(B_W). \
+	[T]_(B_W B_V) = mat(T v_0, dots.c, T v_n)_(B_W)
+	$
 
 	Equivalently, it is the $m times n$ matrix that satisfies
-	$ T v_j = sum_(i=1)^m ([T]_(B_W B_V))_(i j) w_i $
+	$ T v_j = sum_(i=1)^m ([T]_(B_W B_V))_(i j) w_i. $
 ]
 
 #lemma[
@@ -726,31 +730,43 @@ For the following definitions, let $B := ( v_1, dots, v_n )$ be an ordered basis
 	Two systems are equivalent iff they have the same set of solutions.
 ]
 
-== Matrix-vector multiplication
+== Matrix-vector multiplication <sec:matsys:matvec>
 
 #see[#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/math257/CompleteLectureNotes--Filled.pdf#Outline0.5")[MATH 257 [Module 5, Module 6]], #link("file:///home/ethan/Downloads/f26-math257--Lecture3.pdf")[Chuang [Lecture 3]]]
 
-#definition(title: [Matrix-vector multiplication])[
-	Let $X in Field^n$ and $A = display(mat(a_1, dots.c, a_n))$ be an $m times n$-matrix. We define the product $A X$ by
-	$ A X := X_1 a_1 + X_2 a_2 + dots.c + X_n a_n. $
+#see[#link("https://www.youtube.com/watch?v=kYB8IZa5AuE&list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab&index=3")[3Blue1Brown [3]]]
 
-	- $A X$ is a linear combination of the columns of $A$ using the entries in $X$ as coefficients.
-	- $A X$ is only defined if the number of entries of $X$ is equal to the number of columns of $A$.
+#remark-block[
+	Consider $T : Field^2 to Field^2$. Since $[T] = display(mat(T hat(i), T hat(j)))$, and
+	$ T(x, y) &= T((x, 0) + (0, y)) \
+	&= T(x, 0) + T(0, y) \
+	&= T(x hat(i)) + T(y hat(j)) \
+	&= x T(hat(i)) + y T(hat(j)), $
+
+	we define $A vn(x) := x_1 A_(*1) + x_2 A_(*2)$. The following definition generalizes this.
+]
+
+#definition(title: [Matrix-vector multiplication])[
+	Let $vn(x) in Field^n$ and $A = display(mat(A_(*1), dots.c, A_(*n)))$ be an $m times n$-matrix. We define the product $A X$ by
+	$ A vn(x) := x_1 A_(*1) + x_2 A_(*2) + dots.c + x_n A_(*n). $
+
+	- $A vn(x)$ is a linear combination of the columns of $A$ using the entries in $vn(x)$ as coefficients.
+	- $A vn(x)$ is only defined if the number of entries of $vn(x)$ is equal to the number of columns of $A$.
 ] <def:matrix-vector-mult>
 
 #remark-block[
-	Solving linear systems is the same as finding linear combinations: solving $A X = Y$ means finding coefficients expressing $Y$ as a linear combination of $A$'s columns, i.e. finding $Y in span{a_1, dots, a_n}$ (span: see [Vector spaces]).
+	Solving linear systems is the same as finding linear combinations: solving $A vn(x) = vn(y)$ means finding coefficients expressing $Y$ as a linear combination of $A$'s columns, i.e. finding $Y in span{a_1, dots, a_n}$ (span: see [Vector spaces]).
 ]
 
 #theorem[
-	Let $A = display(mat(vn(a)_1, dots.c, vn(a)_n))$ be an $m times n$ matrix and $vn(b) in Field^m$. For any $(x_1, dots, x_n) in Field^n$, the following are equivalent:
-	- $(x_1, dots, x_n)$ is a solution of the vector equation $x_1 vn(a)_1 + dots.c + x_n vn(a)_n = vn(b)$
-	- $vec(x_1, dots.v, x_n)$ is a solution of the matrix equation $A X = vn(b)$
-	- $(x_1, dots, x_n)$ is a solution of the linear system with augmented matrix $[A | vn(b)]$
+	Let $A = display(mat(vn(a)_1, dots.c, vn(a)_n))$ be an $m times n$ matrix and $vn(y) in Field^m$. For any $(x_1, dots, x_n) in Field^n$, the following are equivalent:
+	- $(x_1, dots, x_n)$ is a solution of the vector equation $x_1 vn(a)_1 + dots.c + x_n vn(a)_n = vn(y)$
+	- $vn(x) = vec(x_1, dots.v, x_n)$ is a solution of the matrix equation $A vn(x) = vn(y)$
+	- $(x_1, dots, x_n)$ is a solution of the linear system with augmented matrix $[A | vn(y)]$
 ]
 
 #corollary[
-	The equation $A X = vn(b)$ has a solution iff $vn(b) in span{vn(a)_1, dots, vn(a)_n}$.
+	The equation $A vn(x) = vn(y)$ has a solution iff $vn(y) in span{vn(a)_1, dots, vn(a)_n}$.
 ]
 
 == Row operations
@@ -880,13 +896,31 @@ For the following definitions, let $B := ( v_1, dots, v_n )$ be an ordered basis
 	If $A$ is $m times n$ with more equations than variables ($m > n$), then there exists $Y in Field^m$ such that $A X = Y$ is inconsistent.
 ]
 
-== Matrix multiplication
+== Matrix multiplication <sec:matsys:matmul>
 
 #see[#link("https://linear.axler.net/LADR4e.pdf#page=83")[Axler [3C]], #link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/math257/CompleteLectureNotes--Filled.pdf#Outline0.7")[MATH 257 [Module 7, 8]]]
 
+#remark-block[
+	Let $T_1 in linmaps(Field^n, Field^m)$, $T_2 in linmaps(Field^p, Field^n)$. We want to determine $[T_1 compose T_2]$ in terms of $[T_1]$ and $[T_2]$.
+
+	Recall that the columns of the matrix of a linear map are the coordinate vectors of the map applied to each basis vector:
+	$ A := [T_1] &= mat([T_1 e_1], dots.c, [T_1 e_n]) \
+	  B := [T_2] &= mat([T_2 e_1], dots.c, [T_2 e_p]) $
+
+	(*Note:* The number of columns is the input dimension, and the number of rows is the output dimension.)
+
+	Thus, we need to find $[(T_1 compose T_2)(e_j)]$ for each $j in {1, dots, p}$.
+
+	$ [(T_1 compose T_2)(e_j)] &= [T_1(T_2 e_j)] \
+	  &= [T_1][T_2 e_j] \
+	  &= A B_(* j). $
+
+	Since this holds for every column $j$, $[T_1 compose T_2] = display(mat(A B_(* 1), dots.c, A B_(* p)))$, so we define $A B$ this way.
+]
+
 #definition(title: [Matrix multiplication])[
-	The matrix multiplication of the $m times n$ matrix $A$ and the $n times p$ matrix $B$ is made by dot-producting the rows of the first by the columns of the second:
-	$ [A B_(i j)] = [A_(i *) dot B_(* j)] = [sum_(k=1)^n A_(i k) B_(k j)] $
+	Let $A$ be an $m times n$-matrix and let $B = mat(B_(* 1), dots.c, B_(* p))$ be an $n times p$-matrix. We define
+	$ A B := mat(A B_(* 1), A B_(* 2), dots.h, A B_(* p)) $
 ] <def:matrix-mult>
 
 #theorem[
@@ -896,22 +930,22 @@ For the following definitions, let $B := ( v_1, dots, v_n )$ be an ordered basis
 
 #lemma[
 	Composing two linear maps $T_1$ and $T_2$ is equivalent to multiplying the matrices of the two linear maps:
-	$ T_1 compose T_2 = [T_1][T_2] $
+	$ [T_1 compose T_2] = [T_1][T_2] $
 ]
 
 *Note.* Other ways to compute $A B$.
 
 #procedure(title: [Row-Column Rule])[
-	Let $A$ be $m times n$ and $B$ be $n times p$ such that
-	$ A = mat(R_1; dots.v; R_m), quad "and" quad B = mat(C_1, dots.c, C_p). $
-	Then
+	Let $A$ be $m times n$ and $B$ be $n times p$. Then, $A B$ is formed by dot-producting the rows of the first ($A$) with the columns of the second ($B$):
 	$ A B = mat(
-		R_1 C_1, dots.h, R_1 C_p;
-		R_2 C_1, dots.h, R_2 C_p;
+		A_(1 *) B_(* 1), dots.h, A_(1 *) B_(* p);
+		A_(2 *) B_(* p), dots.h, A_(2 *) B_(* p);
 		dots.v, dots.down, dots.v;
-		R_m C_1, dots.h, R_m C_p;
-	) $
-	and $(A B)_(i j) = R_i C_j = a_(i 1) b_(1 j) + a_(i 2) b_(2 j) + dots.c + a_(i n) b_(n j)$.
+		A_(m *) B_(* p), dots.h, A_(m *) B_(* p);
+	) \
+	(A B)_(i j) = A_(i *) B_(* j).
+	$
+
 ]
 
 #procedure(title: [Outer Product Rule])[
@@ -949,10 +983,6 @@ For the following definitions, let $B := ( v_1, dots, v_n )$ be an ordered basis
 	Let $A$ be a square matrix. We write $A^k$ for $A dots.c A$, $k$-times; that is $A^k$ is obtained by multiplying $A$ $k$-times with itself.
 ]
 
-== LU decomposition
-
-#see[#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/math257/CompleteLectureNotes--Filled.pdf#Outline0.12")[MATH 257 [Module 12]]]
-
 = Matrices as linear maps
 
 == Elementary matrices
@@ -984,9 +1014,9 @@ For the following definitions, let $B := ( v_1, dots, v_n )$ be an ordered basis
 ]
 
 #definition(title: [Invertible matrix])[
-	An $n times n$ matrix $A$ is #defname[invertible] iff there is an $n times n$ matrix $B$ satisfying
-	$ B A = A B = I_n $
-	where $I_n$ is the $n times n$ identity matrix. There is a unique such $B$, called the inverse of $A$, $A^(-1) := B$.
+	An $n times n$ matrix $A$ is #defname[invertible] iff there is an $n times n$ matrix $A^(-1)$ satisfying
+	$ A^(-1) A = A A^(-1) = I_n $
+	where $I_n$ is the $n times n$ identity matrix. There is a unique such $B$, called the inverse of $A$\.
 
 	A matrix that is not invertible is #defname[singular].
 ] <def:invertible-matrix>
@@ -1013,12 +1043,25 @@ For the following definitions, let $B := ( v_1, dots, v_n )$ be an ordered basis
 ]
 
 #theorem(title: [Invertible Matrix Theorem])[
-	If $A$ is an $n times n$ matrix, the following conditions are equivalent:
-	- $A$ is invertible.
-	- $A$ is row-equivalent to the $n times n$ identity matrix.
+If $A$ is an $n times n$ matrix, and is the matrix of the linear map $T_A$, the following conditions are equivalent:
+- $A$ is invertible.
+- $T_A$ is injective.
+	- $A vn(x) = vn(y)$ has a unique solution for every $vn(y) in Field^n$.
+	- $A vn(x) = 0$ has only the trivial solution ($vn(x) = vn(0)$).
+	- $op("Nul") A = {0}$
+	- $op("nullity") A = 0$
+	- The columns of $A$ are linearly independent.
+- $T_A$ is surjective.
+	- $op("Col") A = Field^n$.
+	- The columns of $A$ span $Field^n$.
+	- $op("rank") A = n$.
+- $T_A$ is bijective.
+	- $T_A$ is an isomorphism.
+- $A$ is row-equivalent to the $n times n$ identity matrix.
 	- $A$ has pivots in every row and column.
-	- $A vn(x) = vn(y)$ has a unique solution.
 	- $A$ is a product of elementary matrices.
+- $det A != 0$.
+- $0$ is not an eigenvalue of $A$.
 ] <thm:invertible-matrix-theorem>
 
 #theorem[
@@ -1028,6 +1071,67 @@ For the following definitions, let $B := ( v_1, dots, v_n )$ be an ordered basis
 #procedure(title: [Computation of $A^(-1)$])[
 	Row-reduce the augmented matrix $[A | I]$. If $A$ is row-equivalent to $I$, then $RREF([A | I]) = [I | A^(-1)]$. Otherwise, $A$ doesn't have an inverse.
 ]
+
+*Note* -- The following is not in any of the sources; it comes from the solutions to MATH 257 HW3.
+
+#lemma(title: [Inverse elementary row operations])[
+	The inverses of the elementary row operations are:
+
+	#table(
+		columns: 2,
+		stroke: none,
+		[Forward], [Inverse],
+		$display(R_i mapsto c R_i)$, $display(R_i mapsto 1/c R_i)$,
+		$display(R_i mapsto R_i + c R_j)$, $display(R_i mapsto R_i - c R_j)$,
+		$display(R_i <-> R_j)$, $display(R_i <-> R_j)$
+	)
+
+	Assume $c != 0$ and $i != j$.
+]
+
+#procedure(title: [Computation of inverse of matrix under elementary ops])[
+	Let $A$ be the result of applying $e_1, ..., e_n$ in order to $I$. Then, $A^(-1)$ is the result of applying $(e_n)^(-1), ..., (e_1)^(-1)$ in order to $I$.
+
+	*Warning:* The order must be reversed!
+]
+
+== Left and right inverse
+
+#see[#link("https://ocw.mit.edu/courses/18-06sc-linear-algebra-fall-2011/pages/positive-definite-matrices-and-applications/left-and-right-inverses-pseudoinverse/")[[MIT 18.06SC [Lecture 33]]], [MATH 257 [HW3.4]], #link("https://math.stackexchange.com/questions/1694351/finding-all-left-inverses-of-a-matrix")]
+
+Let $A$ be an $m times n$ matrix with $n > m$. We wish to find $B$ s.t. $A B = I$, i.e. $B$ is the #defname[right-inverse] of $A$. The right-inverse is not unique; the following procedures may give you different right-inverses.
+
+#procedure(title: [Computation of right-inverse by zeroing out rows])[
+  Choose $n - m$ rows of $B$ to zero out. By the outer product rule, zeroing
+  the $j$th row of $B$ causes the $j$th column of $A$ to contribute nothing to
+  $A B$, so that column can be ignored. After zeroing those rows, the remaining
+  rows of $B$ form a square matrix $B'$, and the corresponding columns of $A$
+  form a square matrix $A'$. For $A B = I$ to hold, we need $A' B' = I$, so
+  $B' = (A')^(-1)$.
+
+  If $A'$ is singular, choose a different set of rows to zero out. If no choice
+  yields an invertible $A'$, then no right-inverse exists.
+]
+
+#procedure(title: [Column-by-column computation of right-inverse])[
+	Apply $A$ to each column of $B$ separately and set the result
+  equal to the corresponding column of $I$, giving one linear system per column of $B$ to solve.
+]
+
+#procedure(title: [Computation using transpose])[
+	Notice that $A A^transpose$ is square, and that
+	$ A (A^transpose (A A^transpose)^(-1)) = (A A^transpose) (A A^transpose)^(-1) = -1. $
+
+	Thus, a right-inverse of $A$ is
+	$ A^(-1)_"right" := A^transpose (A A^transpose)^(-1). $
+
+	Similarly, we can find that a left-inverse of $A$ is
+	$ A^(-1)_"left" := (A^transpose A)^(-1) A^transpose. $
+]
+
+== LU decomposition
+
+#see[#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/math257/CompleteLectureNotes--Filled.pdf#Outline0.12")[MATH 257 [Module 12]], Strang-LALD [I.4], Strang-ILA-5e [2.6], Strang-ILA-6e [2.3], Strang-LAFE [2.3], #link("https://ocw.mit.edu/courses/18-06-linear-algebra-spring-2010/4d876a9159e32543eb0d73b4d4382f4c_MIT18_06S10ZoomNotes.pdf")[Strang-ZoomNotes [2.3]], #link("https://ocw.mit.edu/courses/18-06sc-linear-algebra-fall-2011/pages/ax-b-and-the-four-subspaces/factorization-into-a-lu/")[MIT 18.06SC [Lecture 4]]]
 
 == Fundamental matrix spaces
 
@@ -1831,23 +1935,44 @@ For this section, let $V$ be an inner product space.
 == Supplementary resources
 
 - *Klein* -- _Coding the Matrix: Linear Algebra through Applications to Computer Science_, by Philip N. Klein
+	- #link("https://cs.brown.edu/video/channels/coding-matrix-fall-2014/")[Philip Klein's lecture videos]
+	- #link("https://www.youtube.com/playlist?list=PLEhMEyM9jSinRHXJgRCOLZUiu9847V2g0")[Eng Weam's lecture videos]
+	- #link("https://archive.org/details/academictorrents_54cd86f3038dfd446b037891406ba4e0b1200d5a")[Coursera videos]
 - *UCDavis* -- #link("https://www.math.ucdavis.edu/~linear/")[open-access textbook _Linear Algebra_, by Cherney, Denton, Thomas, and Waldron]
 	- Strang-like approach
 - *Alayont & Schlicker* -- #link("https://scholarworks.gvsu.edu/books/21/")[Linear Algebra and Applications: An Inquiry-Based Approach]
 	- Inquiry-based approach, i.e. investigation of examples
 
-=== Gilbert Strang's curriculum
+=== Gilbert Strang's main curriculum
 - *Strang-LAIA* -- _Linear Algebra and Its Applications_
 	- Strang's oldest textbook
 - *Strang-ILA* -- _Introduction to Linear Algebra_
 	- The book in Strang's course MIT 18.06
+	- #link("https://web.archive.org/web/20160124195254if_/http://math.mit.edu/~gs/linearalgebra/")[Website of Fourth Edition (2009)]
+	- #link("https://math.mit.edu/~gs/linearalgebra/ila5/indexila5.html")[Website of Fifth Edition (2016)]
+	- #link("https://math.mit.edu/~gs/linearalgebra/ila6/indexila6.html")[Website of Sixth Edition (2023)]
+		- It has useful links and some full chapters
 - *Strang-LALD* -- _Linear Algebra and Learning from Data_
-- #link("https://web.mit.edu/18.06/www/")[MIT 18.06]
-- #link("https://ocw.mit.edu/courses/18-06sc-linear-algebra-fall-2011/")[MIT 18.06SC]
-	- Designed for self-study
-- MIT 18.065 "Matrix Methods in Data Analysis, Signal Processing, and Machine Learning"
+	- #link("https://math.mit.edu/~gs/learningfromdata/")[Website of First Edition (2019)]
+- *MIT 18.06*
+	- #link("https://web.mit.edu/18.06/www/")[Main website]
+	- #link("https://ocw.mit.edu/courses/18-06-linear-algebra-spring-2010/")[OpenCourseWare (Spring 2010)]
+	- #link("https://ocw.mit.edu/courses/18-06sc-linear-algebra-fall-2011/")[*MIT 18.06SC* (OpenCourseWare)]
+		- Designed for self-study
+		- Has lecture notes on OCW, unlike 18.06
+		- Has problem-solving help videos
+	- #link("https://ocw.mit.edu/courses/18-06-linear-algebra-spring-2010/4d876a9159e32543eb0d73b4d4382f4c_MIT18_06S10ZoomNotes.pdf")[_ZoomNotes for Linear Algebra_]
+	- #link("https://ocw.mit.edu/courses/18-06-linear-algebra-spring-2010/pages/related-resources/")[18.06 Related Resources]
+- *MIT 18.065* "Matrix Methods in Data Analysis, Signal Processing, and Machine Learning"
 	- #link("https://ocw.mit.edu/courses/18-065-matrix-methods-in-data-analysis-signal-processing-and-machine-learning-spring-2018/")[MIT 18.065, Spring 2018]
 	- #link("https://github.com/mitmath/18065")[MIT 18.065, Spring 2023]
+
+=== Gilbert Strang's new curriculum ($C R$-factorization)
+- *Strang-LAFE* -- _Linear Algebra for Everyone_
+	- #link("https://math.mit.edu/~gs/everyone/")[Website of First Edition (2020)]
+	- #link("https://raw.githubusercontent.com/kenjihiranabe/The-Art-of-Linear-Algebra/main/The-Art-of-Linear-Algebra.pdf")[_The Art of Linear Algebra_] by Kenji Hiranabe -- graphical representations of stuff from LAFE
+- #link("https://ocw.mit.edu/courses/res-18-010-a-2020-vision-of-linear-algebra-spring-2020/")[_A Vision of Linear Algebra_ videos (2020\~2024)]
+
 
 == Videos
 
@@ -1861,5 +1986,11 @@ For this section, let $V$ be an inner product space.
 	- Basis (@sec:vecspace:basis)
 	- Spanning (@sec:vecspace:span)
 	- Subspaces of $Reals^2$/$Reals^3$ (@sec:vecspace:subspace-Fn)
-3. 
+3. #link("https://www.youtube.com/watch?v=kYB8IZa5AuE&list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab&index=3")[Linear transformations and matrices]
+	- Linear maps (@sec:linmap:linmap)
+	- Matrix of a linear map (@sec:matsys:matmap)
+	- Matrix-vector multiplication (@sec:matsys:matvec)
+4. #link("https://www.youtube.com/watch?v=XkY2DOUCWMU&list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab&index=4")[Matrix multiplication as composition]
+	- Matrix multiplication (@sec:matsys:matmul)
+5. #link("https://www.youtube.com/watch?v=rHLEWRxRGiM&list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab&index=5")[Three-dimensional linear transformations]
 
