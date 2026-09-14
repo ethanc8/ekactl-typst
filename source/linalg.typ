@@ -1097,9 +1097,26 @@ If $A$ is an $n times n$ matrix, and is the matrix of the linear map $T_A$, the 
 
 == Left and right inverse
 
-#see[#link("https://ocw.mit.edu/courses/18-06sc-linear-algebra-fall-2011/pages/positive-definite-matrices-and-applications/left-and-right-inverses-pseudoinverse/")[[MIT 18.06SC [Lecture 33]]], [MATH 257 [HW3.4]], #link("https://math.stackexchange.com/questions/1694351/finding-all-left-inverses-of-a-matrix")]
+#see[#link("https://ocw.mit.edu/courses/18-06sc-linear-algebra-fall-2011/pages/positive-definite-matrices-and-applications/left-and-right-inverses-pseudoinverse/")[MIT 18.06SC [Lecture 33]], Strang-ILA-6e [4.5], MATH 257 [HW3.4], #link("https://math.stackexchange.com/questions/1694351/finding-all-left-inverses-of-a-matrix")]
 
-Let $A$ be an $m times n$ matrix with $n > m$. We wish to find $B$ s.t. $A B = I$, i.e. $B$ is the #defname[right-inverse] of $A$. The right-inverse is not unique; the following procedures may give you different right-inverses.
+Let $A$ be an $m times n$ matrix with $n > m$. We wish to find $B$ s.t. $A B = I$, i.e. $B$ is the #defname[right-inverse] of $A$. The right-inverse is not unique. //; the following procedures may give you different right-inverses.
+
+#theorem(title: [Finding left/right-inverse])[
+	Notice that $A A^transpose$ is square, and that
+	$ A (A^transpose (A A^transpose)^(-1)) = (A A^transpose) (A A^transpose)^(-1) = -1. $
+
+	Thus, a right-inverse of $A$ is
+	$ A^(-1)_"right" := A^transpose (A A^transpose)^(-1). $
+
+	It only exists when $A$ has independent rows.
+
+	Similarly, we can find that a left-inverse of $A$ is
+	$ A^(-1)_"left" := (A^transpose A)^(-1) A^transpose. $
+
+	It only exists when $A$ has independent columns.
+]
+
+Here are some alternative ways to do it. They aren't very useful.
 
 #procedure(title: [Computation of right-inverse by zeroing out rows])[
   Choose $n - m$ rows of $B$ to zero out. By the outer product rule, zeroing
@@ -1118,16 +1135,10 @@ Let $A$ be an $m times n$ matrix with $n > m$. We wish to find $B$ s.t. $A B = I
   equal to the corresponding column of $I$, giving one linear system per column of $B$ to solve.
 ]
 
-#procedure(title: [Computation using transpose])[
-	Notice that $A A^transpose$ is square, and that
-	$ A (A^transpose (A A^transpose)^(-1)) = (A A^transpose) (A A^transpose)^(-1) = -1. $
+// From Strang-ILA-6e:
 
-	Thus, a right-inverse of $A$ is
-	$ A^(-1)_"right" := A^transpose (A A^transpose)^(-1). $
-
-	Similarly, we can find that a left-inverse of $A$ is
-	$ A^(-1)_"left" := (A^transpose A)^(-1) A^transpose. $
-]
+// #image("/assets/image.png")
+// #image("/assets/image-1.png")
 
 == LU decomposition
 
