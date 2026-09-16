@@ -92,6 +92,7 @@
 #let curl = math.op("curl")
 
 #let RREF = math.op("RREF")
+#let REF = math.op("REF")
 #let span = math.op("span")
 
 #let dirsum = math.limits(sym.plus.o)
@@ -1142,7 +1143,80 @@ Here are some alternative ways to do it. They aren't very useful.
 
 == LU decomposition
 
-#see[#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/math257/CompleteLectureNotes--Filled.pdf#Outline0.12")[MATH 257 [Module 12]], Strang-LALD [I.4], Strang-ILA-5e [2.6], Strang-ILA-6e [2.3], Strang-LAFE [2.3], #link("https://ocw.mit.edu/courses/18-06-linear-algebra-spring-2010/4d876a9159e32543eb0d73b4d4382f4c_MIT18_06S10ZoomNotes.pdf")[Strang-ZoomNotes [2.3]], #link("https://ocw.mit.edu/courses/18-06sc-linear-algebra-fall-2011/pages/ax-b-and-the-four-subspaces/factorization-into-a-lu/")[MIT 18.06SC [Lecture 4]]]
+#see[#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/math257/CompleteLectureNotes--Filled.pdf#Outline0.12")[MATH 257 [Module 12, 13]], Strang-ILA-6e [2.3]]
+
+#see[_(extras)_ Strang-LALD [I.4], Strang-ILA-5e [2.6], Strang-LAFE [2.3], #link("https://ocw.mit.edu/courses/18-06-linear-algebra-spring-2010/4d876a9159e32543eb0d73b4d4382f4c_MIT18_06S10ZoomNotes.pdf#page=19")[Strang-ZoomNotes [2.3, 2.5]], #link("https://ocw.mit.edu/courses/18-06sc-linear-algebra-fall-2011/pages/ax-b-and-the-four-subspaces/factorization-into-a-lu/")[MIT 18.06SC [Lecture 4]]]
+
+#definition[
+	An $n times n$ matrix $A$ is called
+	- upper triangular iff it is of the form
+		$ mat(
+			star, star, star, star, star;
+			0, star, star, star, star;
+			0, 0, star, star, star;
+			0, 0, 0, dots.down, dots.v;
+			0, 0, 0, 0, star;
+		), $
+		i.e. all the entries below the main diagonal are zero.
+	- lower triangular iff it is of the form
+		$ mat(
+			star, 0, 0, 0, 0;
+			star, star, 0, 0, 0;
+			star, star, star, 0, 0;
+			star, star, star, dots.down, dots.v;
+			star, star, star, star, star;
+		), $
+		i.e. all the entries above the main diagonal are zero.
+	- diagonal iff it only has entries on the main diagonal.
+]
+
+#theorem[
+	The product of two lower (upper) triangular matrices is lower (upper) triangular.
+
+	The inverse of a lower (upper) triangular matrix (if it exists) is again lower (upper) triangular.
+]
+
+#definition(title: [LU decomposition])[
+	A matrix $A$ has an #defname[LU decomposition] iff there is a lower triangular matrix $L$ and an upper triangular matrix $U$ such that $A = L U$.
+]
+
+#lemma[
+	Not every matrix has an LU decomposition. The LU decomposition of a matrix is not unique.
+]
+
+#procedure(title: [Finding LU decomposition ($O(n^3)$)])[
+	Suppose that $REF(A)$ can be found by operations $e_1, ..., e_n$ of the form $R_i mapsto R_i + c R_j$ where $j < i$:
+	$ U := REF(A) = e_n (I) dots.c e_1 (I) A. $
+	We define $U := REF(A)$ since $REF(A)$ is always upper-triangular. Finding $U$ takes approximately $1/3 n^3$ multiplications and $1/3 n^3$ subtractions.
+
+	Then,
+	$ L := e_1^(-1)(I) dots.c e_n^(-1)(I) $
+	is lower-triangular.
+]
+
+#lemma[
+	The elementary matrix for a replacement ($R_i mapsto R_i + c R_j$) with $j < i$ or scaling ($R_i mapsto c R_i$) operation is lower triangular.
+]
+
+#theorem[
+	Let $A$ be an $n times n$-matrix. If $A$ can be brought to echelon form just using row operations of the form $R_i mapsto R_i + c R_j$ where $j < i$, then $A$ has an LU decomposition.
+]
+
+#lemma[
+	Every matrix $A$ has some permutation matrix (possibly the identity) s.t. $P A = L U$, where $L U$ is an LU decomposition.
+
+	Equivalently, every matrix has some permutation of its rows which has an $L U$ decomposition.
+]
+
+#procedure(title: [Using LU decomposition ($O(n^2)$)])[
+	Suppose $A = L U$ where $L$ is lower triangular and $U$ is upper triangular. Then, we can solve the problem $A vn(x) = vn(b)$ by:
+	1. Solving $L vn(y) = vn(b)$ for $vn(y)$ using forward-substitution (going from top down).
+	2. Solving $U vn(x) = vn(y)$ for $vn(x)$ using back-substitution (going from bottom up).
+]
+
+#remark-block[
+	LU decomposition is most useful when one has to solve many linear systems $A vn(x) = vn(y)$ with the same coefficients but different right-hand side $vn(y)$.
+]
 
 == Fundamental matrix spaces
 
