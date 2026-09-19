@@ -1904,7 +1904,7 @@ For any discussion of inner product spaces, let $Field$ be $Reals$ or $Complex$.
 
 == Inner product
 
-#see[Trimm 7.1]
+#see[#link("https://linear.axler.net/LADR4e.pdf#section.6.1")[Axler [6A]], #link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/trimm/unit-7/7.1%20Inner%20Product%20Spaces-1.pdf")[Trimm [7.1]], #link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/math257/CompleteLectureNotes--Filled.pdf#Outline0.15")[MATH 257 [Module 15]]] // TODO Chuang
 
 #definition(title: [Positive definite])[
 	A map $f : V times V to Field$ is positive definite iff for any $v in V$ where $v != 0$,
@@ -1918,15 +1918,20 @@ For any discussion of inner product spaces, let $Field$ be $Reals$ or $Complex$.
 	The inner product of $v, w in V$ is denoted $(v, w)$.
 ]
 
+#definition(title: [Norm])[
+	If $u, v mapsto (u, v)$ is an inner product, then the #defname[norm] of a vector $v$ is defined as
+	$ norm(v) := (v, v). $
+]
+
 #definition(title: [Dot product on $Reals^n$])[
-	The dot product is the mapping that maps $x, y in Reals^n$ to the real number
-	$ x dot y = sum_(i=1)^n x_i y_i $
+	The dot product is the mapping that maps $v, w in Reals^n$ to the real number
+	$ v dot w = sum_(i=1)^n v_i w_i = v^transpose w $
 
 	It is an inner product on $Reals^n$, and satisfies the following properties for any $v, w, x in V$:
 	- $(c v + w) dot x = c v dot x + w dot y$
 	- $v dot w = w dot v$
 	- $x dot (c v + w) = c x dot v + x dot w$
-	- $|v| = sqrt(v dot v)$
+	- $norm(v) = sqrt(v dot v)$
 ]
 
 #definition(title: [Complex conjugate])[
@@ -1961,18 +1966,22 @@ For any discussion of inner product spaces, let $Field$ be $Reals$ or $Complex$.
 	- $(c v + w) dot x = c v dot x + w dot y$
 	- $v dot w = overline(w dot v)$
 	- $x dot (c v + w) = overline(c) x dot v + x dot w$
-	- $|v| = sqrt(v dot v)$
+	- $norm(v) = sqrt(v dot v)$
 ]
 
 #definition(title: [Inner product space])[
 	A vector space $V$ together with an inner product on $V$.
 ]
 
-== Orthogonality
+#theorem[
+	For all $u, v in V$,
+	- *Cauchy-Schwarz inequality*: $abs((u, v)) <= norm(u) norm(v)$
+	- *Triangle Inequality*: $norm(u + v) <= norm(u) + norm(v)$
+	- *Reverse Triangle Inequality*: $abs(|u| - |v|) <= norm(u - v)$
+	- *Parallelogram Law*: $norm(u + v)^2 + norm(u - v)^2 = 2(norm(u)^2 + norm(v)^2)$
+]
 
-#see[Trimm 7.1]
-
-For this section, let $V$ be an inner product space.
+Let $V$ be an inner product space.
 
 #definition(title: [Orthogonality])[
 	Two vectors $u, v in V$ are orthogonal iff $(u, v) = 0$.
@@ -1984,21 +1993,28 @@ For this section, let $V$ be an inner product space.
 
 #theorem(title: [Pythagorean Theorem])[
 	If $u, v in V$ are orthogonal, then
-	$ |u + v|^2 = |u|^2 + |v|^2 $
+	$ norm(u + v)^2 = norm(u)^2 + norm(v)^2 $
 ]
 
 #theorem(title: [Orthogonal decomposition])[
 	Let $u, v in V$. Then $u$ can be uniquely decomposed as
 	$ u = u_parallel + u_perp $
-	where $u_parallel parallel v$ and $u_perp perp v$.
+	where $u_parallel parallel v$ (i.e. $u_parallel = c v$ for some $c in Field$) and $u_perp perp v$ (i.e. $(u_perp, v) = 0$).
+
+	We can construct them as:
+	$ u_parallel := ((u, v))/norm(v)^2 v quad u_perp := u - u_parallel $
 ]
 
-#theorem[
-	For all $u, v in V$,
-	- *Cauchy-Schwarz inequality*: $|(u, v)| <= |u| |v|$
-	- *Triangle Inequality*: $|u + v| <= |u| + |v|$
-	- *Reverse Triangle Inequality*: $abs(|u| - |v|) <= |u - v|$
-	- *Parallelogram Law*: $|u + v|^2 + |u - v|^2 = 2(|u|^2 + |v|^2)$
+#definition(title: [Unit vector])[
+	$v in V$ is a #defname[unit vector] iff $norm(v) = 1$.
+]
+
+#definition(title: [Orthogonal set])[
+	A set $A$ where every $v, w in A$ are orthogonal.
+]
+
+#definition(title: [Orthonormal set])[
+	An orthogonal set $A$ where every $v in A$ has $norm(v) = 1$.
 ]
 
 = Resources
