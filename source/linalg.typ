@@ -95,6 +95,12 @@
 #let REF = math.op("REF")
 #let span = math.op("span")
 
+#let Nul = math.op("Nul")
+#let Col = math.op("Col")
+#let Row = math.op("Row")
+#let rank = math.op("rank")
+#let nullity = math.op("nullity")
+
 #let dirsum = math.limits(sym.plus.o)
 
 #let linmaps = $cal(L)$
@@ -454,6 +460,8 @@ Let $Field$ be a field. It's possible that some things in here require $Field = 
 
 == Kernel
 
+#see[#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/trimm/unit-4/4.2%20Kernel%20and%20Image.pdf")[Trimm 4.2], #link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/karthik/4_2.pdf")[Karthik 4.2], #link("https://linear.axler.net/LADR4e.pdf#section.3.2")[Axler 3B]]
+
 #definition(title: [Kernel])[
 	The *kernel* or *null space* of a linear map $T : V to W$ is the set of vectors in $V$ which $T$ maps to the zero vector of $W$:
 	$ op("null") T = ker T := { v in V : T v = 0 } subset.eq V $
@@ -472,6 +480,8 @@ Let $Field$ be a field. It's possible that some things in here require $Field = 
 ]
 
 == Image
+
+#see[#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/trimm/unit-4/4.2%20Kernel%20and%20Image.pdf")[Trimm 4.2], #link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/karthik/4_2.pdf")[Karthik 4.2], #link("https://linear.axler.net/LADR4e.pdf#section.3.2")[Axler 3B]]
 
 #definition(title: [Image])[
 	Let $T : V to W$ be a linear map. The *image* or *range* of $T$ is the set of all outputs of T:
@@ -668,7 +678,7 @@ For the following definitions, let $B := ( v_1, dots, v_n )$ be an ordered basis
 	Every $m times n$ matrix $A$ is the standard matrix of the linear map $T_A : Field^n to Field^m$, $T_A (X) := A X$ (matrix-vector multiplication is defined precisely in @def:matrix-vector-mult below). This is the correspondence that lets us study the abstract map $T_A$ purely as concrete array arithmetic on $A$, and it's the reason $ker T_A$ (equivalently, the null space $op("Nul") A$) is exactly the solution set of the homogeneous system $A X = 0$.
 ]
 
-== Linear systems
+== Linear systems <sec:matsys:linsys>
 
 #see[#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/math257/CompleteLectureNotes--Filled.pdf#Outline0.1")[MATH 257 [Module 1]], Trimm [#link("https://github.com/ethanc8/ekactl-references/raw/trunk/linalg/trimm/unit-1/1.1%20Linear%20Equations.pdf")[1.1], #link("https://github.com/ethanc8/ekactl-references/raw/trunk/linalg/trimm/unit-1/1.2%20Elimination.pdf")[1.2], #link("https://github.com/ethanc8/ekactl-references/raw/trunk/linalg/trimm/unit-1/1.3%20Elementary%20Row%20Operations.pdf")[1.3]]]
 
@@ -1006,7 +1016,7 @@ For the following definitions, let $B := ( v_1, dots, v_n )$ be an ordered basis
 	Let $A$ and $B$ be $m times n$ matrices. Then, $B$ is row-equivalent to $A$ iff $B = e_k (I) dots.c e_1 (I) A$, where $e_1(I), dots, e_k (I)$ are elementary matrices of size $m times m$,
 ]
 
-== Invertible matrices
+== Invertible matrices <sec:matmap:invmat>
 
 #see[#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/trimm/unit-4/4.7%20Invertible%20Matrices.pdf")[Trimm [4.7]], #link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/karthik/4_7.pdf")[Karthik [4.7]], #link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/math257/CompleteLectureNotes--Filled.pdf#Outline0.10")[MATH 257 [Module 10, 11]]]
 
@@ -1218,55 +1228,61 @@ Here are some alternative ways to do it. They aren't very useful.
 	LU decomposition is most useful when one has to solve many linear systems $A vn(x) = vn(y)$ with the same coefficients but different right-hand side $vn(y)$.
 ]
 
-== Fundamental matrix spaces
+== Fundamental matrix spaces <sec:matmap:funmatspaces>
+
+#see[MATH 257 [#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/math257/CompleteLectureNotes--Filled.pdf#Outline0.17")[Module 17], #link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/math257/CompleteLectureNotes--Filled.pdf#Outline0.22")[Module 22]], #link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/trimm/unit-4/4.6%20Fundamental%20Matrix%20Spaces.pdf")[Trimm 4.6], #link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/karthik/4_6.pdf")[Karthik 4.2] #link("https://linear.axler.net/LADR4e.pdf#subsection*.31")[Axler 3C.31]]
 
 Given a matrix $A in Field^(m,n)$, define $T_A := x mapsto A x$. Then $T_A : Field^n to Field^m$.
 
 #definition(title: [Null space, nullity])[
 	The *null space* of $A$ is the kernel of $T_A$:
-	$ op("Nul") A := ker T_A = {x in Field^n : A x = 0} $
+	$ Nul A := ker T_A = {x in Field^n : A x = 0} $
 
 	which is the solution set of the homogeneous linear system $A x = 0$.
 
-	$ op("nullity") A := dim op("Nul") A $
+	$ nullity A := dim Nul A $
 ]
 
 #definition(title: [Column space, rank])[
 	The *column space* of $A$ is the image of $T_A$:
-	$ op("Col") A := im T_A
+	$ Col A := im T_A
 		&= {T_A x : x in Field^n} \
 		&= {A x : x in Field^n} \
 		&= { sum_(i=1)^n x_i A_(* i) : x_i in Field } \
-		&= op("span") { A_(* 1), dots, A_(* n) } $
+		&= span { A_(* 1), dots, A_(* n) } $
 
 	which is the span of the column vectors of the matrix $A$.
 
-	$ op("rank") A := dim op("Col") A $
+	$ rank A := dim Col A $
 ]
 
 #lemma[
-	$ op("rank") A &= "the number of pivot columns" \
-		op("nullity") A &= "the number of non-pivot columns" $
+	$ rank A &= "the number of pivot columns" \
+		nullity A &= "the number of non-pivot columns" $
 
 	Therefore,
-	$ n = op("nullity") A + op("rank") A $
+	$ n = nullity A + rank A, $
+	where $n$ is the number of columns of $A$, or equivalently the dimension of the domain of $T_A$.
 ]
 
-#procedure(title: [Finding bases of $op("Nul") A$, $op("Col") A$, $op("Row") A$])[
-	+ The pivot columns of $A$ are a basis of $op("Col") A$.
-	+ The pivot rows of $RREF(A)$ are a basis of $op("Row") A$. (row space is preserved under row operations)
-	+ The vectors spanning $A x = 0$ are a basis of $op("Nul") A$.
+#procedure(title: [Finding bases of $Nul A$, $Col A$, $Row A$])[
+	+ The pivot columns of $A$ are a basis of $Col A$.
+	+ The pivot rows of $A$ or of $RREF(A)$ are a basis of $Row A$. (row space is preserved under row operations)
+	+ The vectors spanning $A x = 0$ are a basis of $Nul A$, so
+		+ Find the parametric form of the solutions to $A x = 0$.
+		+ Express solutions for $x$ as a linear combination of vectors with the free variables as coefficients.
+		+ These vectors form a basis of $Nul A$.
 ]
 
 #theorion-restate(filter: <def:matrix-transpose>)
 
 #definition(title: [Row space])[
 	The row space of $A$ is the span of the row vectors of $A$:
-	$ op("Row") A := op("span") { A_(1 *), dots, A_(m *) } = op("Col") A^T $
+	$ Row A := span { A_(1 *), dots, A_(m *) } = Col A^T $
 ]
 
 #lemma[
-	$ dim op("Row") A = dim op("Col") A = op("rank") A $
+	$ dim Row A = dim Col A = rank A $
 ]
 
 #definition(title: [Left null space])[
@@ -1902,7 +1918,7 @@ Given a matrix $A in Field^(m,n)$, define $T_A := x mapsto A x$. Then $T_A : Fie
 
 For any discussion of inner product spaces, let $Field$ be $Reals$ or $Complex$.
 
-== Inner product
+== Inner product <sec:innerprod:innerprod>
 
 #see[#link("https://linear.axler.net/LADR4e.pdf#section.6.1")[Axler [6A]], #link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/trimm/unit-7/7.1%20Inner%20Product%20Spaces-1.pdf")[Trimm [7.1]], #link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/math257/CompleteLectureNotes--Filled.pdf#Outline0.15")[MATH 257 [Module 15]]] // TODO Chuang
 
@@ -2094,4 +2110,13 @@ Let $V$ be an inner product space.
 4. #link("https://www.youtube.com/watch?v=XkY2DOUCWMU&list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab&index=4")[Matrix multiplication as composition]
 	- Matrix multiplication (@sec:matsys:matmul)
 5. #link("https://www.youtube.com/watch?v=rHLEWRxRGiM&list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab&index=5")[Three-dimensional linear transformations]
-
+6. #link("https://www.youtube.com/watch?v=Ip3X9LOh2dk&list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab&index=7")[The determinant]
+	- TODO
+7. #link("https://www.youtube.com/watch?v=uQhTuRlWMxw&list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab&index=7")[Inverse matrices, column space and null space]
+	- Linear systems (@sec:matsys:linsys)
+	- Invertible matrices (@sec:matmap:invmat)
+	- Column and null space (@sec:matmap:funmatspaces)
+8. #link("https://www.youtube.com/watch?v=v8VSDg_WQlA&list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab&index=8")[Nonsquare matrices as transformations between dimensions]
+9. #link("https://www.youtube.com/watch?v=LyGKycYT2v0&list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab&index=9")[Dot products and duality]
+	- Inner product (@sec:innerprod:innerprod)
+	- TODO: geometric meaning of the dot product, relationship between row vector as transformation and vector as a vector
