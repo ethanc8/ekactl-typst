@@ -300,17 +300,29 @@ Let $Field$ be a field. It's possible that some things in here require $Field = 
 == Linear independence
 
 #definition(title: [Linear independence])[
-	Let $V$ be a vector space. If $W subset.eq V$ is a finite set, it is linearly independent iff the only way to write 0 as a combination
-	$ alpha_1 v_1 + dots.c + alpha_m v_m = 0 $
-	is by taking $alpha_1 = dots.c = alpha_m = 0$. We also define $nothing$ to be linearly independent.
+	Let $V$ be a vector space. If $W subset.eq V$ is a finite set, it is #defname[linearly independent] iff one of the following equivalent conditions:
+	- the only way to write 0 as a combination
+		$ alpha_1 v_1 + dots.c + alpha_m v_m = 0 $
+		is by taking $alpha_1 = dots.c = alpha_m = 0$.
+	- there does not exist $w in W$ (possibly $w = 0$) s.t. $w$ is a linear combination of the other elements of $W$.
+	
+	We also define $emptyset$ to be linearly independent.
 
-	If $W subset.eq V$ is an infinite set, it is linearly independent if every finite subset of $W$ is linearly independent.
+	If $W subset.eq V$ is an infinite set, it is linearly independent if fevery finite subset of $W$ is linearly independent.
+
+	#defname[Linear dependence] is the opposite of linear independence.
 ]
 
 #theorem[
 	If $W subset.eq V$ is linearly independent, any subset $U subset.eq W$ is linearly independent.
+]
 
-	If one vector in $W$ is a linear combination of the other vectors (including if $0 in W$), then $W$ is linearly dependent.
+#theorem[
+	Let $A$ be an $m times n$ matrix. The following are equivalent:
+	- The columns of $A$ are linearly independent.
+	- $A x = 0$ has only the solution $x = 0$.
+	- $A$ has $n$ pivots.
+	- there are no free variables for $A x = 0$.
 ]
 
 == Basis <sec:vecspace:basis>
@@ -1230,7 +1242,7 @@ Here are some alternative ways to do it. They aren't very useful.
 
 == Fundamental matrix spaces <sec:matmap:funmatspaces>
 
-#see[MATH 257 [#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/math257/CompleteLectureNotes--Filled.pdf#Outline0.17")[Module 17], #link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/math257/CompleteLectureNotes--Filled.pdf#Outline0.22")[Module 22]], #link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/trimm/unit-4/4.6%20Fundamental%20Matrix%20Spaces.pdf")[Trimm 4.6], #link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/karthik/4_6.pdf")[Karthik 4.2] #link("https://linear.axler.net/LADR4e.pdf#subsection*.31")[Axler 3C.31]]
+#see[MATH 257 [#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/math257/CompleteLectureNotes--Filled.pdf#Outline0.17")[Module 17], #link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/math257/CompleteLectureNotes--Filled.pdf#Outline0.21")[Module 21]], #link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/trimm/unit-4/4.6%20Fundamental%20Matrix%20Spaces.pdf")[Trimm 4.6], #link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/karthik/4_6.pdf")[Karthik 4.2] #link("https://linear.axler.net/LADR4e.pdf#subsection*.31")[Axler 3C.31]]
 
 Given a matrix $A in Field^(m,n)$, define $T_A := x mapsto A x$. Then $T_A : Field^n to Field^m$.
 
@@ -1256,7 +1268,7 @@ Given a matrix $A in Field^(m,n)$, define $T_A := x mapsto A x$. Then $T_A : Fie
 	$ rank A := dim Col A $
 ]
 
-#lemma[
+#theorem(title: [Rank-nullity theorem])[
 	$ rank A &= "the number of pivot columns" \
 		nullity A &= "the number of non-pivot columns" $
 
@@ -1293,6 +1305,11 @@ Given a matrix $A in Field^(m,n)$, define $T_A := x mapsto A x$. Then $T_A : Fie
 	To find the left null space of the $n times m$ matrix $A$, make a column vector $b = (b_1, dots, b_m)^T$ and calculate $RREF([A | b])$. Then the basis of the left null space is given by the rows of $RREF([A | b])$ for which the left side is all zero (where $b_1, dots, b_m$ are the basis in which $A$ is expressed in (the basis $B$ for which $A = [T]_B$, which is usually the standard basis)).
 
 	Alternately, calculate $RREF([A | I])$, then the basis of the left null space is given by the rows of $RREF([A | I])$ for which the left side is all zero.
+]
+
+#lemma[
+	$ Nul(A^transpose) &= Col(A)^perp \
+	Row(A) &= Nul(A)^perp $
 ]
 
 == Change of basis
@@ -2031,6 +2048,34 @@ Let $V$ be an inner product space.
 
 #definition(title: [Orthonormal set])[
 	An orthogonal set $A$ where every $v in A$ has $norm(v) = 1$.
+]
+
+
+= Orthogonal complement
+
+#see[#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/math257/CompleteLectureNotes--Filled.pdf#Outline0.23")[MATH 257 [Module 23]]]
+
+#definition(title: [Orthogonal complement])[
+	Let $W$ be a subspace of $Reals^n$. The #defname[orthogonal complement] of $W$ is the subspace $W^perp$ of all vectors that are orthogonal to $W$; that is
+	$ W^perp := { v in Reals^n : v dot w = 0 "for all" w in W }. $
+]
+
+#remark-block[
+	Observe that $(W^perp)^perp = W$.
+]
+
+#theorem[
+	Let $A$ be an $m times n$ matrix. Then $op("Nul")(A)$ is the orthogonal complement of $op("Col")(A^T)$; that is $op("Nul")(A) = op("Col")(A^T)^perp$.
+]
+
+#remark-block[
+	It follows that
+	- $op("Nul")(A)^perp = op("Col")(A^T)$.
+	- $op("Nul")(A^T) = op("Col")(A)^perp$.
+]
+
+#theorem[
+	Let $V$ be a subspace of $Reals^n$. Then $dim V + dim V^perp = n$.
 ]
 
 = Resources
