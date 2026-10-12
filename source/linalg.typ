@@ -1309,8 +1309,8 @@ Given a matrix $A in Field^(m,n)$, define $T_A := x mapsto A x$. Then $T_A : Fie
 
 #lemma[
 	$ Nul(A^transpose) &= Col(A)^perp \
-	Row(A) &= Nul(A)^perp $
-]
+	Row(A) = Col(A^transpose) &= Nul(A)^perp $
+] <lem:nullspace-orthogonal>
 
 == Change of basis
 
@@ -2064,18 +2064,137 @@ Let $V$ be an inner product space.
 	Observe that $(W^perp)^perp = W$.
 ]
 
-#theorem[
-	Let $A$ be an $m times n$ matrix. Then $op("Nul")(A)$ is the orthogonal complement of $op("Col")(A^T)$; that is $op("Nul")(A) = op("Col")(A^T)^perp$.
-]
+#lemma(title: [Transpose is the adjoint of the dot product])[
+	For all $x in Reals^n$ and $y in Reals^m$,
+	$ (A x) dot y = x dot (A^transpose y). $
+] <lem:transpose-adjoint>
 
-#remark-block[
-	It follows that
-	- $op("Nul")(A)^perp = op("Col")(A^T)$.
-	- $op("Nul")(A^T) = op("Col")(A)^perp$.
-]
+#theorion-restate(filter: <lem:nullspace-orthogonal>)
 
 #theorem[
 	Let $V$ be a subspace of $Reals^n$. Then $dim V + dim V^perp = n$.
+]
+
+= Appendix: Graphs
+
+#definition[
+	A graph is a set of nodes (or: vertices) that are connected through edges.
+]
+
+#definition[
+	Let $G$ be a graph with $n$ nodes. The adjacency matrix of $G$ is the $n times n$-matrix $A = (a_(i j))$ such that
+	$ a_(i j) = cases(
+		1 & "if there is an edge between node" i "and node" j,
+		0 & "otherwise",
+	) $
+]
+
+#definition[
+	A walk of length $k$ on a graph is a sequence of $k+1$ vertices and $k$ edges between two nodes (including the start and end) that may repeat. A path is a walk in which all vertices are distinct.
+]
+
+#definition[
+	A graph is connected if for every pair of nodes $i$ and $j$ there is a walk from node $i$ to node $j$. A graph is disconnected if it is not connected.
+]
+
+#theorem[
+	Let $G$ be a graph and let $A$ be its adjacency matrix. Then the entry in the $i$-th row and $j$-th column of $A^ell$ is the number of walks of length $ell$ from node $j$ to node $i$ on $G$.
+]
+
+#definition[
+	A directed graph is a set of vertices connected by edges, where the edges have a direction associated with them.
+]
+
+#definition[
+	Let $G$ be a directed graph with $m$ edges and $n$ nodes. The adjacency matrix of $G$ is the $n times n$ matrix $A = (a_(i,j))_(i,j)$ with
+	$ a_(i,j) = cases(
+		1 & "if there is a directed edge from node" j "to node" i,
+		0 & "otherwise",
+	) $
+]
+
+#definition[
+	Let $G$ be a directed graph with $m$ edges and $n$ nodes. The edge-node incidence matrix of $G$ is the $m times n$ matrix $A = (a_(i,j))_(i,j)$ with
+	$ a_(i,j) = cases(
+		-1 & "if edge" i "leaves node" j,
+		+1 & "if edge" i "enters node" j,
+		0 & "otherwise",
+	) $
+]
+
+#definition[
+	A connected component of an undirected graph is a part in which any two vertices are connected to each other by paths, and which is connected to no additional vertices in the rest of the graph. The connected components of a directed graph are those of its underlying undirected graph. A graph is connected if it has only one connected component.
+]
+
+#theorem[
+	Let $G$ be a directed graph and let $A$ be its edge-node incidence matrix. Then $dim op("Nul")(A)$ is equal to the number of connected components of $G$.
+]
+
+#definition[
+	A cycle in an undirected graph is a path in which all edges are distinct and the only repeated vertices are the first and last vertices. By cycles of a directed graph we mean those of its underlying undirected graph.
+]
+
+#definition[
+	The span of all cycle vectors of a graph $G$ is called the cycle space.
+]
+
+#theorem[
+	Let $G$ be a directed graph and let $A$ be its edge-node incidence matrix. Then the cycle space of $G$ is equal to $op("Nul")(A^T)$.
+]
+
+#remark-block(title: [Why the walk-counting theorem is true (case $ell = 2$)])[
+	Write $A$'s rows as $R_1, dots, R_n$ and columns as $C_1, dots, C_n$. By the row-column rule,
+	$ (A^2)_(i j) = R_i dot C_j = A_(i 1) A_(1 j) + A_(i 2) A_(2 j) + dots.c + A_(i n) A_(n j). $
+	Each summand $A_(i k) A_(k j)$ equals $1$ exactly when there is an edge from $j$ to $k$ *and* an edge from $k$ to $i$ — i.e. exactly when it witnesses a walk of length $2$ from $j$ to $i$ passing through $k$. Since every walk of length $2$ passes through exactly one intermediate node, the sum counts all such walks. The same argument, with $A^(ell - 1)$ in place of $A$, extends this to any $ell$ by induction.
+]
+
+#lemma[
+	The adjacency matrix of an undirected graph is symmetric: $A^transpose = A$. A nonzero diagonal entry $A_(i i)$ indicates a #defname[self-loop] at node $i$.
+]
+
+#remark-block[
+	Since $(I)_(i j) = 1$ exactly when $i = j$, it is natural to regard $I$ as counting the (trivial) walk of length $0$ from a node to itself. Consequently $I + A$ counts walks of length $0$ or $1$ between each pair of nodes — and more generally, $I + A + A^2 + dots.c + A^k$ counts walks of length at most $k$.
+]
+
+#theorem(title: [Walks of length at most $k$])[
+	Let $G$ be a graph with adjacency matrix $A$. Every node of $G$ is connected to every other node by a walk of length at most $k$ if and only if
+	$ I + sum_(i=1)^k A^i $
+	has no zero entries.
+]
+
+#remark-block[
+	Two subtleties:
+	- Using $sum_(i=1)^k A^i$ *without* the $I$ term counts only nontrivial walks between each pair; it can still have zero diagonal entries even for a connected graph, since a node need not have a walk back to itself of length $<= k$.
+	- Using $A^k$ *alone* does not correctly count "reachable within $k$ steps": a node reached in fewer than $k$ steps is forced to leave again at the next step, unless $A$ already has a self-loop at every node (cf. $A + I$).
+]
+
+#corollary[
+	A graph on $n$ nodes is connected if and only if $I + sum_(i=1)^(n-1) A^i$ has no zero entries — since any walk connecting two distinct nodes without revisiting a node uses at most $n - 1$ edges, taking $k = n - 1$ always suffices to test full connectivity.
+]
+
+#remark-block(title: [Potential interpretation of $op("Nul")(M)$])[
+	Let $M$ be the edge-node incidence matrix of a directed graph $G$ with $n$ nodes, and think of $vn(x) in Reals^n$ as assigning a #defname[potential] $x_k$ to each node $k$. For the row of $M$ corresponding to an edge $e$ from node $j$ to node $i$,
+	$ (M vn(x))_e = x_i - x_j, $
+	so $M vn(x) = 0$ forces the potentials at the two endpoints of every edge to agree. Hence $vn(x) in op("Nul")(M)$ assigns equal potential to every pair of nodes joined by a path — i.e. constant potential on each connected component. This gives another route to $dim op("Nul")(M) = $ number of connected components: a basis is given by the indicator vector of each connected component.
+]
+
+#remark-block(title: [Flow interpretation of $op("Nul")(M^transpose)$])[
+	Think of $vn(y) in Reals^m$ ($m$ = number of edges) as assigning a flow $y_e$ to each edge. For node $k$,
+	$ (M^transpose vn(y))_k = ("total inflow at" k) - ("total outflow at" k), $
+	so $vn(y) in op("Nul")(M^transpose)$ exactly when inflow equals outflow at every node — #defname[Kirchhoff's current law]. This is why the cycle space (flows that balance at every node) equals $op("Nul")(M^transpose)$.
+]
+
+#procedure(title: [Writing a cycle as a vector])[
+	Given a cycle in $G$ and a chosen direction to traverse it, build $vn(c) in Reals^m$ by setting, for each edge $e$:
+	- $c_e = +1$ if the cycle traverses $e$ in $e$'s own defined direction (tail to head),
+	- $c_e = -1$ if traversed against it,
+	- $c_e = 0$ if $e$ is not part of the cycle.
+
+	Any such $vn(c)$ automatically satisfies $M^transpose vn(c) = 0$ (flow is conserved at every node along the cycle).
+]
+
+#remark-block[
+	Cycle vectors built this way need not be independent — e.g. for three cycles that share edges, one may find $vn(c)_1 + vn(c)_2 = vn(c)_3$. As with any null space, a genuine *basis* for the cycle space is found by solving $M^transpose vn(y) = 0$ with the usual homogeneous-system procedure (see [Linear systems and matrices]), not by listing cycles directly.
 ]
 
 = Resources
