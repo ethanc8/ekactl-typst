@@ -1118,6 +1118,14 @@ If $A$ is an $n times n$ matrix, and is the matrix of the linear map $T_A$, the 
 	*Warning:* The order must be reversed!
 ]
 
+#theorem[
+	Let $A$ be a square matrix.
+
+	$ A^transpose = A^(-1) &<==> A "has orthonormal columns" \
+	&<==> A "has orthonormal rows".
+	$
+]
+
 == Left and right inverse
 
 #see[#link("https://ocw.mit.edu/courses/18-06sc-linear-algebra-fall-2011/pages/positive-definite-matrices-and-applications/left-and-right-inverses-pseudoinverse/")[MIT 18.06SC [Lecture 33]], Strang-ILA-6e [4.5], MATH 257 [HW3.4], #link("https://math.stackexchange.com/questions/1694351/finding-all-left-inverses-of-a-matrix")]
@@ -1315,12 +1323,14 @@ Given a matrix $A in Field^(m,n)$, define $T_A := x mapsto A x$. Then $T_A : Fie
 == Change of basis
 
 #definition(title: [Change of basis matrix])[
-	The *change of basis matrix* or *transition matrix* of an $n$-dimensional vector space $V$ with relation to the ordered bases $B$ and $B'$ is the $n times n$ matrix whose $j$th column is the coordinate vector of the $j$th vector in $B$ with respect to $B'$:
-	$ C_(* j) := [v_j]_(B') $
+	The *change of basis matrix* or *transition matrix* of an $n$-dimensional vector space $V$ from the ordered basis $B$ to $B'$ is the $n times n$ matrix whose $j$th column is the coordinate vector of the $j$th vector in $B$ with respect to $B'$:
+	$ (C_(B to B'))_(* j) := [v_j]_(B') $
 ]
 
 #procedure(title: [Finding the transition matrix])[
-	Given bases $B$ and $B'$, row-reduce the augmented matrix $[[w_i] | [v_i]]$, whose first $n$ columns are the coordinate vectors $[w_i]$ of the vectors of $B'$ and whose last $n$ columns are the coordinate vectors $[v_i]$ of the vectors of $B$. Then the transition matrix from $B$ to $B'$ is the right-hand side of $RREF([[w_i] | [v_i]])$.
+	Given bases $B$ and $B'$, row-reduce the augmented matrix $[B' | B ] = [[w_i] | [v_i]]$, whose first $n$ columns are the coordinate vectors $[w_i]$ of the vectors of $B'$ and whose last $n$ columns are the coordinate vectors $[v_i]$ of the vectors of $B$. Then the transition matrix from $B$ to $B'$ is the right-hand side of $RREF([B' | B])$.
+
+	$ C_(B to B') = op("rhs")(RREF([B' | B])). $
 ]
 
 #lemma(title: [Inverting a transition matrix])[
@@ -1458,6 +1468,8 @@ Given a matrix $A in Field^(m,n)$, define $T_A := x mapsto A x$. Then $T_A : Fie
 
 == Bilinear forms
 
+#see[#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/trimm/unit-5/5.1%20Bilinear%20Forms.pdf")[Trimm [5.1]], #link("https://linear.axler.net/LADR4e.pdf#section.9.1")[Axler [9A]]]
+
 #definition(title: [Bilinear form])[
 	Let $V$ be a vector space over $Field$. A *bilinear form* on $V$ is a function $B : V times V to Field$ which is linear in each variable separately when the other variable is held constant. That is, for all $v_1, v_2, v in V$ and $alpha B(v, v_1) + B(v, v_2)$,
 	$ B(alpha v_1 + v_2, v) = alpha B(v_1, v) + B(v_2, v) $
@@ -1489,6 +1501,8 @@ Given a matrix $A in Field^(m,n)$, define $T_A := x mapsto A x$. Then $T_A : Fie
 
 == Symmetric bilinear forms
 
+#see[#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/trimm/unit-5/5.2%20Symmetric%20and%20Alternating%20Bilinear%20Forms.pdf")[Trimm [5.2]], #link("https://linear.axler.net/LADR4e.pdf#section.9.1")[Axler [9A]]]
+
 #definition(title: [Symmetric bilinear form])[
 	A bilinear form $B in V^((2))$ is symmetric iff $B(u, w) = B(w, u)$ for all $u, w in V$. The set of all symmetric bilinear forms on $V$ is denoted by $V^((2))_("sym")$.
 ]
@@ -1506,6 +1520,8 @@ Given a matrix $A in Field^(m,n)$, define $T_A := x mapsto A x$. Then $T_A : Fie
 ]
 
 == Alternating bilinear forms
+
+#see[#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/trimm/unit-5/5.2%20Symmetric%20and%20Alternating%20Bilinear%20Forms.pdf")[Trimm [5.2]], #link("https://linear.axler.net/LADR4e.pdf#section.9.1")[Axler [9A]]]
 
 #definition(title: [Alternating bilinear form])[
 	A bilinear form $B in V^((2))$ is alternating if
@@ -1530,6 +1546,8 @@ Given a matrix $A in Field^(m,n)$, define $T_A := x mapsto A x$. Then $T_A : Fie
 
 == Multilinear forms
 
+#see[#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/trimm/unit-5/5.3%20Alternating%20Multilinear%20Forms.pdf")[Trimm [5.3]], #link("https://linear.axler.net/LADR4e.pdf#section.9.2")[Axler [9B]]]
+
 #definition[
 	$ V^m := underbrace(V times V times dots.c times V, m "times") $
 ]
@@ -1541,6 +1559,8 @@ Given a matrix $A in Field^(m,n)$, define $T_A := x mapsto A x$. Then $T_A : Fie
 ]
 
 == Alternating multilinear forms
+
+#see[#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/trimm/unit-5/5.3%20Alternating%20Multilinear%20Forms.pdf")[Trimm [5.3]], #link("https://linear.axler.net/LADR4e.pdf#section.9.2")[Axler [9B]]]
 
 #definition(title: [Alternating multilinear form])[
 	An $m$-linear form $M$ is alternating iff
@@ -1561,6 +1581,8 @@ Given a matrix $A in Field^(m,n)$, define $T_A := x mapsto A x$. Then $T_A : Fie
 ]
 
 == Permutations
+
+#see[#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/trimm/unit-5/5.3%20Alternating%20Multilinear%20Forms.pdf")[Trimm [5.3]], #link("https://linear.axler.net/LADR4e.pdf#section.9.2")[Axler [9B]]]
 
 #definition(title: [Permutation])[
 	A permutation of the set $A = {1, 2, dots, m}$ is a bijection $sigma : A to A$ (equivalently, a reordering of the ordered list $A$). It is often denoted by a matrix
@@ -1646,6 +1668,10 @@ Given a matrix $A in Field^(m,n)$, define $T_A := x mapsto A x$. Then $T_A : Fie
 
 == Determinant
 
+#see[#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/trimm/unit-5/5.4%20Definition%20of%20the%20Determinant.pdf")[Trimm [5.4]], #link("https://linear.axler.net/LADR4e.pdf#section.9.3")[Axler [9C]], #link("https://www.youtube.com/watch?v=Ip3X9LOh2dk&list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab&index=7")[3B1B [Chapter 6]], #link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/ekactl-extras/determinant-multilinear.pdf")[Explanation by LLM], #link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/math257/CompleteLectureNotes--Filled.pdf#Outline0.28")[MATH 257 [Modules 28-29]]]
+
+#see[_(extra practice)_ #link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/trimm/unit-5/5.4b%20Determinants%20Practice%20I.pdf")[Trimm [5.4b]]]
+
 #definition[
 	$[v_1 dots.c v_n]$ is the matrix whose $j$th column is $v_j$.
 
@@ -1660,16 +1686,18 @@ Given a matrix $A in Field^(m,n)$, define $T_A := x mapsto A x$. Then $T_A : Fie
 	Let $n$ be a positive integer, $A$ be an $n times n$ matrix with entries in $Field$, and $T in linmaps(Field^n)$ be the operator whose matrix with respect to the standard basis of $Field^n$ is $A$. Then the determinant of $A$ is $det A := det T$.
 ]
 
-#lemma[
+#theorem[
 	Let $(v_1, dots, v_n)$ be an ordered $n$-tuple of column vectors. Then the map $(v_1, dots, v_n) mapsto |v_1 dots.c v_n|$ is an alternating $n$-linear form on $Field^n$.
+
+	The determinant $det A$ is alternating and multilinear in the columns of $A$ and alternating and multilinear in the rows of $A$.
 ]
 
-#lemma(title: [$O(n!)$ method for calculating determinant])[
+#theorem(title: [Leibniz formula ($O(n!)$)])[
 	If $A$ is an $n times n$ matrix,
 	$ det A = sum_(sigma in S_n) op("sgn")(sigma) A_(sigma(1) 1) dots.c A_(sigma(n) n) $
 ]
 
-#theorem(title: [Cofactor method (also $O(n!)$)])[
+#procedure(title: [Cofactor method ($O(n!)$)])[
 	Let $A$ be an $n times n$ matrix. Define $A[i|j]$ to be the result of removing the $i$th row and $j$th column from $A$. Define the *$i j$-cofactor* of $A$ to be
 	$ C_(i j) := (-1)^(i+j) det(A[i|j]) $
 
@@ -1692,7 +1720,17 @@ Given a matrix $A in Field^(m,n)$, define $T_A := x mapsto A x$. Then $T_A : Fie
 	If $A$ is a triangular matrix with $lambda_1, dots, lambda_n$ on the diagonal, then $det A = lambda_1 dots.c lambda_n$ ($det A$ is the product of the elements on the diagonal).
 ]
 
+#theorem(title: [Determinant is scaling of volume])[
+	Suppose $T in linmaps(Reals^n)$ and $Omega subset.eq Reals^n$. Then
+	$ op("volume")(T(Omega)) = abs(det T) op("volume")(Omega). $
+]
+
 == Properties of the determinant
+
+#see[#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/trimm/unit-5/5.5%20Properties%20of%20the%20Determinant-1.pdf")[Trimm [5]], #link("https://linear.axler.net/LADR4e.pdf#section.9.3")[Axler [9C]]]
+
+#see[_(extra practice)_ #link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/trimm/unit-5/5.4b%20Determinants%20Practice%20I.pdf")[Trimm [5.4b]]]
+
 
 #theorem(title: [Determinant is multiplicative])[
 	- If $S, T in linmaps(V)$, then $det(S T) = (det S)(det T)$.
@@ -1731,7 +1769,8 @@ Given a matrix $A in Field^(m,n)$, define $T_A := x mapsto A x$. Then $T_A : Fie
 	- If two rows or columns of $A$ are equal, then $det A = 0$.
 	- If $B$ is the result of swapping two rows or columns of $A$, then $det B = -det A$.
 	- If $B$ is the result of multiplying one row or column of $A$ by the scalar $lambda$, then $det B = lambda det A$
-	- If $B$ is the result of replacing a column or row by the sum of itself and a scalar multiple of another column or row, then $det B = det A$. (this does not apply adding a column to a scalar multiple of a row or vice-versa.)
+	- If $B$ is the result of replacing a column by the sum of itself and a scalar multiple of another column, then $det B = det A$.
+	- If $B$ is the result of replacing a row by the sum of itself and a scalar multiple of another row, then $det B = det A$.
 ]
 
 #theorem(title: [Effect of elementary row operations (summary)])[
@@ -1745,7 +1784,36 @@ Given a matrix $A in Field^(m,n)$, define $T_A := x mapsto A x$. Then $T_A : Fie
 	Row-reduce the matrix $A$ to row-echelon form ($R := op("REF")(A)$). Then $det R$ is the product of the items along the diagonal of $R$. To find $det A$, apply the above theorems.
 ]
 
+#theorem[
+	The columns of $A$ are linearly dependent iff $det A = 0$.
+]
+
+== Vandermonde determinant
+
+#see[#link("https://en.wikipedia.org/wiki/Vandermonde_matrix")[Wikipedia], #link("https://linear.axler.net/LADR4e.pdf#section.9.3")[Axler [9C]]]
+
+#definition(title: [Vandermonde matrix])[
+	A matrix in which each row consists of successive powers of a number. For example, with three values:
+
+	$ V(x_1, x_2, x_3) := mat(
+		1, x_1, x_1^2;
+		1, x_2, x_2^2;
+		1, x_3, x_3^2;
+	) $
+]
+
+#theorem(title: [Vandermonde determinant])[
+	If $V$ is a Vandermonde matrix, then
+
+	$ det(V) = product_(i < j) (x_j - x_i). $
+
+	For example, 
+	$ det(V(x_1, x_2, x_3)) = (x_2 - x_1)(x_3 - x_1)(x_3 - x_2). $
+]
+
 == Cramer's rule
+
+#see[#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/trimm/unit-5/5.6%20Cramer's%20Rule.pdf")[Trimm [5.6]]]
 
 #definition(title: [Adjugate matrix])[
 	Let $A$ be an $n times n$ matrix. Then the adjugate matrix of $A$ is the transpose of the matrix of cofactors, i.e.
@@ -1766,9 +1834,11 @@ Given a matrix $A in Field^(m,n)$, define $T_A := x mapsto A x$. Then $T_A : Fie
 	where $A_i (arrow(b))$ is the result of replacing the $i$th column of $A$ by $arrow(b)$.
 ]
 
-= Eigenvalues and eigenvectors
+= Eigentheory
 
 == Eigenvalues and eigenvectors
+
+#see[#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/math257/CompleteLectureNotes--Filled.pdf#Outline0.30")[MATH 257 [Module 30]], #link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/trimm/unit-6/6.1%20Eigenvalues%20and%20Eigenvectors-2.pdf")[Trimm [6.1]], #link("https://linear.axler.net/LADR4e.pdf#section.5.1")[Axler [5A]]]
 
 #theorem(title: [Diagonality condition])[
 	Let $V$ be a finite-dimensional vector space, $B = (v_1, dots, v_n)$ be an ordered basis for $V$, and $T in linmaps(V)$. Then $[T]_B$ is diagonal iff $T(v_i) = lambda_i v_i$ for all $i$, where $lambda_i$ is the $i$th element along the diagonal of $[T]_B$.
@@ -1810,6 +1880,10 @@ Given a matrix $A in Field^(m,n)$, define $T_A := x mapsto A x$. Then $T_A : Fie
 	If $A in Reals^(n times n)$, then the eigenspace of $A$ corresponding to $lambda$ is a subspace of $Reals^n$.
 ]
 
+== Characteristic polynomial
+
+#see[#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/math257/CompleteLectureNotes--Filled.pdf#Outline0.31")[MATH 257 [Module 31]], #link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/trimm/unit-6/6.1%20Eigenvalues%20and%20Eigenvectors-2.pdf")[Trimm [6.1]], #link("https://linear.axler.net/LADR4e.pdf#section.5.2")[Axler [5B]]]
+
 #lemma[
 	Let $A$ be an $n times n$ matrix. Then $det(lambda I - A)$ is a monic (leading coefficient 1) polynomial of degree $n$ on $lambda$.
 ]
@@ -1844,6 +1918,8 @@ Given a matrix $A in Field^(m,n)$, define $T_A := x mapsto A x$. Then $T_A : Fie
 ]
 
 == Diagonalizable operators
+
+#see[#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/math257/CompleteLectureNotes--Filled.pdf#Outline0.34")[MATH 257 [Module 34]], #link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/trimm/unit-6/6.2%20Diagonalizable%20Operators.pdf")[Trimm [6.1]], #link("https://linear.axler.net/LADR4e.pdf#section.5.4")[Axler [5D]]]
 
 #definition(title: [Diagonalizable operator])[
 	A linear operator $T in linmaps(V)$ is said to be diagonalizable if there exists a basis consisting of eigenvectors of $T$. Such a basis is called an *eigenbasis*.
@@ -1899,6 +1975,8 @@ Given a matrix $A in Field^(m,n)$, define $T_A := x mapsto A x$. Then $T_A : Fie
 ]
 
 == Powers of a diagonalizable operator
+
+#see[#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/math257/CompleteLectureNotes--Filled.pdf#Outline0.35")[MATH 257 [Module 35]], #link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/trimm/unit-6/6.3%20Powers%20of%20a%20Diagonalizable%20Operator.pdf")[Trimm [6.2]], #link("https://linear.axler.net/LADR4e.pdf#section.5.4")[Axler [5D]]]
 
 #lemma[
 	If $v$ is an eigenvector of $T$ with eigenvalue $lambda$ and $n$ is a positive integer, then $T^n v = lambda^n v$.
