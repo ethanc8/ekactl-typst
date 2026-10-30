@@ -1325,6 +1325,8 @@ Given a matrix $A in Field^(m,n)$, define $T_A := x mapsto A x$. Then $T_A : Fie
 #definition(title: [Change of basis matrix])[
 	The *change of basis matrix* or *transition matrix* of an $n$-dimensional vector space $V$ from the ordered basis $B$ to $B'$ is the $n times n$ matrix whose $j$th column is the coordinate vector of the $j$th vector in $B$ with respect to $B'$:
 	$ (C_(B to B'))_(* j) := [v_j]_(B') $
+
+	$C_(B to B')$ is also denoted $I_(B'B)$.
 ]
 
 #procedure(title: [Finding the transition matrix])[
@@ -1838,7 +1840,7 @@ Given a matrix $A in Field^(m,n)$, define $T_A := x mapsto A x$. Then $T_A : Fie
 
 == Eigenvalues and eigenvectors
 
-#see[#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/math257/CompleteLectureNotes--Filled.pdf#Outline0.30")[MATH 257 [Module 30]], #link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/trimm/unit-6/6.1%20Eigenvalues%20and%20Eigenvectors-2.pdf")[Trimm [6.1]], #link("https://linear.axler.net/LADR4e.pdf#section.5.1")[Axler [5A]]]
+#see[#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/math257/CompleteLectureNotes--Filled.pdf#Outline0.30")[MATH 257 [Module 30]], #link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/trimm/unit-6/6.1%20Eigenvalues%20and%20Eigenvectors-2.pdf")[Trimm [6.1]], #link("https://linear.axler.net/LADR4e.pdf#section.5.1")[Axler [5A]], #link("https://www.axler.net/DwD.pdf")[Axler-DwD]]
 
 #theorem(title: [Diagonality condition])[
 	Let $V$ be a finite-dimensional vector space, $B = (v_1, dots, v_n)$ be an ordered basis for $V$, and $T in linmaps(V)$. Then $[T]_B$ is diagonal iff $T(v_i) = lambda_i v_i$ for all $i$, where $lambda_i$ is the $i$th element along the diagonal of $[T]_B$.
@@ -1873,16 +1875,21 @@ Given a matrix $A in Field^(m,n)$, define $T_A := x mapsto A x$. Then $T_A : Fie
 	A scalar $lambda$ is an eigenvalue of $A$ iff $A v = lambda v$ has a nontrivial solution. This is equivalent to the homogeneous linear system (where $I$ is the $n times n$ identity matrix)
 	$ (A - lambda I) v = 0 $
 
-	The set of all solutions to this equation is the *eigenspace* of $A$ associated to the eigenvalue $lambda$, which we denote by $E_lambda$.
+	The set of all solutions to this equation is the *eigenspace* of $A$ associated to the eigenvalue $lambda$:
+	$ E_lambda := Nul(A - lambda I) $
 ]
 
 #lemma[
 	If $A in Reals^(n times n)$, then the eigenspace of $A$ corresponding to $lambda$ is a subspace of $Reals^n$.
 ]
 
+#lemma[
+	If $T in linmaps(V)$, then every set of eigenvectors corresponding to distinct eigenvalues of $T$ is linearly independent.
+]
+
 == Characteristic polynomial
 
-#see[#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/math257/CompleteLectureNotes--Filled.pdf#Outline0.31")[MATH 257 [Module 31]], #link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/trimm/unit-6/6.1%20Eigenvalues%20and%20Eigenvectors-2.pdf")[Trimm [6.1]], #link("https://linear.axler.net/LADR4e.pdf#section.5.2")[Axler [5B]]]
+#see[#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/math257/CompleteLectureNotes--Filled.pdf#Outline0.31")[MATH 257 [Module 31]], #link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/trimm/unit-6/6.1%20Eigenvalues%20and%20Eigenvectors-2.pdf")[Trimm [6.1]], #link("https://linear.axler.net/LADR4e.pdf#section.5.2")[Axler [5B]], #link("https://www.axler.net/DwD.pdf")[Axler-DwD]]
 
 #lemma[
 	Let $A$ be an $n times n$ matrix. Then $det(lambda I - A)$ is a monic (leading coefficient 1) polynomial of degree $n$ on $lambda$.
@@ -1919,14 +1926,10 @@ Given a matrix $A in Field^(m,n)$, define $T_A := x mapsto A x$. Then $T_A : Fie
 
 == Diagonalizable operators
 
-#see[#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/math257/CompleteLectureNotes--Filled.pdf#Outline0.34")[MATH 257 [Module 34]], #link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/trimm/unit-6/6.2%20Diagonalizable%20Operators.pdf")[Trimm [6.1]], #link("https://linear.axler.net/LADR4e.pdf#section.5.4")[Axler [5D]]]
+#see[#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/math257/CompleteLectureNotes--Filled.pdf#Outline0.34")[MATH 257 [Module 34]], #link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/trimm/unit-6/6.2%20Diagonalizable%20Operators.pdf")[Trimm [6.2]], #link("https://linear.axler.net/LADR4e.pdf#section.5.4")[Axler [5D]], #link("https://www.axler.net/DwD.pdf")[Axler-DwD]]
 
 #definition(title: [Diagonalizable operator])[
 	A linear operator $T in linmaps(V)$ is said to be diagonalizable if there exists a basis consisting of eigenvectors of $T$. Such a basis is called an *eigenbasis*.
-]
-
-#lemma[
-	If $T in linmaps(V)$, then every set of eigenvectors corresponding to distinct eigenvalues of $T$ is linearly independent.
 ]
 
 #lemma[
@@ -1942,7 +1945,8 @@ Given a matrix $A in Field^(m,n)$, define $T_A := x mapsto A x$. Then $T_A : Fie
 ]
 
 #definition(title: [Geometric multiplicity])[
-	The geometric multiplicity of the eigenvalue $lambda_k$ is the dimension of the eigenspace corresponding to $lambda_k$.
+	The geometric multiplicity of the eigenvalue $lambda_k$ is the dimension of the eigenspace corresponding to $lambda_k$,
+	$ dim(Nul(A - lambda I)). $
 ]
 
 // #lemma[
@@ -1958,6 +1962,7 @@ Given a matrix $A in Field^(m,n)$, define $T_A := x mapsto A x$. Then $T_A : Fie
 
 #theorem(title: [Conditions equivalent to diagonalizability])[
 	Let $V$ be a finite-dimensional vector space, $T in linmaps(V)$, and $lambda_1, dots, lambda_n$ be the distinct eigenvalues of $T$. Then the following are equivalent:
+	- $T$ is diagonalizable.
 	- $V$ has a basis consisting of eigenvectors of $T$
 	- $V = E_(lambda_1) plus.o dots.c plus.o E_(lambda_m)$
 	- $dim V = dim E_(lambda_1) + dots.c + dim E_(lambda_m)$
@@ -1976,7 +1981,7 @@ Given a matrix $A in Field^(m,n)$, define $T_A := x mapsto A x$. Then $T_A : Fie
 
 == Powers of a diagonalizable operator
 
-#see[#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/math257/CompleteLectureNotes--Filled.pdf#Outline0.35")[MATH 257 [Module 35]], #link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/trimm/unit-6/6.3%20Powers%20of%20a%20Diagonalizable%20Operator.pdf")[Trimm [6.2]], #link("https://linear.axler.net/LADR4e.pdf#section.5.4")[Axler [5D]]]
+#see[#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/math257/CompleteLectureNotes--Filled.pdf#Outline0.35")[MATH 257 [Module 35]], #link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/trimm/unit-6/6.3%20Powers%20of%20a%20Diagonalizable%20Operator.pdf")[Trimm [6.3]], #link("https://linear.axler.net/LADR4e.pdf#section.5.4")[Axler [5D]], #link("https://www.axler.net/DwD.pdf")[Axler-DwD]]
 
 #lemma[
 	If $v$ is an eigenvector of $T$ with eigenvalue $lambda$ and $n$ is a positive integer, then $T^n v = lambda^n v$.
@@ -1985,10 +1990,16 @@ Given a matrix $A in Field^(m,n)$, define $T_A := x mapsto A x$. Then $T_A : Fie
 #lemma[
 	If $T$ is diagonalizable, then there exists a basis $D$ such that the diagonalization of $T$ is equal to
 	$ [T]_D = C_(e to D) [T]_e C_(D to e) $
-	(where $C_(e to D)$ is the transition matrix from the standard basis to $D$)
+	(where $C_(e to D)$ is the transition matrix from the standard basis to $D$).
+
+	This is often written in the equivalent form
+
+	$ A &= P D P^(-1) \
+	[T]_e &= C_(D to e) [T]_D C_(e to D). $
 
 	Furthermore, for any positive integer $n$,
-	$ [T]_e^n = C_(D to e) [T]_D^n C_(e to D) $
+	$ [T]_e^n &= C_(D to e) [T]_D^n C_(e to D) \
+	A^n &= P D^n P^(-1). $
 ]
 
 #procedure(title: [Power of a diagonal matrix])[
