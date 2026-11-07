@@ -619,7 +619,7 @@ Having developed linear maps abstractly, we now fix bases and see how they corre
 	$ [A^transpose_(i j)] = [A_(j i)] $
 ] <def:matrix-transpose>
 
-#remark-block[
+#remark[
 	The transpose of a column vector is a row vector and vice versa.
 ]
 
@@ -686,7 +686,7 @@ For the following definitions, let $B := ( v_1, dots, v_n )$ be an ordered basis
 	Suppose $lambda in Field$ and $T in linmaps(V, W)$. Then, $[lambda T] = lambda [T]$.
 ]
 
-#remark-block[
+#remark[
 	Every $m times n$ matrix $A$ is the standard matrix of the linear map $T_A : Field^n to Field^m$, $T_A (X) := A X$ (matrix-vector multiplication is defined precisely in @def:matrix-vector-mult below). This is the correspondence that lets us study the abstract map $T_A$ purely as concrete array arithmetic on $A$, and it's the reason $ker T_A$ (equivalently, the null space $op("Nul") A$) is exactly the solution set of the homogeneous system $A X = 0$.
 ]
 
@@ -725,7 +725,7 @@ For the following definitions, let $B := ( v_1, dots, v_n )$ be an ordered basis
 	where $T : V to W_1 times dots.c times W_m$ is defined by $T v := (T_1 v, dots, T_m v)$ and $Y := (y_1, dots, y_m) in W_1 times dots.c times W_m$.
 ]
 
-#remark-block[
+#remark[
 	When $V = Field^n$ and all $W_k = Field$, this is exactly how a linear system becomes the matrix equation $A X = Y$ --- the standard matrix of $T$ is the $m times n$ matrix $A$ whose $j$th row is the standard matrix of $T_j$ --- i.e. gluing the equations' coefficient rows together. Concretely, if $m$ is the number of equations and $n$ the number of variables, the $j$th equation
 	$ sum_(k=1)^n A_(j k) X_k = Y_j $
 	glues into
@@ -737,7 +737,7 @@ For the following definitions, let $B := ( v_1, dots, v_n )$ be an ordered basis
 	giving the compact form $A X = Y$. (Matrix-vector multiplication, which makes precise sense of $A X$, is defined in @def:matrix-vector-mult below.)
 ]
 
-#remark-block[
+#remark[
 	This is the "row" side of the same picture whose "column" side is @def:matrix-vector-mult: gluing $m$ scalar equations $T_j v = y_j$ *row-by-row* into $A$ builds the map $T = (T_1, dots, T_m) : V to Field^m$ above, while --- as the next section shows --- reading $A$'s *columns* as vectors and taking $A X$ to mean the linear combination $X_1 a_1 + dots.c + X_n a_n$ recovers the same equation $A X = Y$ from the span perspective. One matrix, two equivalent readings.
 ]
 
@@ -759,7 +759,7 @@ For the following definitions, let $B := ( v_1, dots, v_n )$ be an ordered basis
 
 #see[#link("https://www.youtube.com/watch?v=kYB8IZa5AuE&list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab&index=3")[3Blue1Brown [3]]]
 
-#remark-block[
+#remark[
 	Consider $T : Field^2 to Field^2$. Since $[T] = display(mat(T hat(i), T hat(j)))$, and
 	$ T(x, y) &= T((x, 0) + (0, y)) \
 	&= T(x, 0) + T(0, y) \
@@ -777,7 +777,7 @@ For the following definitions, let $B := ( v_1, dots, v_n )$ be an ordered basis
 	- $A vn(x)$ is only defined if the number of entries of $vn(x)$ is equal to the number of columns of $A$.
 ] <def:matrix-vector-mult>
 
-#remark-block[
+#remark[
 	Solving linear systems is the same as finding linear combinations: solving $A vn(x) = vn(y)$ means finding coefficients expressing $Y$ as a linear combination of $A$'s columns, i.e. finding $Y in span{a_1, dots, a_n}$ (span: see [Vector spaces]).
 ]
 
@@ -812,7 +812,7 @@ For the following definitions, let $B := ( v_1, dots, v_n )$ be an ordered basis
 	Two matrices are row-equivalent iff each can be derived from the other using a finite number of elementary row operations.
 ]
 
-#remark-block[
+#remark[
 	Each elementary row operation replaces an equation of the system by a linear combination of itself with (or a scalar multiple of, or a swap with) another equation — this is why row-equivalent augmented matrices give equivalent systems.
 ]
 
@@ -923,7 +923,7 @@ For the following definitions, let $B := ( v_1, dots, v_n )$ be an ordered basis
 
 #see[#link("https://linear.axler.net/LADR4e.pdf#page=83")[Axler [3C]], #link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/math257/CompleteLectureNotes--Filled.pdf#Outline0.7")[MATH 257 [Module 7, 8]]]
 
-#remark-block[
+#remark[
 	Let $T_1 in linmaps(Field^n, Field^m)$, $T_2 in linmaps(Field^p, Field^n)$. We want to determine $[T_1 compose T_2]$ in terms of $[T_1]$ and $[T_2]$.
 
 	Recall that the columns of the matrix of a linear map are the coordinate vectors of the map applied to each basis vector:
@@ -1032,7 +1032,7 @@ For the following definitions, let $B := ( v_1, dots, v_n )$ be an ordered basis
 
 #see[#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/trimm/unit-4/4.7%20Invertible%20Matrices.pdf")[Trimm [4.7]], #link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/karthik/4_7.pdf")[Karthik [4.7]], #link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/math257/CompleteLectureNotes--Filled.pdf#Outline0.10")[MATH 257 [Module 10, 11]]]
 
-#remark-block[
+#remark[
 	The inverse of a real number $a$ is denoted by $a^(-1)$. For example, $7^(-1) = 1\/7$ and $7 dot 7^(-1) = 7^(-1) dot 7 = 1$. Note that not all real numbers have an inverse. Namely, $0^(-1)$ is not defined as there is no real number $b$ such that $0 dot b = 1$.
 ]
 
@@ -1244,7 +1244,7 @@ Here are some alternative ways to do it. They aren't very useful.
 	2. Solving $U vn(x) = vn(y)$ for $vn(x)$ using back-substitution (going from bottom up).
 ]
 
-#remark-block[
+#remark[
 	LU decomposition is most useful when one has to solve many linear systems $A vn(x) = vn(y)$ with the same coefficients but different right-hand side $vn(y)$.
 ]
 
@@ -2149,7 +2149,7 @@ Let $V$ be an inner product space.
 	$ W^perp := { v in Reals^n : v dot w = 0 "for all" w in W }. $
 ]
 
-#remark-block[
+#remark[
 	Observe that $(W^perp)^perp = W$.
 ]
 
@@ -2165,6 +2165,8 @@ Let $V$ be an inner product space.
 ]
 
 = Appendix: Graphs
+
+== Graphs
 
 #definition[
 	A graph is a set of nodes (or: vertices) that are connected through edges.
@@ -2231,7 +2233,7 @@ Let $V$ be an inner product space.
 	Let $G$ be a directed graph and let $A$ be its edge-node incidence matrix. Then the cycle space of $G$ is equal to $op("Nul")(A^T)$.
 ]
 
-#remark-block(title: [Why the walk-counting theorem is true (case $ell = 2$)])[
+#remark(title: [Why the walk-counting theorem is true (case $ell = 2$)])[
 	Write $A$'s rows as $R_1, dots, R_n$ and columns as $C_1, dots, C_n$. By the row-column rule,
 	$ (A^2)_(i j) = R_i dot C_j = A_(i 1) A_(1 j) + A_(i 2) A_(2 j) + dots.c + A_(i n) A_(n j). $
 	Each summand $A_(i k) A_(k j)$ equals $1$ exactly when there is an edge from $j$ to $k$ *and* an edge from $k$ to $i$ — i.e. exactly when it witnesses a walk of length $2$ from $j$ to $i$ passing through $k$. Since every walk of length $2$ passes through exactly one intermediate node, the sum counts all such walks. The same argument, with $A^(ell - 1)$ in place of $A$, extends this to any $ell$ by induction.
@@ -2241,7 +2243,7 @@ Let $V$ be an inner product space.
 	The adjacency matrix of an undirected graph is symmetric: $A^transpose = A$. A nonzero diagonal entry $A_(i i)$ indicates a #defname[self-loop] at node $i$.
 ]
 
-#remark-block[
+#remark[
 	Since $(I)_(i j) = 1$ exactly when $i = j$, it is natural to regard $I$ as counting the (trivial) walk of length $0$ from a node to itself. Consequently $I + A$ counts walks of length $0$ or $1$ between each pair of nodes — and more generally, $I + A + A^2 + dots.c + A^k$ counts walks of length at most $k$.
 ]
 
@@ -2251,7 +2253,7 @@ Let $V$ be an inner product space.
 	has no zero entries.
 ]
 
-#remark-block[
+#remark[
 	Two subtleties:
 	- Using $sum_(i=1)^k A^i$ *without* the $I$ term counts only nontrivial walks between each pair; it can still have zero diagonal entries even for a connected graph, since a node need not have a walk back to itself of length $<= k$.
 	- Using $A^k$ *alone* does not correctly count "reachable within $k$ steps": a node reached in fewer than $k$ steps is forced to leave again at the next step, unless $A$ already has a self-loop at every node (cf. $A + I$).
@@ -2261,13 +2263,13 @@ Let $V$ be an inner product space.
 	A graph on $n$ nodes is connected if and only if $I + sum_(i=1)^(n-1) A^i$ has no zero entries — since any walk connecting two distinct nodes without revisiting a node uses at most $n - 1$ edges, taking $k = n - 1$ always suffices to test full connectivity.
 ]
 
-#remark-block(title: [Potential interpretation of $op("Nul")(M)$])[
+#remark(title: [Potential interpretation of $op("Nul")(M)$])[
 	Let $M$ be the edge-node incidence matrix of a directed graph $G$ with $n$ nodes, and think of $vn(x) in Reals^n$ as assigning a #defname[potential] $x_k$ to each node $k$. For the row of $M$ corresponding to an edge $e$ from node $j$ to node $i$,
 	$ (M vn(x))_e = x_i - x_j, $
 	so $M vn(x) = 0$ forces the potentials at the two endpoints of every edge to agree. Hence $vn(x) in op("Nul")(M)$ assigns equal potential to every pair of nodes joined by a path — i.e. constant potential on each connected component. This gives another route to $dim op("Nul")(M) = $ number of connected components: a basis is given by the indicator vector of each connected component.
 ]
 
-#remark-block(title: [Flow interpretation of $op("Nul")(M^transpose)$])[
+#remark(title: [Flow interpretation of $op("Nul")(M^transpose)$])[
 	Think of $vn(y) in Reals^m$ ($m$ = number of edges) as assigning a flow $y_e$ to each edge. For node $k$,
 	$ (M^transpose vn(y))_k = ("total inflow at" k) - ("total outflow at" k), $
 	so $vn(y) in op("Nul")(M^transpose)$ exactly when inflow equals outflow at every node — #defname[Kirchhoff's current law]. This is why the cycle space (flows that balance at every node) equals $op("Nul")(M^transpose)$.
@@ -2282,8 +2284,195 @@ Let $V$ be an inner product space.
 	Any such $vn(c)$ automatically satisfies $M^transpose vn(c) = 0$ (flow is conserved at every node along the cycle).
 ]
 
-#remark-block[
+#remark[
 	Cycle vectors built this way need not be independent — e.g. for three cycles that share edges, one may find $vn(c)_1 + vn(c)_2 = vn(c)_3$. As with any null space, a genuine *basis* for the cycle space is found by solving $M^transpose vn(y) = 0$ with the usual homogeneous-system procedure (see [Linear systems and matrices]), not by listing cycles directly.
+]
+
+= Appendix: Markov matrices
+
+#see[MATH 257 [#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/math257/CompleteLectureNotes--Filled.pdf#Outline0.33")[Module 33], CL7]]
+
+== Markov chains
+
+#definition(title: [Markov chain])[
+	A #defname[Markov chain] is a finite set of states $S = {s_1, dots, s_n}$ together with transition probabilities $p_(i j) in [0, 1]$, where $p_(i j)$ is the probability of moving from state $s_j$ to state $s_i$ in one step.
+
+	A Markov chain can be represented as a directed weighted graph with one node per state and a weighted edge from $s_j$ to $s_i$ of weight $p_(i j)$ whenever $p_(i j) > 0$. A Markov chain can also be represented as a matrix:
+]
+
+#definition(title: [Markov matrix, stochastic matrix])[
+	A #defname[Markov matrix] or #defname[(column-)stochastic matrix] is an $n times n$ matrix $M$ whose entries are nonneg­ative and whose columns each sum to 1:
+	$ M_(i j) >= 0 "for all" i, j, quad sum_i M_(i j) = 1 "for all" j. $
+
+	This follows the column = source convention: $M_(i j)$ is the probability of transitioning *from* state $j$ *to* state $i$.
+]
+
+#definition(title: [State vector, probability vector])[
+	A #defname[state vector] or #defname[probability vector] is a vector $vn(x) in Reals^n$ with nonneg­ative entries summing to 1:
+	$ x_i >= 0 "for all" i, quad sum_i x_i = 1. $
+	The entry $x_i$ is the probability that the system is currently in state $s_i$.
+]
+
+#theorem[
+	If $M$ is a Markov matrix and $vn(x)$ is a state vector, then $M vn(x)$ is also a state vector.
+]
+
+#remark[
+	This means a Markov matrix *maps* state vectors to state vectors. In particular, $sum_i (M vn(x))_i = sum_j x_j sum_i M_(i j) = sum_j x_j = 1$ by the column-sum property.
+]
+
+#definition(title: [Markov chain dynamics])[
+	Let $vn(x)_k$ be the state vector at time step $k$. The state evolves by
+	$ vn(x)_(k+1) = M vn(x)_k, $
+	so $vn(x)_k = M^k vn(x)_0$.
+]
+
+== Steady states
+
+#definition(title: [Stationary distribution, steady state])[
+	A #defname[stationary distribution] or #defname[steady state] of a Markov matrix $M$ is a state vector $vn(x)^*$ satisfying
+	$ M vn(x)^* = vn(x)^*. $
+	That is, $vn(x)^*$ is an eigenvector of $M$ for the eigenvalue $lambda = 1$, normalized so its entries sum to 1.
+]
+
+#theorem[
+	Every Markov matrix has $lambda = 1$ as an eigenvalue.
+] <thm:markov-eigenvalue-1>
+
+#proof[
+	Let $vn(1) = (1, 1, dots, 1)^transpose$. Since each column of $M$ sums to 1,
+	$ (M^transpose vn(1))_j = sum_i M_(i j) = 1, $
+	so $M^transpose vn(1) = vn(1)$. Thus $1$ is an eigenvalue of $M^transpose$. Since $M$ and $M^transpose$ have the same characteristic polynomial ($det(lambda I - M^transpose) = det((lambda I - M)^transpose) = det(lambda I - M)$), they share the same eigenvalues. Hence $lambda = 1$ is an eigenvalue of $M$.
+]
+
+#theorem[
+	Every eigenvalue $lambda$ of a Markov matrix satisfies $|lambda| <= 1$.
+]
+
+#theorem(title: [Convergence for positive Markov matrices])[
+	Let $M$ be an $n times n$ Markov matrix with all entries strictly positive ($M_(i j) > 0$ for all $i, j$). Then:
+	+ $lambda = 1$ is the unique eigenvalue of $M$ with $|lambda| = 1$.
+	+ The eigenspace for $lambda = 1$ is one-dimensional; there is a unique steady state $vn(x)^*$.
+	+ For any starting state vector $vn(x)_0$,
+	$ lim_(k to infty) M^k vn(x)_0 = vn(x)^* $
+	regardless of $vn(x)_0$.
+] <thm:markov-convergence>
+
+#remark[
+	This is why Markov chains are useful for modeling long-run behavior: for a sufficiently "connected" system, the initial distribution is forgotten and the chain settles to $vn(x)^*$.
+]
+
+== Irreducibility
+
+The strict-positivity condition of @thm:markov-convergence is sufficient but stronger than necessary. The right general condition is irreducibility.
+
+#definition(title: [Irreducible Markov chain])[
+	A Markov chain is #defname[irreducible] if for every pair of states $i, j$ there exists $k >= 1$ such that $(M^k)_(i j) > 0$ — i.e. every state is reachable from every state in some number of steps. Equivalently, the directed graph of the chain is strongly connected.
+
+	A chain that is not irreducible is #defname[reducible].
+]
+
+#remark[
+	A positive Markov matrix always gives an irreducible chain (every state is reachable in one step), so @thm:markov-convergence is a special case of the more general statement: an irreducible Markov chain has a unique steady state. However, irreducibility alone does not guarantee convergence to it — one also needs *aperiodicity* (no states that the chain can only return to in a fixed period $> 1$). For the applications in this course, positive entries imply both conditions simultaneously, so we state @thm:markov-convergence in the simpler form.
+]
+
+#example(title: [Gambler's ruin])[
+	A gambler starts with $\$k$ and at each step wins $\$1$ (probability $1/2$) or loses $\$1$ (probability $1/2$), stopping at $\$0$ (loss) or $\$3$ (win). The states are $\$0, \$1, \$2, \$3$ and the Markov matrix is
+	$ G = mat(1, 1/2, 0, 0; 0, 0, 1/2, 0; 0, 1/2, 0, 0; 0, 0, 1/2, 1). $
+
+	States $\$0$ and $\$3$ are *absorbing* — once entered they are never left. The chain is reducible: starting from $\$1$, neither $\$2$ nor $\$3$ can reach $\$0$. The eigenvalue $lambda = 1$ has a 2-dimensional eigenspace (spanned by the indicator vectors of $\$0$ and $\$3$) and the long-run distribution depends on the starting state:
+	- Starting at $\$1$: probability $2/3$ of losing, $1/3$ of winning.
+	- Starting at $\$2$: probability $1/3$ of losing, $2/3$ of winning.
+
+	The other two eigenvalues are $plus.minus 1/2$, so the transient part decays and a limit exists — but it is not unique across starting states.
+]
+
+== Power iteration
+
+#algorithm(title: [Power iteration])[
+	To approximate the dominant eigenvector of a matrix $M$ (the eigenvector for the eigenvalue of largest magnitude):
+
+	+ Start with any vector $vn(x)_0$.
+	+ Repeatedly compute $vn(x)_(k+1) = M vn(x)_k$.
+	+ Optionally normalize after each step: $vn(x)_(k+1) <- vn(x)_(k+1) \/ norm(vn(x)_(k+1))$.
+
+	The iterates converge to the dominant eigenvector as $k to infty$, provided the dominant eigenvalue is strictly larger in magnitude than all other eigenvalues.
+] <alg:power-iteration>
+
+#remark(title: [No normalization needed for Markov matrices])[
+	For a Markov matrix applied to a state vector, normalization is automatic: $M$ preserves the sum of entries, so if $vn(x)_0$ sums to 1, so does every $M^k vn(x)_0$. Power iteration therefore converges to the steady-state distribution $vn(x)^*$ without an explicit normalization step.
+]
+
+#remark(title: [Rate of convergence])[
+	Write $vn(x)_0 = c_1 vn(x)^* + c_2 vn(v)_2 + dots.c + c_n vn(v)_n$ in the eigenbasis, where $|lambda_2| <= dots <= |lambda_n| < lambda_1 = 1$. Then
+	$ M^k vn(x)_0 = c_1 vn(x)^* + c_2 lambda_2^k vn(v)_2 + dots.c $
+	The error is dominated by $|lambda_2|^k$. Each step shrinks it by a factor of $|lambda_2|$, so convergence is fast when $|lambda_2|$ is small.
+]
+
+== Application: PageRank
+
+#example(title: [PageRank])[
+	Model a web surfer clicking links uniformly at random. For a network of $n$ pages, let $A$ be the adjacency matrix (column = source convention: $A_(i j) = 1$ iff page $j$ links to page $i$). Normalize each column by its sum to get transition probabilities: if page $j$ has $d_j$ outgoing links,
+	$ M_(i j) = cases(1/d_j &"if" A_(i j) = 1, 0 &"otherwise.") $
+
+	The steady state $vn(x)^*$ of this Markov matrix is the #defname[PageRank] vector: $x^*_i$ is the long-run fraction of time spent on page $i$, interpreted as its relative importance.
+]
+
+#definition(title: [Dangling node])[
+	A #defname[dangling node] is a page with no outgoing links ($d_j = 0$). Its column in $A$ is all zeros, so normalization is undefined.
+
+	*Fix:* replace the zero column with $1/n vn(1)$, treating the surfer as jumping to any page uniformly. This restores the column-sum-to-1 property.
+]
+
+#remark[
+	Even after fixing dangling nodes, the resulting matrix may not have all strictly positive entries (some pages may simply not be mutually reachable), so @thm:markov-convergence does not directly apply. The full PageRank algorithm adds a *damping factor* $d in (0,1)$ (typically $d approx 0.85$):
+	$ M_"PageRank" = d M + (1-d) 1/n vn(1) vn(1)^transpose. $
+	The second term is a positive matrix (every entry $= (1-d)/n > 0$), so $M_"PageRank"$ has all positive entries, guaranteeing a unique steady state by @thm:markov-convergence. The surfer's behavior is: with probability $d$ follow a random link as before; with probability $1-d$ jump to any page uniformly ("teleportation"). The lab implemented the dangling-node fix but not the full damping term.
+]
+
+#procedure(title: [Computing PageRank in practice])[
+	+ Build the adjacency matrix $A$ (column = source convention).
+	+ Fix dangling nodes: replace zero columns of $A$ with $1/n vn(1)$.
+	+ Normalize each column by its sum to produce $M$.
+	+ (Optional) Apply damping: $M <- d M + (1-d)/n vn(1)vn(1)^transpose$.
+	+ Apply power iteration (@alg:power-iteration) until convergence.
+	+ Rank pages by their entry in the resulting steady state $vn(x)^*$.
+]
+
+= Appendix: Linear differential equations
+
+#see[MATH 257 [#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/math257/CompleteLectureNotes--Filled.pdf#Outline0.37")[Module 37], CL8, CHW8]]
+
+#definition(title: [Linear differential equation])[
+	A linear (first order) differential equation is an equation of the form
+	$ (dif u)/(dif t) = A u $
+	where $u$ is a function from $Reals$ to $Reals^n$. A further condition $u(0) = v$, for some $v$ in $Reals^n$ is called an initial condition.
+]
+
+#lemma[
+	Let $A$ be an $n times n$ matrix and $vn(v) in Reals^n$. The solution of the differential equation $(dif vn(u))/(dif t) = A u$ with initial condition $vn(u)(0) = vn(v)$ is $vn(u)(t) = e^(A t) vn(v)$.
+]
+
+#lemma[
+	Let $A$ be an $n times n$-matrix, and let $vn(v) in Reals^n$ be an eigenvector of $A$ with eigenvalue $lambda$. Then $e^(A t) vn(v) = e^(lambda t) vn(v)$.
+]
+
+#theorem(title: [Solution of LDE])[
+	Let $A$ be an $n times n$-matrix and $(vn(v)_1, dots, vn(v)_n)$ be an eigenbasis of $A$ with eigenvalues $lambda_1, dots, lambda_n$. If $vn(v) = c_1 vn(v)_1 + dots.c + c_n vn(v)_n$, then the unique solution to the differential equation $(dif u)/(dif t) = A u$ with initial condition $u(0) = vn(v)$ is
+
+	$ e^(A t) vn(v) = c_1 e^(lambda_1 t) vn(v)_1 + dots.c + c_n e^(lambda_n t) vn(v)_n. $
+]
+
+#procedure(title: [Solving an LDE])[
+	Consider the LDE $vn(x)'(t) = A vn(x)(t)$ with initial condition $vn(x)(0) = $ some constant.
+
+	1. *Eigenanalysis:* Find the eigenvectors $(vn(v)_1, dots, vn(v)_n)$  with eigenvalues $lambda_1, dots, lambda_n$.
+	2. *Find coefficients:* Plug in the initial condition $vn(x)(0)$ to find $c_1, ..., c_n$:
+	$ vn(x)(0) &= c_1 vn(v)_1 + dots.c + c_n vn(v)_n \
+	&= mat(vn(v)_1, dots.c, vn(v)_n) mat(c_1; dots.v; c_n). $
+	3. *Plug in coefficients:* Using the $c_n$ found above, 
+	$ x(t) &= c_1 vn(v)_1 e^(lambda_1 t) + dots.c + c_n vn(v)_n e^(lambda_n t)
+	&= mat(vn(v)_1, dots.c, vn(v)_n) mat(c_1 e^(lambda_1 t); dots.v; c_n e^(lambda_n t)). $
 ]
 
 = Resources
