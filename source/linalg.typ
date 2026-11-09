@@ -101,6 +101,8 @@
 #let rank = math.op("rank")
 #let nullity = math.op("nullity")
 
+#let proj = math.op("proj")
+
 #let dirsum = math.limits(sym.plus.o)
 
 #let linmaps = $cal(L)$
@@ -2020,7 +2022,29 @@ Given a matrix $A in Field^(m,n)$, define $T_A := x mapsto A x$. Then $T_A : Fie
 	) $
 ]
 
-= Inner product spaces
+== Matrix exponential
+
+#see[#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/math257/CompleteLectureNotes--Filled.pdf#Outline0.36")[MATH 257 [Module 36]]]
+
+#definition[
+	Let $A$ be an $n times n$-matrix. We define the matrix exponential $e^(A t)$ as
+	$ e^(A t) = sum_(k >= 0) ((A t)^k)/(k!) = I + A t + ((A t)^2)/2! + ((A t)^3)/3! + dots.c $
+]
+
+#theorem[
+	Let $A$ be an $n times n$ matrix. Then
+	- the series $e^(A t)$ always converges,
+	- $e^(A t) e^(-A t) = I_n$,
+	- $e^(A t) e^(A s) = e^(A(t+s))$,
+	- $d/(d t) (e^(A t)) = A e^(A t)$.
+]
+
+#theorem[
+	Let $A$ be an $n times n$ matrix such that $A = P D P^(-1)$ for some invertible matrix $P$ and some diagonal matrix $D$. Then
+	$ e^(A t) = P e^(D t) P^(-1). $
+]
+
+= Inner product spaces and orthogonality
 
 For any discussion of inner product spaces, let $Field$ be $Reals$ or $Complex$.
 
@@ -2139,8 +2163,7 @@ Let $V$ be an inner product space.
 	An orthogonal set $A$ where every $v in A$ has $norm(v) = 1$.
 ]
 
-
-= Orthogonal complement
+== Orthogonal complement
 
 #see[#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/math257/CompleteLectureNotes--Filled.pdf#Outline0.23")[MATH 257 [Module 23]]]
 
@@ -2162,6 +2185,162 @@ Let $V$ be an inner product space.
 
 #theorem[
 	Let $V$ be a subspace of $Reals^n$. Then $dim V + dim V^perp = n$.
+]
+
+== Orthogonal projection
+
+#see[#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/math257/CompleteLectureNotes--Filled.pdf#Outline0.38")[MATH 257 [Modules 38, 39]]]
+
+#definition(title: [Orthogonal projection onto a subspace])[
+	Let $W$ be a subspace of $Reals^n$ and $vn(v) in Reals^n$. Then, $vn(v)$ can be written uniquely as
+	$ vn(v) = vn(v)^parallel + vn(v)^perp $
+	with
+	- $vn(v)^parallel in W$
+	- $vn(v)^perp in W^perp$.
+
+	The #defname[orthogonal projection] of $vn(v)$ onto $W$ is $vn(v)^parallel$, denoted $proj_W vn(v)$.
+
+	If $W = span(vn(w))$ for some vector $vn(w)$, then
+	$ proj_vn(w) vn(v) := proj_span(vn(w)) vn(v). $
+]
+
+#theorem(title: [Orthogonal projection formula])[
+	If $(vn(w)_1, ..., vn(w)_m)$ is an orthogonal basis of $W$, then
+	$ proj_W (vn(v)) = ((vn(v) dot vn(w)_1)/(vn(w)_1 dot vn(w)_1)) vn(w)_1 + dots.c + ((vn(v) dot vn(w)_m)/(vn(w)_m dot vn(w)_m)) vn(w)_m. $
+
+	For a projection onto a vector's span:
+	$ proj_vn(w) (vn(v)) = (vn(v) dot vn(w))/(vn(w) dot vn(w)) vn(w). $
+]
+
+#definition(title: [Orthogonal projection map and matrix])[
+	The #defname[orthogonal projection map] onto $W$ is the map $proj_W : Reals^n to Reals^n$ which is guaranteed to be linear.
+
+	The matrix of this map under the standard basis is the #defname[orthogonal projection matrix], denoted $P_W := [proj_W]_cal(E)$.
+]
+
+#theorem(title: [Orthogonal projection matrix onto a vector])[
+	$ proj_vn(w) (vn(v)) = P_vn(w) vn(v) $
+	where $P_vn(w)$ is the $n times n$ orthogonal projection matrix onto $span(vn(w))$:
+	$ P_vn(w) = 1/(vn(w) dot vn(w)) vn(w) vn(w)^transpose. $
+]
+
+#theorem(title: [Orthogonal projection matrix onto a column space])[
+	Let $A$ be an $m times n$ matrix with linearly independent columns. Then
+	$ P_(Col(A)) = A(A^T A)^(-1) A^T.  $
+]
+
+#lemma[
+	- If $proj_W v = v$, then $v in W$.
+	- If $proj_W v = 0$, then $v in W^perp$.
+]
+
+#lemma(title: [Orthogonal projection onto $W^perp$])[
+	$ P_(W^perp) = I - P_W. $
+
+	This follows from that $v^parallel = v - v^perp$.
+]
+
+== Least squares
+
+#see[#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/math257/CompleteLectureNotes--Filled.pdf#Outline0.40")[MATH 257 [Module 40]]]
+
+In here, we want to find the best solution to $A x = b$ where $b in.not im(A) = Col(A)$.
+
+#definition(title: [Least squares solution])[
+	Let $A$ be an $m times n$ matrix and $b in Reals^m$. Let $op("dist")$ be the Euclidean distance. A #defname[least squares solution] of the system $A x = b$ is a vector $hat(x) in Reals^n$ such that
+	$ op("dist")(A hat(x), b) = min_(x in Reals^n) op("dist")(A x, b). $
+]
+
+#theorem[
+	Let $A$ be an $m times n$ matrix and $b in Reals^m$. Then $hat(x)$ is a least-squares solution to $A x = b$ if and only if (the following equivalent conditions):
+	- $A hat(x) = proj_(Col(A)) b$.
+	- $A^T A hat(x) = A^T b$, called the #defname[normal equation].
+]
+
+#image("/assets/image-2.png")
+
+_Image from #link("https://pdodds.w3.uvm.edu/teaching/courses/2008-08UVM-124/content/docs/strang1993a.pdf")[Strang's 1993 paper]._
+
+== Linear regression
+
+#see[MATH 257 [#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/math257/CompleteLectureNotes--Filled.pdf#Outline0.41")[Module 41], CL9]]
+
+#procedure(title: [Linear regression])[
+	Say we have a set of $n$ data points ${(t_1, y_1), ..., (t_n, y_n)}$. We want to fit this to the linear combination of $m$ different functions $f_1, ..., f_m$,
+	$ y = x_1 f_1(t) + dots.c + x_m f_m(t) $
+	1. Make the #defname[design matrix] $A$:
+		$ A := mat(
+			f_1(t_1), dots.c, f_m(t_1);
+			dots.v, dots.down, dots.v;
+			f_1(t_n), dots.c, f_m(t_n);
+		). $
+		As an example, the design matrix for $y = x_1 t^2 + x_2 t + x_3$ is
+		$ A := mat(
+			t_1^2, t_1, 1;
+			dots.v, dots.v, dots.v;
+			t_n^2, t_n, 1;
+		). $
+	2. Make the equation we want to solve:
+	$ A vec(x_1, dots.v, x_m) = vec(y_1, dots.v, y_n). $
+	3. Find a least-squares solution to the equation by solving for $hat(x)$:
+	$ A^transpose A hat(x) = A^transpose y. $
+]
+
+#procedure(title: [Linear regression with QR decomposition])[
+	1. Make the #defname[design matrix] $A$:
+		$ A := mat(
+			f_1(t_1), dots.c, f_m(t_1);
+			dots.v, dots.down, dots.v;
+			f_1(t_n), dots.c, f_m(t_n);
+		). $
+	2. Make the equation we want to solve:
+	$ A vec(x_1, dots.v, x_m) = vec(y_1, dots.v, y_n). $
+	3. $Q R$-decompose $A$ (see the next section) and solve the equation
+	$ R hat(x) = Q^transpose y. $
+]
+
+== Gram-Schmidt and $Q R$-decomposition
+
+#see[#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/math257/CompleteLectureNotes--Filled.pdf#Outline0.42")[MATH 257 [Module 42]]]
+
+#theorem[
+	Every subspace of $Reals^n$ has an orthonormal basis.
+]
+
+#procedure(title: [Gram-Schmidt orthonormalization])[
+	Given a basis $vn(a)_1, ..., vn(a)_n$, produce an orthogonal basis $vn(b)_1, ..., vn(b)_n$ and an orthonormal basis $vn(q)_1, ..., vn(q)_n$ by:
+	$ b_1 :&= a_1 & q_1 :&= b_1/norm(b_1) \
+	b_2 :&= a_2 - proj_(b_1) (a_2) \
+	&= a_2 - (a_2 dot q_1)q_1 & q_2 :&= b_2/norm(b_2) \
+	b_3 :&= a_3 - proj_(span(b_1, b_2))(a_3) \
+	&= a_3 - (a_3 dot q_1)q_1 + (a_3 dot q_2) q_2 &quad q_3 :&= b_3/norm(b_3) \
+	&dots.v & &dots.v $
+]
+
+#theorem(title: [$Q R$-decomposition])[
+	Let $A$ be an $m times n$ matrix of rank $n$. Then, there exists an $m times n$ matrix $Q$ with orthonormal columns and an upper triangular $n times n$ invertible matrix $R$ s.t. $A = Q R$.
+
+	$Q$ can be obtained by applying Gram-Schmidt to the columns of $A$.
+
+	$R = Q^transpose A$. Alternately,
+	$ R = mat(
+		a_1 dot q_1, a_2 dot q_1, dots.c, a_n dot q_1;
+		0, a_2 dot q_2, dots.c, a_n dot q_2;
+		0, 0, dots.down, dots.v;
+		0, 0, dots.c, a_n dot q_n;
+	) $
+]
+
+#lemma[
+	With $a_k$ being the $k$th column of $A$, $q_k$ being the $k$th column of $Q$, and $A = Q R$:
+	$ a_1 &= R_(11) q_1 \
+	a_2 &= R_(12) q_1 + R_(22) q_2 \
+	a_3 &= R_(13) q_1 + R_(23) q_2 + R_33 q_3 \
+	dots.v & dots.v $
+
+	#image("/assets/image-3.png")
+
+	_Image from #link("https://raw.githubusercontent.com/kenjihiranabe/The-Art-of-Linear-Algebra/main/The-Art-of-Linear-Algebra.pdf")[The Art of Linear Algebra]._
 ]
 
 = Appendix: Graphs
