@@ -107,6 +107,10 @@
 
 #let linmaps = $cal(L)$
 
+#let conj = overline
+
+#let inprod(a, b) = $chevron.l #a #b chevron.r$
+
 #show link: set text(blue)
 
 Let $Field$ be a field. It's possible that some things in here require $Field = Reals$ or $Field = Complex$; if it does and it's not marked it should be considered a bug.
@@ -149,6 +153,10 @@ Let $Field$ be a field. It's possible that some things in here require $Field = 
 	$Reals$ and $Complex$ are fields.
 ]
 
+== Complex numbers
+
+#see[#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/math257/CompleteLectureNotes--Filled.pdf#Outline0.48")[MATH 257 [Modul3 48]]]
+
 #definition(title: [Complex number])[
 	A number which can be defined by a pair of real numbers $a, b$ where the value of the number is equal to $a + b i$.
 ]
@@ -157,6 +165,11 @@ Let $Field$ be a field. It's possible that some things in here require $Field = 
 	Let $z = a + b i$ and $w = c + d i$ be complex numbers. Then:
 	- $z + w = (a + c) + (b + d) i$
 	- $z w = (a c - b d) + (b c + a d) i$
+]
+
+#definition(title: [Complex conjugate])[
+	The complex conjugate of the complex number $a + b i$ is
+	$ overline(a + b i) = a - b i $
 ]
 
 = Vector spaces
@@ -1120,14 +1133,6 @@ If $A$ is an $n times n$ matrix, and is the matrix of the linear map $T_A$, the 
 	*Warning:* The order must be reversed!
 ]
 
-#theorem[
-	Let $A$ be a square matrix.
-
-	$ A^transpose = A^(-1) &<==> A "has orthonormal columns" \
-	&<==> A "has orthonormal rows".
-	$
-]
-
 == Left and right inverse
 
 #see[#link("https://ocw.mit.edu/courses/18-06sc-linear-algebra-fall-2011/pages/positive-definite-matrices-and-applications/left-and-right-inverses-pseudoinverse/")[MIT 18.06SC [Lecture 33]], Strang-ILA-6e [4.5], MATH 257 [HW3.4], #link("https://math.stackexchange.com/questions/1694351/finding-all-left-inverses-of-a-matrix")]
@@ -2080,11 +2085,6 @@ For any discussion of inner product spaces, let $Field$ be $Reals$ or $Complex$.
 	- $norm(v) = sqrt(v dot v)$
 ]
 
-#definition(title: [Complex conjugate])[
-	The complex conjugate of the complex number $a + b i$ is
-	$ overline(a + b i) = a - b i $
-]
-
 #definition(title: [Conjugate-linear map])[
 	A map $f : V to W$ where $V$ and $W$ are complex vector spaces is conjugate-linear iff for all $x, y in V$, $s in Complex$,
 	- *Additivity*: $f(x + y) = f(x) + f(y)$
@@ -2096,8 +2096,9 @@ For any discussion of inner product spaces, let $Field$ be $Reals$ or $Complex$.
 #definition(title: [Sesquilinear map])[
 	A map $f : V times V to W$ which is linear in the first argument and semilinear in the second argument.
 
-	Iff it is conjugate-linear in the second argument, for all $z_1, z_2 in Complex^n$, $c in Complex$,
-	$ f(w, c z_1 + z_2) = overline(c) f(w, z_1) + f(2, z_2) $
+	If $V$ and $W$ are complex vector spaces, then semilinear is taken to mean conjugate-linear. Then, $f$ is sesquilinear iff for all $w, z_1, z_2 in V$, $c in Complex$,
+	$ f(c w_1 + w_2, z) &= c f(w_1, z) + f(w_2, z), \
+    f(w, c z_1 + z_2) &= overline(c) f(w, z_1) + f(w, z_2). $
 ]
 
 #definition(title: [Inner product on a complex vector space])[
@@ -2301,7 +2302,7 @@ _Image from #link("https://pdodds.w3.uvm.edu/teaching/courses/2008-08UVM-124/con
 
 == Gram-Schmidt and $Q R$-decomposition
 
-#see[#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/math257/CompleteLectureNotes--Filled.pdf#Outline0.42")[MATH 257 [Module 42]]]
+#see[#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/math257/CompleteLectureNotes--Filled.pdf#Outline0.42")[MATH 257 [Module 42]], Axler [#link("https://linear.axler.net/LADR4e.pdf#section.6.2")[6B], #link("https://linear.axler.net/LADR4e.pdf")[7D.3]]]
 
 #theorem[
 	Every subspace of $Reals^n$ has an orthonormal basis.
@@ -2318,7 +2319,7 @@ _Image from #link("https://pdodds.w3.uvm.edu/teaching/courses/2008-08UVM-124/con
 ]
 
 #theorem(title: [$Q R$-decomposition])[
-	Let $A$ be an $m times n$ matrix of rank $n$. Then, there exists an $m times n$ matrix $Q$ with orthonormal columns and an upper triangular $n times n$ invertible matrix $R$ s.t. $A = Q R$.
+	Let $A$ be an $m times n$ matrix of rank $n$. Then, there exists an $m times n$ matrix $Q$ with orthonormal columns (i.e. a unitary matrix) and an upper triangular $n times n$ invertible matrix $R$ s.t. $A = Q R$.
 
 	$Q$ can be obtained by applying Gram-Schmidt to the columns of $A$.
 
@@ -2341,6 +2342,202 @@ _Image from #link("https://pdodds.w3.uvm.edu/teaching/courses/2008-08UVM-124/con
 	#image("/assets/image-3.png")
 
 	_Image from #link("https://raw.githubusercontent.com/kenjihiranabe/The-Art-of-Linear-Algebra/main/The-Art-of-Linear-Algebra.pdf")[The Art of Linear Algebra]._
+]
+
+= Operators on inner product spaces
+
+== Adjoint
+
+#see[#link("https://linear.axler.net/LADR4e.pdf#section.7.1")[Axler [7A]], #link("https://web.physics.ucsb.edu/~davidgrabovsky/files-notes/Linear%20Algebra.pdf#page=15")[Grabowsky [8.0]], #link("https://ocw.mit.edu/courses/8-05-quantum-physics-ii-fall-2013/04b0570b349e84d74129eef504498472_MIT8_05F13_Chap_03.pdf#page=22")[Zwiebach [6]]]
+
+#definition(title: [Adjoint])[
+	The #defname[adjoint] of $T in linmaps(V to W)$ is the function $T* : W to V$ s.t.
+	$ inprod(T v, w) = inprod(v, T* w). $
+]
+
+#theorem[
+	Suppose $T in linmaps(V, W)$. Then
+	- $(S + T)^* = S^* + T^*$ for all $S in linmaps(V, W)$.
+	- $(lambda T)^* = conj(lambda) T^*$ for all $lambda in Field$.
+	- $(T^*)^* = T$.
+	- $(S T)^* = T^* S^*$ for all $S in linmaps(W, U)$.
+	- $I^* = I$.
+	- $T$ invertible $implies$ $T^*$ invertible and $(T^*)^(-1) = (T^(-1))^*$.
+	- $ker T^* = (im T)^perp$.
+	- $im T^* = (ker T)^perp$.
+	- $ker T = (im T^*)^perp$.
+	- $im T = (ker T^*)^perp$.
+]
+
+#definition(title: [Conjugate transpose])[
+	The conjugate transpose of an $m times n$ complex-valued matrix $A$ is the $n times m$ matrix $A^*$ obtained by interchanging the rows and columns, and then taking the complex conjugate of each entry:
+	$ (A^*)_(j, k) &= conj(A_(k, j)) \
+	A^* &= conj(A)^transpose = conj(A^transpose). $
+]
+
+#theorem[
+	Let $T in linmaps(V, W)$ where $V$ and $W$ are vector spaces on the field $Complex$. Then, the matrix of $T^*$ with respect to orthonormal bases $B_V$ and $B_W$ is the conjugate transpose of $[T]$:
+	$ [T^*] = [T]^* = conj([T]^transpose). $
+]
+
+#theorem[
+	Let $T in linmaps(V, W)$ where $V$ and $W$ are vector spaces on the field $Reals$. Then, the matrix of $T^*$ with respect to orthonormal bases $B_V$ and $B_W$ is the transpose of $[T]$:
+	$ [T^*] = [T]^transpose. $
+]
+
+== Self-adjoint operators
+
+#see[#link("https://linear.axler.net/LADR4e.pdf#section.7.1")[Axler [7A]], #link("https://web.physics.ucsb.edu/~davidgrabovsky/files-notes/Linear%20Algebra.pdf#page=15")[Grabowsky [8.0]], #link("https://ocw.mit.edu/courses/8-05-quantum-physics-ii-fall-2013/04b0570b349e84d74129eef504498472_MIT8_05F13_Chap_03.pdf#page=24")[Zwiebach [7]]]
+
+#definition(title: [Self-adjoint operator])[
+	An operator $T in linmaps(V)$ is #defname[self-adjoint] iff it satisfies the equivalent conditions:
+	- $T = T^*$.
+	- $inprod(T v, w) = inprod(v, T w)$.
+
+	Iff $V$ is a real inner product space, $T$ is called #defname[symmetric]. Iff $V$ is a complex inner product space, $T$ is called #defname[Hermitian].
+]
+
+#theorem[
+	$T in linmaps(V)$, with $V$ a real inner product space, is symmetric iff $[T]$ is a #defname[symmetric matrix], i.e. $[T]^transpose = T$.
+
+	$T in linmaps(V)$, with $V$ a complex inner product space, is symmetric iff $[T]$ is a #defname[Hermitian matrix], i.e. $conj([T]^transpose) = T$.
+]
+
+#theorem[
+	Let $T in linmaps(V)$ where $V$ is a complex inner product space. Then,
+	- $inprod(T v, v) = 0$ for every $V in V$ $<==>$ $T = 0$.
+	- $T$ is self-adjoint $<==>$ $inprod(T v, v) in Reals$ for every $v in V$.
+]
+
+#theorem[
+	If $T in linmaps(V)$ is self-adjoint (regardless of whether $V$ is real or complex), then
+	- $inprod(T v, v) = 0$ for every $v in V$ $<==>$ $T = 0$.
+]
+
+#theorem[
+	Every eigenvalue of a Hermitian (self-adjoint) operator $H in linmaps(V)$ is real (where $V$ is a complex inner product space).
+
+	Thus, every eigenvalue of a symmetric real-valued matrix is real.
+
+	Furthermore, eigenvectors of $H$ corresponding to distinct eigenvalues are orthogonal.
+]
+
+== Normal and unitary operators
+
+#see[Axler [#link("https://linear.axler.net/LADR4e.pdf#section.7.1")[7A], #link("https://linear.axler.net/LADR4e.pdf#section.7.1")[7D]], #link("https://web.physics.ucsb.edu/~davidgrabovsky/files-notes/Linear%20Algebra.pdf#page=15")[Grabowsky [8.0]], #link("https://ocw.mit.edu/courses/8-05-quantum-physics-ii-fall-2013/04b0570b349e84d74129eef504498472_MIT8_05F13_Chap_03.pdf#page=24")[Zwiebach [7]]]
+
+#definition(title: [Normal operator])[
+	An operator $T in linmaps(V)$ is #defname[normal] iff $T^* T = T T^*$.
+]
+
+#theorem[
+	$T$ is normal iff $norm(T v) = norm(T^* v)$ for every $v in V$.
+]
+
+#theorem[
+	Let $T in linmaps(V)$ be a normal operator.
+	- $ker T = ker T^*$
+	- $im T = im T^*$
+	- $V = ker T plus.o im T$
+	- $T - lambda I$ is normal for every $lambda in Field$
+	- If $v in V$ and $lambda in Field$, $T v = lambda v$ iff $T^* v = conj(lambda) v$.
+]
+
+#theorem[
+	Let $T in linmaps(V)$ be a unitary operator. Then, eigenvectors of $T$ corresponding to distinct eigenvectors are orthogonal.
+]
+
+#definition(title: [Unitary operator])[
+	An operator $T in linmaps(V)$ is #defname[unitary] iff it satisfies the equivalent conditions:
+	- $inprod(T u, T v) = inprod(u, v)$.
+	- $T^* T = T T^* = I$.
+]
+
+#theorem(title: [Orthogonal matrix])[
+	Let $A$ be a real-valued square matrix.
+
+	$ A^transpose = A^(-1) &<==> A "has orthonormal columns" \
+	&<==> A "has orthonormal rows".
+	$
+
+	A matrix where $A^(-1) = A^transpose$ is called an #defname[orthogonal matrix].
+
+	Iff $V$ is a real inner product space and $T in linmaps(V)$ is unitary, $T$ is called a #defname[orthogonal operator] and $[T]$ is an orthogonal matrix.
+]
+
+#theorem(title: [Unitary matrix])[
+	Let $A$ be a square matrix.
+
+	$ A^* = A^(-1) &<==> A "has orthonormal columns" \
+	&<==> A "has orthonormal rows".
+	$
+
+	A matrix where $A^(-1) = A^*$ is called a #defname[unitary matrix].
+
+	Iff $T in linmaps(V)$ is unitary, $[T]$ is a unitary matrix.
+]
+
+#theorem[
+	Every self-adjoint operator is unitary.
+
+	All change-of-basis maps on real or complex vector spaces are unitary operators.
+
+	If $T in linmaps(V)$ is unitary, then $T$ is an isometry.
+]
+
+#theorem[
+	Let $T in linmaps(V)$ be a unitary operator. Then, every eigenvaluue of $T$ has unit norm, and eigenvectors of $T$ corresponding to distinct eigenvectors are orthogonal.
+]
+
+== Spectral theorem
+
+#see[#link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/math257/CompleteLectureNotes--Filled.pdf#Outline0.1")[MATH 257 [Module 43]]]
+
+#see[Abstract proofs: #link("https://linear.axler.net/LADR4e.pdf#section.7.2")[Axler [7B]], #link("https://web.physics.ucsb.edu/~davidgrabovsky/files-notes/Linear%20Algebra.pdf")[Grabovsky [8.2]]]
+
+#theorem[
+	Every operator on a complex vector space has an eigenvector.
+]
+
+#theorem(title: [Real spectral theorem])[
+	Let $T in linmaps(V)$ where $V$ is a finite-dimensional real inner product space. Then, the following are equivalent:
+	- $T$ is self-adjoint.
+	- $T$ has a diagonal matrix with respect to some orthonormal basis of $V$.
+	- $V$ has an orthonormal basis consisting of eigenvectors of $T$.
+]
+
+#theorem(title: [Real spectral theorem for matrices])[
+	Iff the real-valued matrix $A = [T]_e$ is symmetric, it has an eigenbasis composed of orthonormal eigenvectors.
+
+	Then, 
+	$ A &= C_(D to e) [T]_D C_(e to D) \
+	&= Q D Q^(-1) \
+	&= Q D Q^transpose $
+
+	where $Q$ is the orthogonal matrix $C_(D to e)$ whose columns are the orthonormal eigenvectors, and $D$ is the diagonal matrix containing the eigenvalues.
+]
+
+#theorem(title: [Complex spectral theorem])[
+	Let $T in linmaps(V)$ where $V$ is a finite-dimensional complex inner product space. Then, the following are equivalent:
+	- $T$ is normal.
+	- $T$ has a diagonal matrix with respect to some orthonormal basis of $V$.
+	- $V$ has an orthonormal basis consisting of eigenvectors of $T$.
+]
+
+#theorem(title: [Complex spectral theorem for matrices])[
+	Iff the complex-valued matrix $A = [T]_e$ is symmetric, it has an eigenbasis composed of orthonormal eigenvectors.
+
+	Then, 
+	$ A &= C_(D to e) [T]_D C_(e to D) \
+	&= U D U^(-1) \
+	&= U D U^* $
+
+	where $U$ is the unitary matrix $C_(D to e)$ whose columns are the orthonormal eigenvectors, and $D$ is the diagonal matrix containing the eigenvalues.
+]
+
+#lemma[
+#image("/assets/image-4.png")
+_Image from #link("https://raw.githubusercontent.com/kenjihiranabe/The-Art-of-Linear-Algebra/main/The-Art-of-Linear-Algebra.pdf")[The Art of Linear Algebra]._
 ]
 
 = Appendix: Graphs
@@ -2656,41 +2853,56 @@ The strict-positivity condition of @thm:markov-convergence is sufficient but str
 
 = Resources
 
+Resources marked with a star (#sym.star.filled) are resources I have personally read and liked.
+
+Resources marked with (\$) are to my knowledge not available for free on the Internet.
 
 == Main resources
 
-- *Trimm* -- notes from "TrimmAlg", the linear algebra class taught by Dr. Anderson Trimm in S25
-	- *Karthik* -- a student's solutions to worksheets from TrimmAlg
-	- This class follows Axler, but presents some things from Strang in an Axler-style presentation
-- *MATH 257* -- notes from MATH 257 "Linear Algebra with Computational Applications", taught in F26
-	- *Chaung* -- notes from the 09:00 lecture given by Jer-Chin Chuang in F26
-	- This is a more numerical/applied class
-	- This class mostly follows Strang and MIT 18.06, but also introduces worked examples in NumPy code
 - *Axler* -- #link("https://linear.axler.net/LADR4e.pdf")[_Linear Algebra Done Right_, 4th edition, by Sheldon Axler]
 	- #link("https://lew98.github.io/Mathematics/LADR_Solutions/LADR_Solutions.pdf")[Solution manual by GitHub user `@lew98`]
 	- A very abstract book
+- *Treil-LADW* -- _Linear Algebra Done Wrong_ (#link("https://www.math.brown.edu/streil/papers/LADW/LADW_2026_08-31.pdf")[PDF] | #link("https://www.math.brown.edu/streil/papers/LADW/HTML_2026_08-31/LADW_2026_08-31.html")[HTML])
+- (\$) Paul Halmos, _Finite-Dimensional Vector Spaces_ (1958) -- exhaustive textbook
+- (\$) Kenneth Hoffman and Ray Kunze, _Linear Algebra_ -- an algebraist's approach
 
-== Supplementary resources
+=== Quick overviews of abstract linear algebra
 
-- *Klein* -- _Coding the Matrix: Linear Algebra through Applications to Computer Science_, by Philip N. Klein
-	- #link("https://cs.brown.edu/video/channels/coding-matrix-fall-2014/")[Philip Klein's lecture videos]
-	- #link("https://www.youtube.com/playlist?list=PLEhMEyM9jSinRHXJgRCOLZUiu9847V2g0")[Eng Weam's lecture videos]
-	- #link("https://archive.org/details/academictorrents_54cd86f3038dfd446b037891406ba4e0b1200d5a")[Coursera videos]
+- #sym.star.filled *Grabovsky* -- David Grabovsky, #link("https://web.physics.ucsb.edu/~davidgrabovsky/files-notes/Linear%20Algebra.pdf")[_Linear Algebra: A Field Guide_] -- builds up to spectral theory
+- #sym.star.filled *Zwiebach* -- Barton Zwiebach, #link("https://ocw.mit.edu/courses/8-05-quantum-physics-ii-fall-2013/04b0570b349e84d74129eef504498472_MIT8_05F13_Chap_03.pdf")[_Linear Algebra: Vector Spaces and Operators_] -- a more physical intuition approach and summary of the topics in Axler, from #link("https://ocw.mit.edu/courses/8-05-quantum-physics-ii-fall-2013/pages/syllabus/")[MIT 8.05 Quantum Physics]
+
+=== Other abstract resources
+
+- #sym.star.filled *Axler-DwD* -- #link("https://www.axler.net/DwD.pdf")[_Down with Determinants!_], an introduction to eigentheory without using determinants, and a definition of determinants from eigentheory
+
+== Mix of abstract and applied curricula
+
+- #sym.star.filled *Trimm* -- notes from "TrimmAlg", the linear algebra class taught by Dr. Anderson Trimm in S25
+	- *Karthik* -- a student's solutions to worksheets from TrimmAlg
+	- This class follows Axler, but presents some things from Strang in an Axler-style presentation
+
+== American-style matrix-focused curricula
+
+These focus on matrices, and are often first courses designed for engineers.
+
 - *UCDavis* -- #link("https://www.math.ucdavis.edu/~linear/")[open-access textbook _Linear Algebra_, by Cherney, Denton, Thomas, and Waldron]
-	- Strang-like approach
-- *Alayont & Schlicker* -- #link("https://scholarworks.gvsu.edu/books/21/")[Linear Algebra and Applications: An Inquiry-Based Approach]
-	- Inquiry-based approach, i.e. investigation of examples
+- #sym.star.filled *TU Delft* -- #link("https://interactivetextbooks.tudelft.nl/linear-algebra/index.html")[open-access textbook for a first course for engineers]
+- (\$) *MATH 257* -- notes from MATH 257 "Linear Algebra with Computational Applications", taught in F26
+	- *Chaung* -- notes from the 09:00 lecture given by Jer-Chin Chuang in F26
+	- This is a more numerical/applied class
+	- This class mostly follows Strang and MIT 18.06, but also introduces worked examples in NumPy code
+	- The notes are not very good
 
 === Gilbert Strang's main curriculum
-- *Strang-LAIA* -- _Linear Algebra and Its Applications_
+- (\$) *Strang-LAIA* -- _Linear Algebra and Its Applications_
 	- Strang's oldest textbook
-- *Strang-ILA* -- _Introduction to Linear Algebra_
+- (\$) *Strang-ILA* -- _Introduction to Linear Algebra_
 	- The book in Strang's course MIT 18.06
 	- #link("https://web.archive.org/web/20160124195254if_/http://math.mit.edu/~gs/linearalgebra/")[Website of Fourth Edition (2009)]
 	- #link("https://math.mit.edu/~gs/linearalgebra/ila5/indexila5.html")[Website of Fifth Edition (2016)]
 	- #link("https://math.mit.edu/~gs/linearalgebra/ila6/indexila6.html")[Website of Sixth Edition (2023)]
 		- It has useful links and some full chapters
-- *Strang-LALD* -- _Linear Algebra and Learning from Data_
+- (\$) *Strang-LALD* -- _Linear Algebra and Learning from Data_
 	- #link("https://math.mit.edu/~gs/learningfromdata/")[Website of First Edition (2019)]
 - *MIT 18.06*
 	- #link("https://web.mit.edu/18.06/www/")[Main website]
@@ -2706,11 +2918,30 @@ The strict-positivity condition of @thm:markov-convergence is sufficient but str
 	- #link("https://github.com/mitmath/18065")[MIT 18.065, Spring 2023]
 
 === Gilbert Strang's new curriculum ($C R$-factorization)
-- *Strang-LAFE* -- _Linear Algebra for Everyone_
+- (\$) *Strang-LAFE* -- _Linear Algebra for Everyone_
 	- #link("https://math.mit.edu/~gs/everyone/")[Website of First Edition (2020)]
-	- #link("https://raw.githubusercontent.com/kenjihiranabe/The-Art-of-Linear-Algebra/main/The-Art-of-Linear-Algebra.pdf")[_The Art of Linear Algebra_] by Kenji Hiranabe -- graphical representations of stuff from LAFE
+	- #sym.star.filled #link("https://raw.githubusercontent.com/kenjihiranabe/The-Art-of-Linear-Algebra/main/The-Art-of-Linear-Algebra.pdf")[_The Art of Linear Algebra_] by Kenji Hiranabe -- graphical representations of stuff from LAFE
 - #link("https://ocw.mit.edu/courses/res-18-010-a-2020-vision-of-linear-algebra-spring-2020/")[_A Vision of Linear Algebra_ videos (2020\~2024)]
 
+== Applied linear algebra
+
+- (\$) *Klein* -- _Coding the Matrix: Linear Algebra through Applications to Computer Science_, by Philip N. Klein
+	- #link("https://cs.brown.edu/video/channels/coding-matrix-fall-2014/")[Philip Klein's lecture videos]
+	- #link("https://www.youtube.com/playlist?list=PLEhMEyM9jSinRHXJgRCOLZUiu9847V2g0")[Eng Weam's lecture videos]
+	- #link("https://archive.org/details/academictorrents_54cd86f3038dfd446b037891406ba4e0b1200d5a")[Coursera videos]
+- *Boyd* - #link("https://web.stanford.edu/~boyd/vmls/")[_Introduction to Applied Linear Algebra – Vectors, Matrices, and Least Squares_] by Stephen Boyd and Lieven Vandenberghe
+- *MML* -- #link("https://mml-book.github.io/book/mml-book.pdf")[_Mathematics for Machine Learning_], Marc Peter Deisenroth, A. Aldo Faisal, and Cheng Soon Ong
+	- #link("https://mml-book.github.io/")[Book website]
+
+== Visual intuition
+
+- #sym.star.filled *3Blue1Brown* -- video series on linear algebra; see "Videos" below
+- #sym.star.filled *Hiranabe* -- #link("https://raw.githubusercontent.com/kenjihiranabe/The-Art-of-Linear-Algebra/main/The-Art-of-Linear-Algebra.pdf")[_The Art of Linear Algebra_] by Kenji Hiranabe
+
+== Other resources
+
+- *Alayont & Schlicker* -- #link("https://scholarworks.gvsu.edu/books/21/")[Linear Algebra and Applications: An Inquiry-Based Approach]
+	- Inquiry-based approach, i.e. investigation of examples
 
 == Videos
 
