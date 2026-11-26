@@ -109,7 +109,8 @@
 
 #let conj = overline
 
-#let inprod(a, b) = $chevron.l #a #b chevron.r$
+#let inprod(a, b) = $chevron.l #a, #b chevron.r$
+#let adj = math.dagger
 
 #show link: set text(blue)
 
@@ -2345,6 +2346,8 @@ _Image from #link("https://pdodds.w3.uvm.edu/teaching/courses/2008-08UVM-124/con
 	_Image from #link("https://raw.githubusercontent.com/kenjihiranabe/The-Art-of-Linear-Algebra/main/The-Art-of-Linear-Algebra.pdf")[The Art of Linear Algebra]._
 ]
 
+// MARK: - Spectral
+
 = Singular values and spectral methods
 
 == Adjoint
@@ -2352,38 +2355,38 @@ _Image from #link("https://pdodds.w3.uvm.edu/teaching/courses/2008-08UVM-124/con
 #see[#link("https://linear.axler.net/LADR4e.pdf#section.7.1")[Axler [7A]], #link("https://web.physics.ucsb.edu/~davidgrabovsky/files-notes/Linear%20Algebra.pdf#page=15")[Grabowsky [8.0]], #link("https://ocw.mit.edu/courses/8-05-quantum-physics-ii-fall-2013/04b0570b349e84d74129eef504498472_MIT8_05F13_Chap_03.pdf#page=22")[Zwiebach [6]]]
 
 #definition(title: [Adjoint])[
-	The #defname[adjoint] of $T in linmaps(V to W)$ is the function $T^* : W to V$ s.t.
-	$ inprod(T v, w) = inprod(v, T* w). $
+	The #defname[adjoint] of $T in linmaps(V to W)$ is the function $T^adj : W to V$ (also denoted $T^*$ or $T^"H"$) s.t.
+	$ inprod(T v, w) = inprod(v, T^adj w). $
 ]
 
 #theorem[
 	Suppose $T in linmaps(V, W)$. Then
-	- $(S + T)^* = S^* + T^*$ for all $S in linmaps(V, W)$.
-	- $(lambda T)^* = conj(lambda) T^*$ for all $lambda in Field$.
-	- $(T^*)^* = T$.
-	- $(S T)^* = T^* S^*$ for all $S in linmaps(W, U)$.
-	- $I^* = I$.
-	- $T$ invertible $implies$ $T^*$ invertible and $(T^*)^(-1) = (T^(-1))^*$.
-	- $ker T^* = (im T)^perp$.
-	- $im T^* = (ker T)^perp$.
-	- $ker T = (im T^*)^perp$.
-	- $im T = (ker T^*)^perp$.
+	- $(S + T)^adj = S^adj + T^adj$ for all $S in linmaps(V, W)$.
+	- $(lambda T)^adj = conj(lambda) T^adj$ for all $lambda in Field$.
+	- $(T^adj)^adj = T$.
+	- $(S T)^adj = T^adj S^adj$ for all $S in linmaps(W, U)$.
+	- $I^adj = I$.
+	- $T$ invertible $implies$ $T^adj$ invertible and $(T^adj)^(-1) = (T^(-1))^adj$.
+	- $ker T^adj = (im T)^perp$.
+	- $im T^adj = (ker T)^perp$.
+	- $ker T = (im T^adj)^perp$.
+	- $im T = (ker T^adj)^perp$.
 ]
 
 #definition(title: [Conjugate transpose])[
-	The conjugate transpose of an $m times n$ complex-valued matrix $A$ is the $n times m$ matrix $A^*$ obtained by interchanging the rows and columns, and then taking the complex conjugate of each entry:
-	$ (A^*)_(j, k) &= conj(A_(k, j)) \
-	A^* &= conj(A)^transpose = conj(A^transpose). $
+	The conjugate transpose of an $m times n$ complex-valued matrix $A$ is the $n times m$ matrix $A^adj$ obtained by interchanging the rows and columns, and then taking the complex conjugate of each entry:
+	$ (A^adj)_(j, k) &= conj(A_(k, j)) \
+	A^adj &= conj(A)^transpose = conj(A^transpose). $
 ]
 
 #theorem[
-	Let $T in linmaps(V, W)$ where $V$ and $W$ are vector spaces on the field $Complex$. Then, the matrix of $T^*$ with respect to orthonormal bases $B_V$ and $B_W$ is the conjugate transpose of $[T]$:
-	$ [T^*] = [T]^* = conj([T]^transpose). $
+	Let $T in linmaps(V, W)$ where $V$ and $W$ are vector spaces on the field $Complex$. Then, the matrix of $T^adj$ with respect to orthonormal bases $B_V$ and $B_W$ is the conjugate transpose of $[T]$:
+	$ [T^adj] = [T]^adj = conj([T]^transpose). $
 ]
 
 #theorem[
-	Let $T in linmaps(V, W)$ where $V$ and $W$ are vector spaces on the field $Reals$. Then, the matrix of $T^*$ with respect to orthonormal bases $B_V$ and $B_W$ is the transpose of $[T]$:
-	$ [T^*] = [T]^transpose. $
+	Let $T in linmaps(V, W)$ where $V$ and $W$ are vector spaces on the field $Reals$. Then, the matrix of $T^adj$ with respect to orthonormal bases $B_V$ and $B_W$ is the transpose of $[T]$:
+	$ [T^adj] = [T]^transpose. $
 ]
 
 == Self-adjoint operators
@@ -2392,7 +2395,7 @@ _Image from #link("https://pdodds.w3.uvm.edu/teaching/courses/2008-08UVM-124/con
 
 #definition(title: [Self-adjoint operator])[
 	An operator $T in linmaps(V)$ is #defname[self-adjoint] iff it satisfies the equivalent conditions:
-	- $T = T^*$.
+	- $T = T^adj$.
 	- $inprod(T v, w) = inprod(v, T w)$.
 
 	Iff $V$ is a real inner product space, $T$ is called #defname[symmetric]. Iff $V$ is a complex inner product space, $T$ is called #defname[Hermitian].
@@ -2428,20 +2431,20 @@ _Image from #link("https://pdodds.w3.uvm.edu/teaching/courses/2008-08UVM-124/con
 #see[Axler [#link("https://linear.axler.net/LADR4e.pdf#section.7.1")[7A], #link("https://linear.axler.net/LADR4e.pdf#section.7.1")[7D]], #link("https://web.physics.ucsb.edu/~davidgrabovsky/files-notes/Linear%20Algebra.pdf#page=15")[Grabowsky [8.0]], #link("https://ocw.mit.edu/courses/8-05-quantum-physics-ii-fall-2013/04b0570b349e84d74129eef504498472_MIT8_05F13_Chap_03.pdf#page=24")[Zwiebach [7]]]
 
 #definition(title: [Normal operator])[
-	An operator $T in linmaps(V)$ is #defname[normal] iff $T^* T = T T^*$.
+	An operator $T in linmaps(V)$ is #defname[normal] iff $T^adj T = T T^adj$.
 ]
 
 #theorem[
-	$T$ is normal iff $norm(T v) = norm(T^* v)$ for every $v in V$.
+	$T$ is normal iff $norm(T v) = norm(T^adj v)$ for every $v in V$.
 ]
 
 #theorem[
 	Let $T in linmaps(V)$ be a normal operator.
-	- $ker T = ker T^*$
-	- $im T = im T^*$
+	- $ker T = ker T^adj$
+	- $im T = im T^adj$
 	- $V = ker T plus.o im T$
 	- $T - lambda I$ is normal for every $lambda in Field$
-	- If $v in V$ and $lambda in Field$, $T v = lambda v$ iff $T^* v = conj(lambda) v$.
+	- If $v in V$ and $lambda in Field$, $T v = lambda v$ iff $T^adj v = conj(lambda) v$.
 ]
 
 #theorem[
@@ -2457,7 +2460,7 @@ _Image from #link("https://pdodds.w3.uvm.edu/teaching/courses/2008-08UVM-124/con
 #definition(title: [Unitary operator])[
 	An operator $T in linmaps(V)$ is #defname[unitary] iff it satisfies the equivalent conditions:
 	- $inprod(T u, T v) = inprod(u, v)$.
-	- $T^* T = T T^* = I$.
+	- $T^adj T = T T^adj = I$.
 ]
 
 #theorem(title: [Orthogonal matrix])[
@@ -2475,11 +2478,11 @@ _Image from #link("https://pdodds.w3.uvm.edu/teaching/courses/2008-08UVM-124/con
 #theorem(title: [Unitary matrix])[
 	Let $A$ be a square matrix.
 
-	$ A^* = A^(-1) &<==> A "has orthonormal columns" \
+	$ A^adj = A^(-1) &<==> A "has orthonormal columns" \
 	&<==> A "has orthonormal rows".
 	$
 
-	A matrix where $A^(-1) = A^*$ is called a #defname[unitary matrix].
+	A matrix where $A^(-1) = A^adj$ is called a #defname[unitary matrix].
 
 	Iff $T in linmaps(V)$ is unitary, $[T]$ is a unitary matrix.
 ]
@@ -2528,12 +2531,12 @@ _Image from #link("https://pdodds.w3.uvm.edu/teaching/courses/2008-08UVM-124/con
 ]
 
 #theorem(title: [Complex spectral theorem for matrices])[
-	Iff the complex-valued matrix $A = [T]_e$ is conjugate-symmetric (Hermitian) or otherwise normal (i.e. $A^* A = A A^*$), it has an eigenbasis composed of orthonormal eigenvectors.
+	Iff the complex-valued matrix $A = [T]_e$ is conjugate-symmetric (Hermitian) or otherwise normal (i.e. $A^adj A = A A^adj$), it has an eigenbasis composed of orthonormal eigenvectors.
 
 	Then, 
 	$ A &= C_(D to e) [T]_D C_(e to D) \
 	&= U D U^(-1) \
-	&= U D U^* $
+	&= U D U^adj $
 
 	where $U$ is the unitary matrix $C_(D to e)$ whose columns are the orthonormal eigenvectors, and $D$ is the diagonal matrix containing the eigenvalues.
 ]
@@ -2541,9 +2544,9 @@ _Image from #link("https://pdodds.w3.uvm.edu/teaching/courses/2008-08UVM-124/con
 #lemma(title: [Geometric interpetation of spectral theorem])[
 	Given a self-adjoint matrix $A$,
 
-	$ A = lambda_1 q_1 q_1^* + dots.c + lambda_n q_n q_n^*. $
+	$ A = lambda_1 q_1 q_1^adj + dots.c + lambda_n q_n q_n^adj. $
 
-	Each $q_k q_k^*$ is the orthogonal projection matrix onto the $k$th eigenvector, so $A$ is a weighted sum of projections onto perpendicular lines. Thus, a self-adjoint operator can only stretch things; it cannot rotate or shear.
+	Each $q_k q_k^adj$ is the orthogonal projection matrix onto the $k$th eigenvector, so $A$ is a weighted sum of projections onto perpendicular lines. Thus, a self-adjoint operator can only stretch things; it cannot rotate or shear.
 
 #image("/assets/image-4.png")
 _Image from #link("https://raw.githubusercontent.com/kenjihiranabe/The-Art-of-Linear-Algebra/main/The-Art-of-Linear-Algebra.pdf")[The Art of Linear Algebra]._
@@ -2568,24 +2571,24 @@ _Image from Strang's paper #link("https://doi.org/10.1080/10511970.2024.2321349"
 ]
 
 #theorem[
-	For any operator $T$, $T^* T$ and $T T^*$ are self-adjoint, positive semidefinite operators.
+	For any operator $T$, $T^adj T$ and $T T^adj$ are self-adjoint, positive semidefinite operators.
 ]
 
 == Singular value decomposition
 
 #see[#link("https://mml-book.github.io/book/mml-book.pdf#section.4.5")[MML [4.5]], #link("https://linear.axler.net/LADR4e.pdf#section.7.5")[Axler [7E]], #link("https://raw.githubusercontent.com/ethanc8/ekactl-references/trunk/linalg/math257/CompleteLectureNotes--Filled.pdf#Outline0.44")[MATH 257 [Module 44]]]
 
-#theorem(title: [Properties of $T^* T$])[
+#theorem(title: [Properties of $T^adj T$])[
 	Suppose $T in linmaps(V, W)$. Then
-	- $T^* T$ is a self-adjoint positive semidefinite operator on $V$.
-	- $ker T^* T = ker T$.
-	- $im T^* T = im T^*$.
-	- $dim im T = dim im T^* = dim im T^* T$.
+	- $T^adj T$ is a self-adjoint positive semidefinite operator on $V$.
+	- $ker T^adj T = ker T$.
+	- $im T^adj T = im T^adj$.
+	- $dim im T = dim im T^adj = dim im T^adj T$.
 ]
 
 #theorem(title: [Singular value decomposition])[
 	Let $A$ be an $m times n$ matrix of rank $r$. Then, $A$ can be written in the form (called the #defname[singular value decomposition])
-	$ A = U Sigma V^*, $
+	$ A = U Sigma V^adj, $
 
 	with a unitary $m times m$ matrix $U$, unitary matrix $V$, and (possibly rectangular) diagonal matrix $Sigma$.
 
@@ -2597,7 +2600,7 @@ _Image from Strang's paper #link("https://doi.org/10.1080/10511970.2024.2321349"
 
 	We can further write $A$ as a sum of outer products weighted by the singular values:
 
-	$ A = U Sigma V^* = sigma_1 u_1 v_1^* + dots.c + sigma_r u_r v_r^*. $
+	$ A = U Sigma V^adj = sigma_1 u_1 v_1^adj + dots.c + sigma_r u_r v_r^adj. $
 
 #image("/assets/image-6.png")
 _Image from Strang's paper #link("https://doi.org/10.1080/10511970.2024.2321349")["The Art of Linear Algebra"]._
@@ -2621,28 +2624,28 @@ _Image from Strang's paper #link("https://doi.org/10.1080/10511970.2024.2321349"
 #remark(title: [Construction of the SVD])[
 	Let $A$ be an $m times n$ matrix.
 
-	*Constructing the right-singular vectors $B_V$.* We need an orthonormal basis $B_V = (v_1, dots, v_n)$ which we will use as the columns of $V$. We know that $A^* A$ is a self-adjoint positive semidefinite matrix, so we eigendecompose $A^* A$ into $P D P^*$. We obtain (by spectral theorem) unitary matrix $P$ composed of the orthonormal eigenbasis of $A^* A$, and diagonal matrix $D$ composed of the eigenvalues of $A^* A$. If we assume the SVD of $A$ exists, then:
-	$ A^* A &= (U Sigma V^*)^* (U Sigma V^*) \
-	&= V Sigma^* U^* U Sigma V^*. $
-	Since $U$ and $V$ are unitary, $U^* U = I$, so 
-	$ A^* A &= V Sigma^* Sigma V^* \
-	&= V diag(sigma_1^2, dots, sigma_n^2) V^*. $
+	*Constructing the right-singular vectors $B_V$.* We need an orthonormal basis $B_V = (v_1, dots, v_n)$ which we will use as the columns of $V$. We know that $A^adj A$ is a self-adjoint positive semidefinite matrix, so we eigendecompose $A^adj A$ into $P D P^adj$. We obtain (by spectral theorem) unitary matrix $P$ composed of the orthonormal eigenbasis of $A^adj A$, and diagonal matrix $D$ composed of the eigenvalues of $A^adj A$. If we assume the SVD of $A$ exists, then:
+	$ A^adj A &= (U Sigma V^adj)^adj (U Sigma V^adj) \
+	&= V Sigma^adj U^adj U Sigma V^adj. $
+	Since $U$ and $V$ are unitary, $U^adj U = I$, so 
+	$ A^adj A &= V Sigma^adj Sigma V^adj \
+	&= V diag(sigma_1^2, dots, sigma_n^2) V^adj. $
 
-	Thus, $V^* = P^*$ and $sigma_i^2 = lambda_i$: the eigenvectors of $A^* A$ are the right-singular vectors of $A$ and the eigenvalues of $A^* A$ are the squares of the singular values of $A$.
+	Thus, $V^adj = P^adj$ and $sigma_i^2 = lambda_i$: the eigenvectors of $A^adj A$ are the right-singular vectors of $A$ and the eigenvalues of $A^adj A$ are the squares of the singular values of $A$.
 
-	*Constructing the left-singular vectors $B_U$.* We need an orthonormal basis $B_U = (u_1, dots, u_m)$ which we will use as the columns of $U$. We know that $A A^*$ is a self-adjoint positive semidefinite matrix, so we eigendecompose $A A^*$ into $P D P^*$, obtaining unitary $P$ and diagonal $D$. Assuming the SVD of $A$ exists,
-	$ A A^* &= (U Sigma V^*) (U Sigma V^*)^* \
-	&= U Sigma V^* V Sigma^* U^* \
-	&= U Sigma Sigma^* U^* \
-	&= U diag(sigma_1^2, dots, sigma_m^2) U^*. $
+	*Constructing the left-singular vectors $B_U$.* We need an orthonormal basis $B_U = (u_1, dots, u_m)$ which we will use as the columns of $U$. We know that $A A^adj$ is a self-adjoint positive semidefinite matrix, so we eigendecompose $A A^adj$ into $P D P^adj$, obtaining unitary $P$ and diagonal $D$. Assuming the SVD of $A$ exists,
+	$ A A^adj &= (U Sigma V^adj) (U Sigma V^adj)^adj \
+	&= U Sigma V^adj V Sigma^adj U^adj \
+	&= U Sigma Sigma^adj U^adj \
+	&= U diag(sigma_1^2, dots, sigma_m^2) U^adj. $
 
-	Thus, $U = P$ and $sigma_i^2 = lambda_i$: the eigenvectors of $A A^*$ are the left-singular vectors of $A$ and the eigenvalues of $A A^*$ are the squares of the singular values of $A$.
+	Thus, $U = P$ and $sigma_i^2 = lambda_i$: the eigenvectors of $A A^adj$ are the left-singular vectors of $A$ and the eigenvalues of $A A^adj$ are the squares of the singular values of $A$.
 
-	*Constructing the singular value matrix.* $A A^*$ and $A^* A$ possess the same eigenvalues, since if $A A^* v = lambda v$ with $lambda != 0$, then $(A^* A)(A^* v) = A^* (A A^* v) = lambda(A^* v)$, and $A^* v != 0$ since $lambda != 0$. (Alternately if $A$ is real-valued, then we know that $A A^* = (A^* A)^transpose$, and the eigenvalues of a matrix and its transpose are the same.) Thus the nonzero entries of $Sigma$ in both cases must be the same.
+	*Constructing the singular value matrix.* $A A^adj$ and $A^adj A$ possess the same eigenvalues, since if $A A^adj v = lambda v$ with $lambda != 0$, then $(A^adj A)(A^adj v) = A^adj (A A^adj v) = lambda(A^adj v)$, and $A^adj v != 0$ since $lambda != 0$. (Alternately if $A$ is real-valued, then we know that $A A^adj = (A^adj A)^transpose$, and the eigenvalues of a matrix and its transpose are the same.) Thus the nonzero entries of $Sigma$ in both cases must be the same.
 
 	Now we need to show that the images of the $v_i$ under $A$ must be orthogonal, i.e. we want to show that $inprod(A v_i, A v_j) = 0$ for all $i != j$. For any $i != j$, we have that
-	$ inprod(A v_i, A v_j) = inprod(v_i, A^* A v_j) = inprod(v_i, lambda_j v_j) = lambda_j inprod(v_i, v_j) = 0. $
-	(Using definition of the adjoint, then that $v_j$ is an eigenvector of $A^* A$, then orthogonality of eigenvectors.)
+	$ inprod(A v_i, A v_j) = inprod(v_i, A^adj A v_j) = inprod(v_i, lambda_j v_j) = lambda_j inprod(v_i, v_j) = 0. $
+	(Using definition of the adjoint, then that $v_j$ is an eigenvector of $A^adj A$, then orthogonality of eigenvectors.)
 
 	*Constructing left-singular vectors consistent with $V$ and $Sigma$.* We now need to construct left-singular vectors consistent with $V$ and $Sigma$, s.t $A = U Sigma V^transpose$.
 
@@ -2652,24 +2655,26 @@ _Image from Strang's paper #link("https://doi.org/10.1080/10511970.2024.2321349"
 	*Singular value equation.* Rearranging our most recent definition of the $u_i$:
 	$ A v_i = sigma_i u_i quad i = 1, dots, r. $
 
-	When $n < m$, the singular value equation holds only for $i <= n$. We need to find more $u_i$, so we find these by extending the ${u_i}$ to an orthonormal basis of the whole space (by concatenating ${u_i}$ with an orthonormal basis of $(span {u_i})^perp$). When $m < n$, for $i > m$, $A v_i = 0$, so the remaining $v_i$ with $i > m$ form an orthonormal basis of the nullspace of $A$. We get these remaining $v_i$ from our eigendecomposition of $A^* A$.
+	When $n < m$, the singular value equation holds only for $i <= n$. We need to find more $u_i$, so we find these by extending the ${u_i}$ to an orthonormal basis of the whole space (by concatenating ${u_i}$ with an orthonormal basis of $(span {u_i})^perp$). When $m < n$, for $i > m$, $A v_i = 0$, so the remaining $v_i$ with $i > m$ form an orthonormal basis of the nullspace of $A$. We get these remaining $v_i$ from our eigendecomposition of $A^adj A$.
 ]
 
 #procedure(title: [Computing the SVD])[
 	Let $A$ be an $m times n$ matrix.
-	1. *Right-singular vectors from $A^* A$.*
-	  a. Compute $A^* A$.
-		b. Eigendecompose $A^* A$ into $P D P^*$ such that the eigenvalues in $D$ are arranged in descending order.
-		c. Choose $V := P$; i.e. the right-singular vectors are the columns of $P$.
+	1. *Right-singular vectors from $A^adj A$.*
+		+ Compute $A^adj A$.
+		+ Eigendecompose $A^adj A$ into $P D P^adj$.
+		+ Arrange $P D P^adj$ such that the eigenvalues in $D$ are arranged in descending order.
+		+ Normalize the columns of $P$.
+		+ Choose $V := P$; i.e. the right-singular vectors are the columns of $P$.
 	2. *Singular-value matrix.*
-		a. Extract the eigenvalues $lambda_1, dots, lambda_n$ from $D$ (from step 1).
-		b. Define $Sigma := diag(sqrt(lambda_1), dots, sqrt(lambda_n))$.
-		c. Extend $Sigma$ with zeros so that its shape is the shape of $A$ (i.e. $m times n$).
+		+ Extract the eigenvalues $lambda_1, dots, lambda_n$ from $D$ (from step 1).
+		+ Define $Sigma := diag(sqrt(lambda_1), dots, sqrt(lambda_n))$.
+		+ Extend $Sigma$ with zeros so that its shape is the shape of $A$ (i.e. $m times n$).
 	3. *Left-singular vectors as the normalized image of the right-singular vectors.*
-		a. Compute each $u_i := (A v_i)/norm(A v_i) = 1/(sigma_i) A v_i.$
-		b. Find an orthonormal basis of $(span{u_1, dots, u_r})^perp$, the left nullspace of $A$ ($Nul A^perp$), by finding a basis and using Gram-Schmidt to orthonormalize the basis.
-		c. Append this orthonormal basis of $Nul A^perp$ to the end of ${u_i}$.
-		c. Put these $u_i$ as the columns of matrix $U$.
+		+ Compute each $u_i := (A v_i)/norm(A v_i) = 1/(sigma_i) A v_i.$
+		+ Find an orthonormal basis of $(span{u_1, dots, u_r})^perp$, the left nullspace of $A$ ($Nul A^adj$), by finding a basis and using Gram-Schmidt to orthonormalize the basis.
+		+ Append this orthonormal basis of $Nul A^adj$ to the end of ${u_i}$.
+		+ Put these $u_i$ as the columns of matrix $U$.
 ]
 
 #remark(title: [Numerical stability])[
@@ -2678,7 +2683,7 @@ _Image from Strang's paper #link("https://doi.org/10.1080/10511970.2024.2321349"
 	The #defname[condition number] of a matrix $A$ is a measure of how sensitive the solution of $A x = b$ is to small perturbations in $A$ or $b$. It is usually defined as
 	$ kappa(A) := norm(A)_2 dot norm(A^(-1))_2 = sigma_max / sigma_min, $
 
-	where $norm(A)_2$ is the spectral norm (defined in the next section on low-rank approximation). Since $kappa(A^* A) = kappa(A)^2$, it is much more numerically unstable. 
+	where $norm(A)_2$ is the spectral norm (defined in the next section on low-rank approximation). Since $kappa(A^adj A) = kappa(A)^2$, it is much more numerically unstable. 
 
 	In order to avoid this, other algorithms (not covered in these notes) are used:
 	- *Golub-Reinsch algorithm*: Reducing $A$ to bidiagonal form using Householder reflections and applying a QR algorithm to extract singular values.
@@ -2691,7 +2696,7 @@ _Image from Strang's paper #link("https://doi.org/10.1080/10511970.2024.2321349"
 	It may sometimes be useful to use smaller matrices in order to have a diagonal $Sigma$ and other useful properties. They are constructed in essentially the same ways. Given here an $m times n$ mmatrix $M$ with rank $r$, we have:
 
 	1. The #defname[full SVD].
-	2. The #defname[thin SVD] or #defname[reduced SVD], removing columns of $U$ not corresponding to rows of $V^*$, giving a diagonal $Sigma$.
+	2. The #defname[thin SVD] or #defname[reduced SVD], removing columns of $U$ not corresponding to rows of $V^adj$, giving a diagonal $Sigma$.
 	3. The #defname[compact SVD], retaining only the nonzero singular values.
 	4. The #defname[truncated SVD], retaining only the $t$ largest singular values.
 
@@ -2710,22 +2715,22 @@ _Image from Strang's paper #link("https://doi.org/10.1080/10511970.2024.2321349"
 	- In SVD, $U$ and $V$ are generally not inverses. In eigendecomposition, $P$ and $P^(-1)$ are inverses.
 	- In SVD, the entries in $Sigma$ are all real and nonnegative. This is not necessarily true for eigendecomposition $D$.
 	- SVD and eigendecomposition are closely related through their projections:
-		- The left-singular vectors of $A$ are eigenvectors of $A A^*$
-		- The right-singular vectors of $A$ are eigenvectors of $A^* A$
-		- The nonzero singular values of $A$ are the square roots of the nonzero eigenvalues of both $A A^*$ and $A^* A$
+		- The left-singular vectors of $A$ are eigenvectors of $A A^adj$
+		- The right-singular vectors of $A$ are eigenvectors of $A^adj A$
+		- The nonzero singular values of $A$ are the square roots of the nonzero eigenvalues of both $A A^adj$ and $A^adj A$
 	- By spectral theorem, for a self-adjoint matrix the eigendecomposition is equal to the SVD
 ]
 
 #theorem[
-	Let $A$ be an $m times n$ matrix with rank $r$. Let $A = U Sigma V^*$ be an SVD of $A$ with $U = [u_1 dots.c u_m]$ and $V = [v_1, dots.c v_n]$. Then,
+	Let $A$ be an $m times n$ matrix with rank $r$. Let $A = U Sigma V^adj$ be an SVD of $A$ with $U = [u_1 dots.c u_m]$ and $V = [v_1, dots.c v_n]$. Then,
 	- $(u_1, dots, u_r)$ is a basis of $Col(A)$.
-	- $(v_1, dots, v_r)$ is a basis of $Col(A^*)$.
-	- $(u_(r + 1), dots, u_m)$ is a basis of $Nul(A^*)$.
+	- $(v_1, dots, v_r)$ is a basis of $Col(A^adj)$.
+	- $(u_(r + 1), dots, u_m)$ is a basis of $Nul(A^adj)$.
 	- $(v_(r + 1), dots, v_n)$ is a basis of $Nul(A)$.
 ]
 
 #definition(title: [Singular value])[
-	Let $T in linmaps(V, W)$. The #defname[singular values] of $T$ are the nonnegative square roots of the eigenvalues of $T^* T$, listed in decreasing order, each included as many times as the dimension of the corresponding eigenspace of $T^* T$.
+	Let $T in linmaps(V, W)$. The #defname[singular values] of $T$ are the nonnegative square roots of the eigenvalues of $T^adj T$, listed in decreasing order, each included as many times as the dimension of the corresponding eigenspace of $T^adj T$.
 ]
 
 #theorem(title: [Role of positive singular values])[
@@ -2755,7 +2760,7 @@ _Image from Strang's paper #link("https://doi.org/10.1080/10511970.2024.2321349"
 	- $norm(lambda T) = abs(lambda) norm(T)$ for all $lambda in Field$.
 	- *Triangle inequality:* $norm(S + T) <= norm(S) + norm(T)$.
 	- *Reverse triangle inequality:* $abs(norm(S) - norm(T)) <= norm(S - T)$.
-	- $norm(T^*) = norm(T)$.
+	- $norm(T^adj) = norm(T)$.
 	- $d(S, T) := norm(S - T)$ makes $d$ a metric (in the metric spaces sense) on $linmaps(V, W)$.
 ]
 
@@ -2765,9 +2770,9 @@ _Image from Strang's paper #link("https://doi.org/10.1080/10511970.2024.2321349"
 
 #definition(title: [Rank-$k$ approximation])[
 	Let $A$ be an $m times n$ matrix of rank $r$. Then the #defname[rank-$k$ approximation] to $A$ is the matrix of rank $k$ (with $k <= r$) defined as:
-	$ hat(A)(k) := sum_(i = 1)^k sigma_i u_i v_i^* = sigma_1 u_1 v_1^* + dots.c + sigma_k u_k v_k^*. $
+	$ hat(A)(k) := sum_(i = 1)^k sigma_i u_i v_i^adj = sigma_1 u_1 v_1^adj + dots.c + sigma_k u_k v_k^adj. $
 
-	Note that each $sigma_i u_i v_i^*$ is a rank-1 matrix, and that the rank-$r$ approximation to $A$ is exactly $A$.
+	Note that each $sigma_i u_i v_i^adj$ is a rank-1 matrix, and that the rank-$r$ approximation to $A$ is exactly $A$.
 ]
 
 #theorem(title: [Eckart-Young Theorem])[
@@ -2777,7 +2782,7 @@ _Image from Strang's paper #link("https://doi.org/10.1080/10511970.2024.2321349"
 	Furthermore, the rank-$k$ approximation to $A$ defined above is the optimal approximation of rank at most $k$ to $A$ (i.e. has the lowest difference from $A$ under the spectral norm).
 
 	That $norm(A - hat(A)(k))_2 = sigma_(k + 1)$ follows immediately from that 
-	$ A - hat(A)(k) = sum_(i = k + 1)^r sigma_i u_i v_i^* $
+	$ A - hat(A)(k) = sum_(i = k + 1)^r sigma_i u_i v_i^adj $
 	and that $sigma_(k + 1)$ is the largest singular value of that sum and is thus the spectral norm of that sum. Proving it is the optimal approximation is harder; see the proof in #link("https://mml-book.github.io/book/mml-book.pdf#section.4.6")[MML [4.6]] or #link("https://linear.axler.net/LADR4e.pdf#section.7.6")[Axler [7F]].
 ]
 
@@ -2793,13 +2798,13 @@ _Image from Strang's paper #link("https://doi.org/10.1080/10511970.2024.2321349"
 	- $A^+ A$ is self-adjoint
 
 	It can be found by the following means:
-	- $A^+ = V_c Sigma_c^(-1) U_c^*$, where $A = U_c Sigma_c V_c^*$ is the compact SVD of $A$ (s.t. $Sigma_c$ is $r times r$).
-	- $A^+ = (A^* A)^(-1) A^*$, if $A^* A$ is positive definite, which is the case if $A$ is full column rank ($r = n$).
-	- $A^+ = A^* (A A^*)^(-1)$, if $A A^*$ is positive definite, which is the case if $A$ is full row rank ($r = m$).
+	- $A^+ = V_c Sigma_c^(-1) U_c^adj$, where $A = U_c Sigma_c V_c^adj$ is the compact SVD of $A$ (s.t. $Sigma_c$ is $r times r$).
+	- $A^+ = (A^adj A)^(-1) A^adj$, if $A^adj A$ is positive definite, which is the case if $A$ is full column rank ($r = n$).
+	- $A^+ = A^adj (A A^adj)^(-1)$, if $A A^adj$ is positive definite, which is the case if $A$ is full row rank ($r = m$).
 ]
 
 #theorem[
-	Let $v in Col(A^*)$ and $w in Col(A)$. Then, $A^+ A v = v$ and $A A^+ w = w$.
+	Let $v in Col(A^adj)$ and $w in Col(A)$. Then, $A^+ A v = v$ and $A A^+ w = w$.
 ]
 
 #lemma[
@@ -2807,12 +2812,14 @@ _Image from Strang's paper #link("https://doi.org/10.1080/10511970.2024.2321349"
 ]
 
 #lemma[
-	Let $v_r in Col(A^*)$ and $v_n in Nul(A)$. Then $A^+ A (v_r + v_n) = v_r$.
+	Let $v_r in Col(A^adj)$ and $v_n in Nul(A)$. Then $A^+ A (v_r + v_n) = v_r$.
 ]
 
 #theorem[
 	Let $A$ be an $m times n$ matrix and $b in Reals^m$. Then $A^+ b$ is the least-squares solution of $A x = b$.
 ]
+
+// MARK: - Graphs
 
 = Appendix: Graphs
 
